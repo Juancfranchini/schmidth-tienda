@@ -5,6 +5,7 @@ import ProductoContent from './ProductoContent';
 import ProductJsonLd from './ProductJsonLd';
 import { getProductoParaSeo } from './getProductoParaSeo';
 
+import { MARCA } from '@/config/marca';
 /**
  * Ficha de producto.
  *
@@ -40,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const titulo = marca ? `${producto.name} — ${marca}` : producto.name;
   const descripcion =
     producto.description?.trim() ||
-    `Comprá ${producto.name}${marca ? ' de ' + marca : ''} en Home Pádel. Envíos a todo el país y múltiples medios de pago.`;
+    `Comprá ${producto.name}${marca ? ' de ' + marca : ''} en ${MARCA.nombre}. Envíos a todo el país y múltiples medios de pago.`;
   const imagen = producto.images?.[0];
 
   return {

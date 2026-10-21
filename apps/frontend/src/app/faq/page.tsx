@@ -6,6 +6,7 @@ import FaqAccordionList from './FaqAccordionList';
 import FaqContactCta from './FaqContactCta';
 import { usePaymentMethods } from '@/hooks/usePaymentMethods';
 
+import { MARCA } from '@/config/marca';
 interface FaqItem {
   id: string;
   category: string;
@@ -29,7 +30,7 @@ function applyPublicCheckoutPolicy(faq: FaqItem, conTransferencia: boolean): Faq
     return { ...faq, answer: 'Las cuotas disponibles se muestran antes de comprar y se confirman al ingresar a Mercado Pago.' };
   }
   if (question.includes('seguro')) {
-    return { ...faq, answer: 'Sí. El pago se completa dentro de Mercado Pago y Home Pádel no almacena datos de tarjetas.' };
+    return { ...faq, answer: 'Sí. El pago se completa dentro de Mercado Pago y ' + MARCA.nombre + ' no almacena datos de tarjetas.' };
   }
   return faq;
 }

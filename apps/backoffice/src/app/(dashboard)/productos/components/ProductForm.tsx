@@ -6,9 +6,6 @@ import VariantPropertiesSection from './product-form/VariantPropertiesSection';
 import PricingFields from './product-form/PricingFields';
 import DiscountInstallmentsFields from './product-form/DiscountInstallmentsFields';
 import { StockOrLeadTimeField, CategoryField, MadeToOrderField, BrandField } from './product-form/CategoryStockFields';
-import ShapeField from './product-form/ShapeField';
-import LevelField from './product-form/LevelField';
-import GenderField from './product-form/GenderField';
 import StatusTogglesRow from './product-form/StatusTogglesRow';
 import { useProductFormLogic } from './product-form/useProductFormLogic';
 import { inputClass, labelClass, Props } from './product-form/schema';
@@ -18,7 +15,7 @@ export type { ProductFormData } from './product-form/schema';
 
 export default function ProductForm({ defaultValues, onSave, onCancel, saving, categories, brands }: Props) {
   const { toast } = useToast();
-  const { form, variants, setVariants, hasSalePrice, toggleSalePrice, imageState, handleFormSubmit, getImageUrl } = useProductFormLogic({ defaultValues, onSave, categories });
+  const { form, variants, setVariants, hasSalePrice, toggleSalePrice, imageState, handleFormSubmit, getImageUrl } = useProductFormLogic({ defaultValues, onSave });
   const { register, handleSubmit, setValue, watch, formState: { errors } } = form;
 
   const featured = watch('featured');
@@ -31,13 +28,6 @@ export default function ProductForm({ defaultValues, onSave, onCancel, saving, c
   const hasWeight = watch('hasWeight');
   const hasInstallmentsInterest = watch('hasInstallmentsInterest');
   const isMadeToOrder = watch('isMadeToOrder');
-  const categoryId = watch('categoryId');
-  const shape = watch('shape');
-  const gender = watch('gender');
-  const level = watch('level');
-
-  const selectedCategory = categories.find((cat) => cat.id === categoryId);
-  const isPaleta = selectedCategory?.slug === 'paletas';
 
   const previewUrl = getImageUrl(imageState.mainImage);
 
@@ -70,6 +60,11 @@ export default function ProductForm({ defaultValues, onSave, onCancel, saving, c
           {errors.sku && <p className="text-xs text-red-600 mt-0.5">{errors.sku.message}</p>}
         </div>
 
+        <div>
+          <label className={labelClass}>Material</label>
+          <input {...register('material')} className={inputClass + ' mt-1'} placeholder="Eco cuero" />
+        </div>
+
         <PricingFields register={register} errors={errors} hasSalePrice={hasSalePrice} onToggleSalePrice={toggleSalePrice} />
 
         {!isMadeToOrder && (
@@ -80,9 +75,6 @@ export default function ProductForm({ defaultValues, onSave, onCancel, saving, c
         <StockOrLeadTimeField register={register} isMadeToOrder={isMadeToOrder} />
         <CategoryField register={register} errors={errors} categories={categories} />
 
-        {isPaleta && <ShapeField value={shape} onChange={(next) => setValue('shape', next, { shouldDirty: true })} />}
-        {isPaleta && <LevelField value={level} onChange={(next) => setValue('level', next, { shouldDirty: true })} />}
-        <GenderField value={gender} onChange={(next) => setValue('gender', next, { shouldDirty: true })} />
         <MadeToOrderField isMadeToOrder={isMadeToOrder} onToggle={() => setValue('isMadeToOrder', !isMadeToOrder, { shouldDirty: true })} register={register} />
         <BrandField register={register} errors={errors} brands={brands} />
 

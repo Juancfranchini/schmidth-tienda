@@ -7,7 +7,8 @@ import { trackMetaEvent } from '@/lib/metaPixel';
 import { useCartStore } from '@/store/cartStore';
 import { CartItem } from '@/types';
 
-const MENSAJE = 'Hola! Tengo una consulta sobre un producto de Home Pádel.';
+import { MARCA } from '@/config/marca';
+const MENSAJE = 'Hola! Tengo una consulta sobre un producto de ' + MARCA.nombre + '.';
 
 /** Desde el carrito el mensaje ya lleva lo que tiene cargado, para no tener que repetirlo. */
 function mensajeDelCarrito(items: CartItem[]): string {

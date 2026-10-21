@@ -6,6 +6,7 @@ import { Printer } from 'lucide-react';
 import api from '@/lib/api';
 import { formatDate, formatPrice } from '@/lib/utils';
 
+import { MARCA } from '@/config/marca';
 interface TicketOrder {
   number: string;
   createdAt: string;
@@ -45,7 +46,7 @@ function TicketDocument({ order, exchange }: { order: TicketOrder; exchange: boo
     <div className="min-h-screen bg-gray-100 p-6 print:bg-white print:p-0">
       <div className="mx-auto max-w-sm rounded-xl bg-white p-6 font-mono text-sm shadow-sm print:shadow-none">
         <div className="text-center">
-          <h1 className="text-xl font-black">HOME PÁDEL</h1>
+          <h1 className="text-xl font-black">{MARCA.nombreLogo}</h1>
           <p className="text-xs text-gray-500">
             {exchange ? 'TICKET DE CAMBIO' : 'COMPROBANTE DE VENTA'}
           </p>

@@ -1,4 +1,4 @@
-import { Edit2, Trash2, ArrowRight, ImageIcon, Youtube, BarChart3, ListChecks } from 'lucide-react';
+import { Edit2, Trash2, ArrowRight, ImageIcon, Youtube, ListChecks } from 'lucide-react';
 import { Product } from '../useProductosContenido';
 
 const API_BASE = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000').replace(/\/api\/?$/, '');
@@ -21,7 +21,6 @@ export default function ContentTable({ products, onEdit, onDelete, onDetail }: {
               <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Imagen</th>
               <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Nombre</th>
               <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Video</th>
-              <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Rendimiento</th>
               <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Highlights</th>
               <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase">Opciones</th>
             </tr>
@@ -34,7 +33,6 @@ export default function ContentTable({ products, onEdit, onDelete, onDetail }: {
                   <td className="px-4 py-3">{imgSrc ? <img src={imgSrc} alt={p.name} className="w-10 h-10 rounded-lg object-cover border border-gray-200" /> : <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center"><ImageIcon className="w-4 h-4 text-gray-400" /></div>}</td>
                   <td className="px-4 py-3"><p className="text-gray-900 font-medium text-sm">{p.name}</p></td>
                   <td className="px-4 py-3 text-center">{p.videoUrl ? <Youtube className="w-4 h-4 text-green-500 mx-auto" /> : '-'}</td>
-                  <td className="px-4 py-3 text-center">{p.performanceStats?.length ? <BarChart3 className="w-4 h-4 text-blue-500 mx-auto" /> : '-'}</td>
                   <td className="px-4 py-3 text-center">{p.highlights?.length ? <ListChecks className="w-4 h-4 text-amber-500 mx-auto" /> : '-'}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-1">

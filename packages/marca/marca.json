@@ -37,6 +37,23 @@
     "archivo": "/marca/logo.svg",
     "mail": "/email/logo.png"
   },
+  "backoffice": {
+    "rutasOcultas": [
+      "/punto-de-venta",
+      "/caja",
+      "/equipo-pdv",
+      "/configuracion-pdv",
+      "/gastos",
+      "/configuracion/talles",
+      "/clientes",
+      "/reviews",
+      "/configuracion/reviews-info",
+      "/testimonios",
+      "/configuracion/formatos-paleta",
+      "/marcas"
+    ],
+    "nota": "Rutas del backoffice ocultas del menú y bloqueadas. El código no se borra: para reactivar un módulo, sacar su ruta de esta lista y correr node scripts/sync-marca.mjs."
+  },
   "prefijoPedido": "SCH",
   "prefijoStorage": "schmidt",
   "carpetaImagenes": "schmidt",

@@ -265,7 +265,7 @@ describe('PaymentsService.createPreference — bolsa de regalo', () => {
     await service.createPreference({ ...DTO_BASE, bolsasRegalo: 1 });
     expect(ordenesCreadas[0].total).toBe(500000 + 12000 + 3000);
     expect(JSON.parse(ordenesCreadas[0].notes)).toMatchObject({ bolsasRegalo: 1, precioBolsaRegalo: 3000 });
-    expect(cuerpoEnviado().items).toContainEqual({ id: 'bolsa-regalo', title: 'Bolsa de regalo Home Pádel', quantity: 1, unit_price: 3000, currency_id: 'ARS' });
+    expect(cuerpoEnviado().items).toContainEqual({ id: 'bolsa-regalo', title: 'Bolsa de regalo Schmidt', quantity: 1, unit_price: 3000, currency_id: 'ARS' });
   });
 
   it('sin precio (como hasta ahora): va sin cargo y sin renglón en Mercado Pago', async () => {

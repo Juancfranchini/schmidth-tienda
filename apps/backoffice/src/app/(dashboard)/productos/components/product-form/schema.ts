@@ -18,9 +18,7 @@ export const schema = z.object({
   hasDimensions: z.boolean().default(false),
   hasWeight: z.boolean().default(false),
 
-  shape: z.string().optional().nullable(),
-  gender: z.string().optional().nullable(),
-  level: z.enum(['Principiante', 'Intermedio', 'Avanzado']).optional().nullable(),
+  material: z.string().optional(),
   size: z.string().optional(),
   color: z.string().optional(),
   dimensionLength: optionalNumber,
@@ -42,7 +40,7 @@ export const schema = z.object({
 });
 
 export interface Variant {
-  id?: string; sku: string; size: string; color?: string; dimensions?: string;
+  id?: string; sku: string; size: string; color?: string; colorHex?: string; dimensions?: string;
   dimensionLength?: number; dimensionWidth?: number; dimensionHeight?: number; dimensionUnit?: string;
   weight?: number; weightUnit?: string; imageUrl?: string; images?: string[]; stock: number;
 }

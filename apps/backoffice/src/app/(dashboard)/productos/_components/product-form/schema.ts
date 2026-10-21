@@ -1,10 +1,5 @@
 import { z } from 'zod';
 
-export const perfStatSchema = z.object({
-  label: z.string().min(1),
-  value: z.coerce.number().min(0).max(100),
-});
-
 export const featureSchema = z.object({
   icon: z.string().optional(),
   title: z.string().min(1),
@@ -15,6 +10,7 @@ export const schema = z.object({
   // Básico
   name: z.string().min(2, 'Nombre requerido (mí­n. 2 caracteres)'),
   description: z.string().optional(),
+  material: z.string().optional(),
   sku: z.string().min(1, 'SKU requerido'),
   barcode: z.string().optional(),
   categoryId: z.string().min(1, 'Seleccioná una categorí­a'),
@@ -34,9 +30,6 @@ export const schema = z.object({
 
   // Imágenes (URLs)
   images: z.array(z.string().url('URL de imagen inválida')).optional(),
-
-  // Rendimiento (performance stats)
-  performanceStats: z.array(perfStatSchema).optional(),
 
   // Caracterí­sticas
   features: z.array(featureSchema).optional(),

@@ -114,6 +114,8 @@ model Product {
   name                    String
   slug                    String              @unique
   description             String?
+  // Material principal (por ejemplo "Eco cuero"). Se muestra en la ficha.
+  material                String?
   price                   Float
   salePrice               Float?
   discountPercentage      Float?
@@ -424,6 +426,8 @@ model ProductVariant {
   barcode            String?             @unique
   size               String              @default("")
   color              String?
+  // Color de la muestra (círculo) en la tienda, en hexadecimal: #A87449.
+  colorHex           String?
   dimensions         String?
   dimensionLength    Float?
   dimensionWidth     Float?

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { X, Star, Send } from 'lucide-react';
 import api from '@/lib/api';
 
+import { MARCA } from '@/config/marca';
 const reviewSchema = z.object({
   name: z.string().trim().min(2, 'Escribí tu nombre').max(80, 'El nombre es demasiado largo'),
   comment: z.string().trim().min(10, 'Contanos un poco más sobre tu experiencia').max(1000, 'La reseña admite hasta 1000 caracteres'),
@@ -67,7 +68,7 @@ export default function ReviewForm({ productId, onClose }: Props) {
   const rating = watch('rating');
   const commentPlaceholder = productId
     ? 'Contanos tu experiencia con el producto'
-    : 'Contanos tu experiencia con Home Pádel';
+    : 'Contanos tu experiencia con ' + MARCA.nombre;
 
   const onSubmit = async (data: ReviewFormData) => {
     setApiError('');

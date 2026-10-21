@@ -1,4 +1,4 @@
-// Tailwind CSS configuration with custom colors for Home Pádel BackOffice
+// Tailwind CSS configuration with custom colors for the BackOffice
 import type { Config } from 'tailwindcss';
 
 const config: Config = {

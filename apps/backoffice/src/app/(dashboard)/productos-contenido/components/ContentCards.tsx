@@ -1,4 +1,4 @@
-import { Edit2, Trash2, ImageIcon, Youtube, BarChart3, ListChecks } from 'lucide-react';
+import { Edit2, Trash2, ImageIcon, Youtube, ListChecks } from 'lucide-react';
 import { Product } from '../useProductosContenido';
 import { getImageUrl } from './ContentTable';
 
@@ -17,14 +17,10 @@ export default function ContentCards({ products, onEdit, onDelete }: {
               </div>
               <div className="flex-1 min-w-0 flex flex-col justify-center">
                 <p className="text-sm font-semibold text-gray-900 truncate">{p.name}</p>
-                <div className="grid grid-cols-3 gap-1.5 mt-2">
+                <div className="grid grid-cols-2 gap-1.5 mt-2">
                   <div className="flex flex-col items-center gap-0.5 py-1 rounded bg-gray-50">
                     <Youtube className={'w-3.5 h-3.5 ' + (p.videoUrl ? 'text-green-500' : 'text-gray-300')} />
                     <span className="text-[9px] text-gray-500">Video</span>
-                  </div>
-                  <div className="flex flex-col items-center gap-0.5 py-1 rounded bg-gray-50">
-                    <BarChart3 className={'w-3.5 h-3.5 ' + (p.performanceStats?.length ? 'text-blue-500' : 'text-gray-300')} />
-                    <span className="text-[9px] text-gray-500">Rend.</span>
                   </div>
                   <div className="flex flex-col items-center gap-0.5 py-1 rounded bg-gray-50">
                     <ListChecks className={'w-3.5 h-3.5 ' + (p.highlights?.length ? 'text-amber-500' : 'text-gray-300')} />

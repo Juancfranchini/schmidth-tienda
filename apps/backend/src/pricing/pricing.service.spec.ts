@@ -70,7 +70,7 @@ const ZAPATILLAS = {
 };
 
 const REMERA = {
-  name: 'Remera Home Pádel',
+  name: 'Cartera Schmidt',
   price: 45000,
   salePrice: null,
   stock: 0, // el stock real vive en cada variante

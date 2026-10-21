@@ -6,10 +6,43 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | Etapa | Estado |
 |---|---|
 | 1. Proyecto limpio + configuración central de marca | ✅ Terminada (2026-10-20) |
-| 2. Modelo de producto, ocultar módulos, seed de 5 productos | ⏸ No empezada: esperar OK |
+| 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20), seed y migración sin probar contra una base |
 | 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | Pendiente |
 | 4. Textos, mails y páginas legales | Pendiente |
 | 5. Revisión final y pendientes del cliente | Pendiente |
+
+## Etapa 2: qué se hizo
+
+- **Prisma** (migración `20261020120000_add_material_color_hex`, solo agrega dos columnas opcionales, no borra nada): `Product.material` y `ProductVariant.colorHex` (color de la muestra en la tienda).
+- **Campos de pádel**: las columnas `shape`, `level`, `gender`, `performanceStats`, `compareData`, `showPerformance` y `showCompare` **siguen en la base**, pero:
+  - El DTO de producto ya no las acepta (el ValidationPipe devuelve 400 si alguien las manda; hay un test).
+  - Se sacaron de los formularios del backoffice (modal rápido y página completa), del filtro de búsqueda avanzada y de las pestañas Rendimiento y Compara de "Contenido de fichas".
+  - Se sacaron de la tienda: asesor del catálogo, estadísticas de rendimiento, comparador y formato en las tarjetas. Se borraron los componentes que quedaron sin uso (iconos de specs, selector de iconos, comparador, imagen de formato). Están en `../homepadel` si hicieran falta.
+  - **Falta (etapa 3, al rediseñar el catálogo):** los filtros de género/formato/nivel de la tienda (y los parámetros `shape`, `gender`, `level` del endpoint de listado del backend) siguen en el código; quedan vacíos porque ningún producto tiene esos valores.
+- **Producto nuevo**: formulario con Material y, por variante, color + selector de color de muestra (`colorHex`). Medidas: `dimensionWidth`/`dimensionHeight` en cm del producto. Bolsillos y compartimentos: JSON `features`.
+- **Módulos ocultos** con un flag, sin borrar código: `backoffice.rutasOcultas` en `packages/marca/marca.json` (+ `node scripts/sync-marca.mjs`). Oculta del menú y bloquea la ruta (redirige al inicio): punto de venta, caja, equipo PDV, configuración PDV, gastos, guía de talles, clientes (CRM), reseñas (+ info de reseñas), testimonios, formatos de paleta y marcas. Para reactivar uno, sacarlo de la lista. Es solo del backoffice: **en la tienda las reseñas y testimonios siguen y se resuelven en la etapa 3**.
+- **Seed** (`prisma/seed.ts`, reescrito): admin, 4 categorías (De hombro, Bandoleras, Totes, Bolsos), marca Schmidt, los 5 productos con sus colores (una variante por color con `colorHex` + variante base), canales de contacto, hero, beneficios, FAQ y secciones del sitio. Ya no siembra testimonios (eran inventados). El stock por color es **de prueba: 10 por color**. Fotos provisorias de placehold.co (agregado a los dominios permitidos de `next.config.ts`).
+  - **A confirmar con la clienta**: medidas, bolsillos, forrado, categoría de cada modelo y precios (todo leído de capturas del catálogo).
+  - Categorías (mi propuesta): Astra = De hombro, Siena = Bandoleras, Ambar y Soho = Totes, Monaco = Bolsos.
+  - Ambar: el pedido dice 30 cm de ancho y el catálogo de Canva dice 36 cm; el seed usa 30.
+- **Corrección a la etapa 1**: el barrido de marca de la etapa 1 usó una expresión que no reconocía las tildes en este entorno y dejó ~45 apariciones de "Home Pádel" (mails, páginas, login del backoffice, metadatos). Ya están pasadas a `MARCA`, y el barrido corregido (`home ?p.{1,2}del`) da cero en el código. Sigue habiendo texto de pádel genérico (ver abajo).
+
+### Etapa 2: qué se corrió (resultado real)
+
+| App | Compilación | Tests | Lint | Build |
+|---|---|---|---|---|
+| backend | ✅ | ✅ 57 suites, 419 tests (+8 nuevos del DTO) | 0 errores, 168 warnings (igual que el origen) | — |
+| frontend | ✅ | ✅ 21 tests | 0 errores, 58 warnings (origen: 64) | ✅ |
+| backoffice | ✅ | sin tests | 0 errores, 292 warnings (origen: 307) | ✅ |
+
+**No se probó**: la migración y el seed contra una base real (no hay Postgres ni `.env` acá), ni guardar un producto desde el backoffice, ni la tienda con datos. Antes de usar, con una base de prueba: `npx prisma migrate deploy && npm run prisma:seed` (en `apps/backend`, con `SEED_ADMIN_PASSWORD` cargada).
+
+### Pendiente para las etapas 3 y 4
+
+- Home (`components/home`: marcas, categorías, hero, titular, newsletter), buscador, menú y footer todavía tienen **texto de pádel** ("Paletas, indumentaria…", "Bullpadel"), imágenes de categorías de pádel (`public/images/categories`) y la imagen de la bolsa de regalo. Etapa 3.
+- **Redirecciones del sitio viejo de HomePadel** (Tiendanube) en `middleware.ts` y `lib/legacyUrls.ts` (+ su test): no aplican a Schmidt; borrar o reemplazar en la etapa 3.
+- Textos legales, FAQ, páginas de información, mails y logo de mails: etapa 4.
+- La bolsa de regalo (desestimada) sigue en el código, apagada por configuración (precio 0): ocultarla de la tienda en la etapa 3.
 
 ## Etapa 1: qué se hizo
 

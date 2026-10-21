@@ -13,6 +13,7 @@ import HeaderSearch from './HeaderSearch';
 import CategoryMegaMenu from './CategoryMegaMenu';
 import ThemeToggle from './ThemeToggle';
 
+import { MARCA } from '@/config/marca';
 // Arriba quedan el buscador y las categorías; estos links informativos van en
 // el pie de página y al final del menú del celular.
 const LINKS_INFO = [
@@ -73,7 +74,7 @@ export default function Header() {
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:flex-shrink-0 lg:translate-x-0" aria-label="Home Pádel — Inicio">
+          <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:flex-shrink-0 lg:translate-x-0" aria-label={MARCA.nombre + ' — Inicio'}>
             <span className="lg:hidden"><BrandLogo size="sm" priority /></span>
             <span className="hidden lg:block"><BrandLogo size="md" priority /></span>
           </Link>

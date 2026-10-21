@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { MARCA } from '@/config/marca';
 /**
  * La página es un componente de navegador y no puede exportar metadatos, así
  * que el título y la descripción viven acá. Sin esto, esta ruta compartía el
@@ -7,7 +8,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Cambios y devoluciones',
-  description: 'Cómo cambiar o devolver un producto comprado en Home Pádel, y en qué plazos.',
+  description: 'Cómo cambiar o devolver un producto comprado en ' + MARCA.nombre + ', y en qué plazos.',
   alternates: { canonical: '/politica-de-devolucion' },
 };
 

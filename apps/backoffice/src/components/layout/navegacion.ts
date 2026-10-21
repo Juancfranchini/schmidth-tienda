@@ -3,6 +3,7 @@ import {
   LayoutDashboard, Mail, Megaphone, MessageSquare, MessagesSquare, Package, Palette, Percent, PlaySquare, Receipt, RefreshCw, Ruler,
   Settings, Shapes, Shield, ShoppingBag, ShoppingCart, Sparkles, Star, Store, Tag, Tags, Truck, UserCheck, Users, Wallet,
 } from 'lucide-react';
+import { MARCA } from '@/config/marca';
 
 export interface ItemMenu {
   label: string;
@@ -26,7 +27,7 @@ export interface GrupoMenu {
  * Branding, Canales de contacto, Newsletter e Info de reviews no figuraban
  * en ningún lado: solo se llegaba escribiendo la dirección.
  */
-export const GRUPOS_MENU: GrupoMenu[] = [
+const GRUPOS_COMPLETOS: GrupoMenu[] = [
   { items: [{ label: 'Inicio', href: '/', icon: LayoutDashboard }] },
   {
     title: 'Ventas',
@@ -105,6 +106,20 @@ export const GRUPOS_MENU: GrupoMenu[] = [
     ],
   },
 ];
+
+/**
+ * Módulos apagados desde packages/marca/marca.json (backoffice.rutasOcultas):
+ * no aparecen en el menú y `esRutaOculta` bloquea entrar escribiendo la dirección.
+ */
+const RUTAS_OCULTAS: readonly string[] = MARCA.backoffice.rutasOcultas;
+
+export function esRutaOculta(pathname: string): boolean {
+  return RUTAS_OCULTAS.some((ruta) => pathname === ruta || pathname.startsWith(ruta + '/'));
+}
+
+export const GRUPOS_MENU: GrupoMenu[] = GRUPOS_COMPLETOS
+  .map((grupo) => ({ ...grupo, items: grupo.items.filter((item) => !RUTAS_OCULTAS.includes(item.href)) }))
+  .filter((grupo) => grupo.items.length > 0);
 
 /** Rutas que tienen subpáginas propias en el menú: se marcan solo si coinciden exacto. */
 const EXACTAS = ['/', '/productos', '/configuracion'];

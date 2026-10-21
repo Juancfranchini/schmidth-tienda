@@ -38,12 +38,11 @@ function useEditingProduct(mode: 'create' | 'edit', productId: string | undefine
       const res = await api.get(`/products/${productId}`);
       const p = res.data;
       reset({
-        name: p.name, description: p.description ?? '', sku: p.sku, barcode: p.barcode ?? '',
+        name: p.name, description: p.description ?? '', material: p.material ?? '', sku: p.sku, barcode: p.barcode ?? '',
         categoryId: p.category?.id ?? p.categoryId ?? '', brandId: p.brand?.id ?? p.brandId ?? '',
         featured: p.featured ?? false, isNew: p.isNew ?? false, isOffer: p.isOffer ?? false, active: p.active ?? true,
         price: p.price ?? 0, salePrice: p.salePrice ?? undefined, transferPrice: p.transferPrice ?? undefined,
         stock: p.stock ?? 0, images: Array.isArray(p.images) ? p.images : [],
-        performanceStats: Array.isArray(p.performanceStats) ? p.performanceStats : [],
         features: Array.isArray(p.features) ? p.features : [],
         highlights: Array.isArray(p.highlights) ? p.highlights : [],
         paymentMethods: Array.isArray(p.paymentMethods) ? p.paymentMethods : [],
@@ -72,12 +71,11 @@ export function useProductForm(mode: 'create' | 'edit', productId?: string) {
     resolver: zodResolver(schema),
     defaultValues: {
       active: true, featured: false, isNew: false, isOffer: false,
-      stock: 0, price: 0, images: [], performanceStats: [], features: [],
+      stock: 0, price: 0, images: [], features: [],
     },
   });
 
   const { loading, loadProduct } = useEditingProduct(mode, productId, reset);
-  const perfArray = useFieldArray({ control, name: 'performanceStats' });
   const featuresArray = useFieldArray({ control, name: 'features' });
   const imagesWatch = watch('images') ?? [];
   const highlightsWatch = watch('highlights') ?? [];
@@ -103,7 +101,7 @@ export function useProductForm(mode: 'create' | 'edit', productId?: string) {
         salePrice: data.salePrice && data.salePrice > 0 ? data.salePrice : undefined,
         transferPrice: data.transferPrice && data.transferPrice > 0 ? data.transferPrice : undefined,
         videoUrl: data.videoUrl?.trim() || undefined,
-        images: data.images ?? [], performanceStats: data.performanceStats ?? [], features: data.features ?? [],
+        images: data.images ?? [], features: data.features ?? [],
         highlights: data.highlights ?? [], paymentMethods: data.paymentMethods ?? [],
       };
       if (mode === 'create') {
@@ -126,7 +124,7 @@ export function useProductForm(mode: 'create' | 'edit', productId?: string) {
 
   return {
     router, categories, brands, loading, saving, newImageUrl, setNewImageUrl, newHighlight, setNewHighlight,
-    register, handleSubmit, watch, setValue, errors, perfArray, featuresArray, imagesWatch, highlightsWatch, paymentWatch,
+    register, handleSubmit, watch, setValue, errors, featuresArray, imagesWatch, highlightsWatch, paymentWatch,
     addImage, removeImage, onSubmit,
   };
 }

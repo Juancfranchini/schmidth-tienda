@@ -47,7 +47,7 @@ describe('precio de la bolsa', () => {
   it('notas y renglón para los mails', () => {
     expect(notasDeBolsas({ cantidad: 2, precio: 3000, total: 6000 })).toEqual({ bolsasRegalo: 2, precioBolsaRegalo: 3000 });
     expect(notasDeBolsas({ cantidad: 1, precio: 0, total: 0 })).toEqual({ bolsasRegalo: 1 });
-    expect(lineaDeBolsas({ bolsasRegalo: 2, precioBolsaRegalo: 3000 })).toEqual([{ name: 'Bolsa de regalo Home Pádel', quantity: 2, price: 3000 }]);
+    expect(lineaDeBolsas({ bolsasRegalo: 2, precioBolsaRegalo: 3000 })).toEqual([{ name: 'Bolsa de regalo Schmidt', quantity: 2, price: 3000 }]);
     expect(lineaDeBolsas({})).toEqual([]);
   });
 });

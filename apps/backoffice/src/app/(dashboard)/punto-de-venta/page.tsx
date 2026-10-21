@@ -17,6 +17,7 @@ import { PosFormData, posSchema } from './posSchema';
 import { CreatedSale, SavedCart } from './types';
 import { usePos } from './usePos';
 
+import { MARCA } from '@/config/marca';
 const defaults: PosFormData = {
   channel: 'LOCAL',
   branchId: '',
@@ -273,7 +274,7 @@ function CartActions({
 }
 
 function ShareLink({ url }: { url: string }) {
-  const whatsapp = `https://wa.me/?text=${encodeURIComponent(`Hola, podés completar tu compra de Home Pádel acá: ${url}`)}`;
+  const whatsapp = `https://wa.me/?text=${encodeURIComponent(`Hola, podés completar tu compra de ${MARCA.nombre} acá: ${url}`)}`;
   return (
     <div className="rounded-xl border border-lime-200 bg-lime-50 p-3">
       <p className="break-all text-xs text-lime-900">{url}</p>

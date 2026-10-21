@@ -1,15 +1,16 @@
-// Bolsa de regalo Home Pádel: como máximo una por unidad comprada, al precio
+// Bolsa de regalo: como máximo una por unidad comprada, al precio
 // que fija la tienda desde Productos (sección "bolsa_regalo"; 0 = sin cargo).
 // El navegador pide cuántas quiere; el servidor decide cuántas van y cuánto salen.
 
 import { BadRequestException } from '@nestjs/common';
 import type { PrismaService } from '../prisma/prisma.service';
 
+import { MARCA } from '../config/marca';
 /** Tope del DTO: nadie arma un pedido con más bolsas que esto. */
 export const MAX_BOLSAS_REGALO = 50;
 /** Precio máximo admitido por bolsa: frena un error de tipeo (un cero de más). */
 export const PRECIO_MAXIMO_BOLSA = 1_000_000;
-export const NOMBRE_BOLSA = 'Bolsa de regalo Home Pádel';
+export const NOMBRE_BOLSA = 'Bolsa de regalo ' + MARCA.nombre;
 
 export interface ConfigBolsa {
   precio: number;

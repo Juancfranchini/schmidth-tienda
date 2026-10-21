@@ -2,7 +2,6 @@
 import { ShoppingCart } from 'lucide-react';
 import { Product } from '@/types';
 import ProductCardPricing from './ProductCardPricing';
-import ShapeImage from './ShapeImage';
 
 interface Props {
   product: Product;
@@ -26,13 +25,6 @@ export default function ProductCardContent({ product, isMadeToOrder, hasDiscount
           {product.name}
         </h3>
       </Link>
-
-      {product.shape && (
-        <p className="flex items-center gap-1.5 text-[13px] text-[#A1A1AA] light:text-[#5F6068]">
-          <ShapeImage shape={product.shape} />
-          Formato: {product.shape}
-        </p>
-      )}
 
       <ProductCardPricing product={product} isMadeToOrder={isMadeToOrder} hasDiscount={hasDiscount} />
 

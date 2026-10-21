@@ -6,22 +6,16 @@ import api from '@/lib/api';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useToast } from '@/components/ui/Toast';
 
-export const PERF_LABELS = ['Control', 'Potencia', 'Manejabilidad', 'Dureza', 'Jugabilidad'];
-
 const schema = z.object({
   videoUrl: z.string().optional().or(z.literal('')),
   highlightsTitle: z.string().optional().or(z.literal('')),
   highlightsDescription: z.string().optional().or(z.literal('')),
   highlights: z.array(z.object({ text: z.string() })).optional(),
-  performanceStats: z.array(z.object({ label: z.string(), value: z.coerce.number().min(0).max(100) })).optional(),
   specs: z.array(z.object({ icon: z.string(), title: z.string(), value: z.string() })).optional(),
   relatedVideos: z.array(z.object({ title: z.string(), url: z.string() })).optional(),
   relatedProductIds: z.array(z.string()).optional(),
-  compareData: z.any().optional(),
   showVideo: z.boolean().default(false),
-  showPerformance: z.boolean().default(false),
   showHighlights: z.boolean().default(false),
-  showCompare: z.boolean().default(false),
   showRelated: z.boolean().default(false),
 });
 export type FormData = z.infer<typeof schema>;
@@ -30,19 +24,15 @@ export interface Product {
   id: string; name: string; slug: string; images: string[];
   videoUrl?: string; highlightsTitle?: string; highlightsDescription?: string;
   highlights?: string[];
-  performanceStats?: { label: string; value: number }[];
   specs?: { icon: string; title: string; value: string }[];
   relatedVideos?: { title: string; url: string }[];
   relatedProductIds?: string[];
-  compareData?: any;
   showVideo?: boolean;
-  showPerformance?: boolean;
   showHighlights?: boolean;
-  showCompare?: boolean;
   showRelated?: boolean;
 }
 
-export type TabKey = 'video' | 'rendimiento' | 'highlights' | 'relacionados' | 'compara';
+export type TabKey = 'video' | 'highlights' | 'relacionados';
 
 function useProductsData() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -88,12 +78,10 @@ export function useProductosContenido() {
     reset({
       videoUrl: p.videoUrl || '', highlightsTitle: p.highlightsTitle || '', highlightsDescription: p.highlightsDescription || '',
       highlights: (p.highlights || []).map((h) => ({ text: h })),
-      performanceStats: p.performanceStats || PERF_LABELS.map((l) => ({ label: l, value: 0 })),
       specs: p.specs || [],
       relatedVideos: p.relatedVideos || [],
       relatedProductIds: p.relatedProductIds || [],
-      compareData: p.compareData || { fields: [], products: [] },
-      showVideo: p.showVideo !== false, showPerformance: p.showPerformance !== false, showHighlights: p.showHighlights !== false, showCompare: p.showCompare !== false, showRelated: p.showRelated !== false,
+      showVideo: p.showVideo !== false, showHighlights: p.showHighlights !== false, showRelated: p.showRelated !== false,
     });
     setActiveTab('video');
     setModalOpen(true);

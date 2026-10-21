@@ -80,17 +80,12 @@ export function deriveProductDisplay(product: Product, selectedVariant: any, act
   const cuota = installments > 0 ? Math.ceil((displayPrice * (1 + (hasInstallmentsInterest ? installmentsInterest / 100 : 0))) / installments) : 0;
   const transferPrice = product.transferPrice && product.transferPrice > 0 ? product.transferPrice : 0;
   const paymentMethods: string[] = Array.isArray(product.paymentMethods) ? product.paymentMethods.filter((m): m is string => typeof m === 'string') : [];
-  const performanceStats = Array.isArray(product.performanceStats) ? product.performanceStats : [];
   const highlights = Array.isArray(product.highlights) ? product.highlights.filter((h): h is string => typeof h === 'string') : [];
-  const specs = (product as any).specs || [];
   const relatedVideos = (product as any).relatedVideos || [];
-  const compareData = (product as any).compareData || null;
   const highlightsTitle = (product as any).highlightsTitle || '';
   const highlightsDescription = (product as any).highlightsDescription || '';
   const showVideo = (product as any).showVideo !== false;
-  const showPerformance = (product as any).showPerformance !== false;
   const showHighlights = (product as any).showHighlights !== false;
-  const showCompare = (product as any).showCompare !== false;
   const showRelated = (product as any).showRelated !== false;
   const video = getVideoEmbedUrl(product.videoUrl);
   const embedUrl = video?.url ?? null;
@@ -99,8 +94,8 @@ export function deriveProductDisplay(product: Product, selectedVariant: any, act
   return {
     hasDiscount, discountPct, displayPrice, images, effectiveStock,
     installments, hasInstallmentsInterest, installmentsInterest, cuota, transferPrice,
-    paymentMethods, performanceStats, highlights, specs, relatedVideos, compareData,
-    highlightsTitle, highlightsDescription, showVideo, showPerformance, showHighlights,
-    showCompare, showRelated, embedUrl, embedVertical,
+    paymentMethods, highlights, relatedVideos,
+    highlightsTitle, highlightsDescription, showVideo, showHighlights,
+    showRelated, embedUrl, embedVertical,
   };
 }

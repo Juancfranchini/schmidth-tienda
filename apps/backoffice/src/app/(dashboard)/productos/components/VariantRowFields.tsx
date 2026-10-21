@@ -17,7 +17,10 @@ export function VariantSizeColor({ v, inputClass, hasSize, hasColor, onUpdate }:
       <div className="flex flex-col justify-end">
         {hasColor && <>
           <label className="text-[10px] text-gray-400 uppercase">Color</label>
-          <input type="text" value={v.color || ''} onChange={(e) => onUpdate('color', e.target.value)} className={inputClass + ' !py-1.5'} placeholder="Negro, Blanco" />
+          <div className="flex gap-1.5">
+            <input type="text" value={v.color || ''} onChange={(e) => onUpdate('color', e.target.value)} className={inputClass + ' !py-1.5 min-w-0 flex-1'} placeholder="Negro, Camel" />
+            <input type="color" value={v.colorHex || '#000000'} onChange={(e) => onUpdate('colorHex', e.target.value)} className="h-[34px] w-9 shrink-0 cursor-pointer rounded border border-gray-200 bg-white p-0.5" title="Color de la muestra en la tienda" aria-label="Color de la muestra" />
+          </div>
         </>}
       </div>
     </div>

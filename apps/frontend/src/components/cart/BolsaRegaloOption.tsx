@@ -6,8 +6,9 @@ import { bolsasEfectivas, useCartStore } from '@/store/cartStore';
 import { useConfigBolsa } from '@/hooks/useBolsaRegalo';
 import { formatPrice } from '@/lib/utils';
 
+import { MARCA } from '@/config/marca';
 /**
- * Ofrece la bolsa de regalo Home Pádel, una por producto como máximo, al
+ * Ofrece la bolsa de regalo, una por producto como máximo, al
  * precio que fija la tienda (o sin cargo). Si la tienda no la ofrece, no
  * aparece. `compacta` es la versión del resumen del checkout.
  */
@@ -32,7 +33,7 @@ export default function BolsaRegaloOption({ compacta = false }: { compacta?: boo
             <Gift size={compacta ? 14 : 16} className="text-brand-fg flex-shrink-0" /> ¿Es para regalo?
           </p>
           <p className="text-xs text-fg-muted mt-0.5">
-            {bolsas > 0 ? `${bolsas === 1 ? 'Va 1 bolsa' : `Van ${bolsas} bolsas`} Home Pádel, ${costo}.` : `Sumá la bolsa Home Pádel, ${precio > 0 ? formatPrice(precio) : 'sin cargo'}.`}
+            {bolsas > 0 ? `${bolsas === 1 ? 'Va 1 bolsa' : `Van ${bolsas} bolsas`} ${MARCA.nombre}, ${costo}.` : `Sumá la bolsa ${MARCA.nombre}, ${precio > 0 ? formatPrice(precio) : 'sin cargo'}.`}
             {!compacta && ' Una por producto como máximo.'}
           </p>
         </div>

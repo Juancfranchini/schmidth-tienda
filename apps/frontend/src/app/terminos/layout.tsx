@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { MARCA } from '@/config/marca';
 /**
  * El contenido lo arma un componente de navegador (LegalPage), así que los
  * metadatos viven acá. Antes heredaba el canonical de la portada (Google la
@@ -7,7 +8,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Términos y condiciones',
-  description: 'Términos y condiciones de compra en Home Pádel: pedidos, pagos, envíos, cambios y devoluciones.',
+  description: 'Términos y condiciones de compra en ' + MARCA.nombre + ': pedidos, pagos, envíos, cambios y devoluciones.',
   alternates: { canonical: '/terminos' },
 };
 

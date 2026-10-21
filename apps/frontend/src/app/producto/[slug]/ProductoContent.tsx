@@ -13,9 +13,7 @@ import ProductGallery from './components/ProductGallery';
 import ProductDescription from './components/ProductDescription';
 import ProductInfoColumn from './ProductInfoColumn';
 import PaymentModal from './components/PaymentModal';
-import PerformanceSection from './components/PerformanceSection';
 import ProductVideoHighlightsSection from './ProductVideoHighlightsSection';
-import CompareModels from './components/CompareModels';
 import ProductReviewsSection from './ProductReviewsSection';
 import RelatedProducts from './components/RelatedProducts';
 import TrustBottom from './components/TrustBottom';
@@ -75,8 +73,6 @@ export default function ProductoContent({ initialProduct }: Props) {
 
       <ProductDescription description={product.description} />
 
-      {display.showPerformance && <PerformanceSection stats={display.performanceStats} specs={display.specs} />}
-
       <ProductVideoHighlightsSection
         showVideo={display.showVideo}
         showHighlights={display.showHighlights}
@@ -87,8 +83,6 @@ export default function ProductoContent({ initialProduct }: Props) {
         highlightsTitle={display.highlightsTitle}
         highlightsDescription={display.highlightsDescription}
       />
-
-      {display.showCompare && <CompareModels data={display.compareData} />}
 
       {(product.reviewCount || 0) > 0 && <ProductReviewsSection productId={product.id} />}
 

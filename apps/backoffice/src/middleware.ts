@@ -1,4 +1,4 @@
-// Middleware de autenticación para el BackOffice de Home Pádel.
+// Middleware de autenticación para el BackOffice.
 // Protege todas las rutas del dashboard — redirige a /login si no hay token.
 // El token se guarda como cookie "bo_token" al hacer login.
 

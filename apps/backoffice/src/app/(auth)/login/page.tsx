@@ -114,7 +114,7 @@ export default function LoginPage() {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0f172a] mb-4">
                 <span className="text-[#C8FF00] font-black text-xl">HP</span>
               </div>
-              <h1 className="text-2xl font-black text-gray-900 tracking-tight">HOME PÁDEL</h1>
+              <h1 className="text-2xl font-black text-gray-900 tracking-tight">{MARCA.nombreLogo}</h1>
               <p className="text-gray-400 text-sm mt-1 font-medium uppercase tracking-widest">BackOffice</p>
             </div>
 
@@ -123,7 +123,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-slate-500 text-xs mt-6">
-          © {new Date().getFullYear()} Home Pádel — Todos los derechos reservados
+          © {new Date().getFullYear()} {MARCA.nombre} — Todos los derechos reservados
         </p>
       </div>
     </div>

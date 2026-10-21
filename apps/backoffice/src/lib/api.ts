@@ -1,4 +1,4 @@
-// Axios HTTP client configured for the Home Pádel backend API.
+// Axios HTTP client configured for the backend API.
 // Automatically attaches the JWT token from localStorage to every request
 // and redirects to /login on 401 Unauthorized responses.
 

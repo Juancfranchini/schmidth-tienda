@@ -8,7 +8,6 @@ export interface ProductAdvancedFilters {
   brandId: string | null;
   active: boolean | null;
   featured: boolean | null;
-  shape: string | null;
 }
 
 interface Category { id: string; name: string }
@@ -27,10 +26,9 @@ const menuItems = [
   { id: 'brand', label: 'Marca', icon: Package },
   { id: 'active', label: 'Estado', icon: Tag },
   { id: 'featured', label: 'Destacado', icon: Star },
-  { id: 'shape', label: 'Formato', icon: Tag },
 ];
 
-type MenuSection = 'category' | 'brand' | 'active' | 'featured' | 'shape';
+type MenuSection = 'category' | 'brand' | 'active' | 'featured';
 
 function radioLabelClass(isSelected: boolean) {
   return 'flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-lg border cursor-pointer transition-colors ' +
@@ -110,40 +108,19 @@ function FeaturedFilterPanel({ featured, onChange }: { featured: boolean | null;
   );
 }
 
-const SHAPES = ['Diamante', 'Lagrima', 'Redondo', 'Hibrido'];
-const ETIQUETA_SHAPE: Record<string, string> = { Lagrima: 'Lágrima', Hibrido: 'Híbrido' };
-
-function ShapeFilterPanel({ shape, onChange }: { shape: string | null; onChange: (v: string | null) => void }) {
-  return (
-    <div className={panelGridClass}>
-      <label className={radioLabelClass(shape === null)}>
-        <input type="radio" name="shp" checked={shape === null} onChange={() => onChange(null)} className="sr-only" />
-        <span className="text-sm font-medium">Todos</span>
-      </label>
-      {SHAPES.map((s) => (
-        <label key={s} className={radioLabelClass(shape === s)}>
-          <input type="radio" name="shp" checked={shape === s} onChange={() => onChange(s)} className="sr-only" />
-          <span className="text-sm font-medium">{ETIQUETA_SHAPE[s] ?? s}</span>
-        </label>
-      ))}
-    </div>
-  );
-}
-
 export default function ProductAdvancedSearchModal({ isOpen, onClose, onApply, categories, brands }: Props) {
   const [activeSection, setActiveSection] = useState<MenuSection>('category');
   const [categoryId, setCategoryId] = useState<string | null>(null);
   const [brandId, setBrandId] = useState<string | null>(null);
   const [active, setActive] = useState<boolean | null>(null);
   const [featured, setFeatured] = useState<boolean | null>(null);
-  const [shape, setShape] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const hasFilters = categoryId !== null || brandId !== null || active !== null || featured !== null || shape !== null;
+  const hasFilters = categoryId !== null || brandId !== null || active !== null || featured !== null;
 
-  const handleClear = () => { setCategoryId(null); setBrandId(null); setActive(null); setFeatured(null); setShape(null); };
-  const handleApply = () => { onApply({ categoryId, brandId, active, featured, shape }); onClose(); };
+  const handleClear = () => { setCategoryId(null); setBrandId(null); setActive(null); setFeatured(null); };
+  const handleApply = () => { onApply({ categoryId, brandId, active, featured }); onClose(); };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4">
@@ -191,7 +168,6 @@ export default function ProductAdvancedSearchModal({ isOpen, onClose, onApply, c
             {activeSection === 'brand' && <BrandFilterPanel brandId={brandId} brands={brands} onChange={setBrandId} />}
             {activeSection === 'active' && <ActiveFilterPanel active={active} onChange={setActive} />}
             {activeSection === 'featured' && <FeaturedFilterPanel featured={featured} onChange={setFeatured} />}
-            {activeSection === 'shape' && <ShapeFilterPanel shape={shape} onChange={setShape} />}
           </div>
         </div>
 

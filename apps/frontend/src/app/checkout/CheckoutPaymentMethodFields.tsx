@@ -7,6 +7,7 @@ import { getImageUrl } from '@/lib/utils';
 import { CheckoutFormData } from './checkoutSchema';
 import { PaymentMethodConfig } from '@/hooks/usePaymentMethods';
 
+import { MARCA } from '@/config/marca';
 interface Props {
   register: UseFormRegister<CheckoutFormData>;
   errors: FieldErrors<CheckoutFormData>;
@@ -44,7 +45,7 @@ export default function CheckoutPaymentMethodFields({ register, errors, selected
       {selectedPayment === 'mercadopago' && (
         <div className="flex items-start gap-2 mt-3 text-xs text-fg-muted">
           <ShieldCheck size={15} className="text-brand-fg mt-0.5 flex-shrink-0" />
-          <p>Al continuar, salís temporalmente de Home Pádel para completar el pago de forma segura. No almacenamos datos de tu tarjeta.</p>
+          <p>Al continuar, salís temporalmente de {MARCA.nombre} para completar el pago de forma segura. No almacenamos datos de tu tarjeta.</p>
           <ExternalLink size={13} className="mt-0.5 flex-shrink-0" />
         </div>
       )}

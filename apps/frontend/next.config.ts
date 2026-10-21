@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.up.railway.app' },
       // Catálogo y foto oficial de respaldo para el pack de overgrips.
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'https', hostname: 'www.bullpadel.com' },
+      // Fotos provisorias del seed hasta tener las reales (ver prisma/seed.ts).
+      { protocol: 'https', hostname: 'placehold.co' },
     ],
   },
   // El login con Google pasa por el dominio de la tienda: Google muestra

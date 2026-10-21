@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { MARCA } from '@/config/marca';
 /**
  * El contenido lo arma un componente de navegador (LegalPage), así que los
  * metadatos viven acá. Antes heredaba el canonical de la portada (Google la
@@ -7,7 +8,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Política de privacidad',
-  description: 'Cómo Home Pádel recopila, usa y protege tus datos personales cuando comprás en la tienda.',
+  description: 'Cómo ' + MARCA.nombre + ' recopila, usa y protege tus datos personales cuando comprás en la tienda.',
   alternates: { canonical: '/privacidad' },
 };
 

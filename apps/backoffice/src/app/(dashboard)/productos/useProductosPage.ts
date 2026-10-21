@@ -44,10 +44,8 @@ export interface Product {
   dimensionUnit?: string;
   weight?: number;
   weightUnit?: string;
-  shape?: string;
-  gender?: string;
-  level?: 'Principiante' | 'Intermedio' | 'Avanzado' | null;
-  variants?: { sku: string; size: string; color?: string; dimensions?: string; dimensionLength?: number; dimensionWidth?: number; dimensionHeight?: number; dimensionUnit?: string; weight?: number; weightUnit?: string; imageUrl?: string; images?: string[]; stock: number }[];
+  material?: string;
+  variants?: { sku: string; size: string; color?: string; colorHex?: string; dimensions?: string; dimensionLength?: number; dimensionWidth?: number; dimensionHeight?: number; dimensionUnit?: string; weight?: number; weightUnit?: string; imageUrl?: string; images?: string[]; stock: number }[];
 }
 
 export interface Brand { id: string; name: string }
@@ -123,9 +121,7 @@ function buildDefaultFormValues(editItem: Product | null) {
     dimensionUnit: editItem.dimensionUnit || 'cm',
     weight: editItem.weight || undefined,
     weightUnit: editItem.weightUnit || 'kg',
-    shape: editItem.shape || null,
-    gender: editItem.gender || null,
-    level: editItem.level || null,
+    material: editItem.material || '',
     variants: editItem.variants?.filter((variant: any) => variant.id !== `${editItem.id}-base`) || [],
   };
 }
@@ -194,7 +190,6 @@ export function useProductosPage() {
     if (advancedFilters.brandId && p.brand?.id !== advancedFilters.brandId) return false;
     if (advancedFilters.active !== null && p.active !== advancedFilters.active) return false;
     if (advancedFilters.featured !== null && p.featured !== advancedFilters.featured) return false;
-    if (advancedFilters.shape && p.shape !== advancedFilters.shape) return false;
     return true;
   });
 

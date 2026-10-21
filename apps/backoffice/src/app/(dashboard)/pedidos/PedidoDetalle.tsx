@@ -11,6 +11,7 @@ import {
   bolsasConCargo, estadoDeEntrega, estadoDelPago, fechaCorta, formaDeEntrega, mailCliente, medioDePago, nombreCliente, unidades, whatsappDe,
 } from './formato';
 
+import { MARCA } from '@/config/marca';
 const ESTADOS = [
   { valor: 'PENDING', texto: 'Pendiente de pago' },
   { valor: 'PAID', texto: 'Pagado' },
@@ -41,7 +42,7 @@ function Productos({ pedido }: { pedido: Pedido }) {
       </header>
       {(pedido.bolsasRegalo ?? 0) > 0 && (
         <p className="mx-4 mt-3 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-800">
-          <Gift size={16} /> Para regalo: incluir {pedido.bolsasRegalo === 1 ? '1 bolsa' : pedido.bolsasRegalo + ' bolsas'} Home Pádel
+          <Gift size={16} /> Para regalo: incluir {pedido.bolsasRegalo === 1 ? '1 bolsa' : pedido.bolsasRegalo + ' bolsas'} {MARCA.nombre}
         </p>
       )}
       <ul className="divide-y divide-gray-100">

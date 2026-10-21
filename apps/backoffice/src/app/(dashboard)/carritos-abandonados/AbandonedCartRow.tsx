@@ -2,6 +2,7 @@
 
 import { MessageCircle, Trash2, Check, Clock } from 'lucide-react';
 
+import { MARCA } from '@/config/marca';
 export interface AbandonedCart {
   id: string;
   email: string;
@@ -29,7 +30,7 @@ function enlaceWhatsapp(carrito: AbandonedCart): string | null {
   const numero = digitos.startsWith('54') ? digitos : '549' + digitos;
   const productos = carrito.items.map((i) => `${i.quantity}x ${i.name}`).join(', ');
   const saludo = carrito.name ? `Hola ${carrito.name.split(' ')[0]}!` : 'Hola!';
-  const mensaje = `${saludo} Te escribo de Home Pádel. Vimos que dejaste un pedido sin terminar (${productos}). ¿Te ayudamos a completarlo?`;
+  const mensaje = `${saludo} Te escribo de ${MARCA.nombre}. Vimos que dejaste un pedido sin terminar (${productos}). ¿Te ayudamos a completarlo?`;
 
   return 'https://wa.me/' + numero + '?text=' + encodeURIComponent(mensaje);
 }

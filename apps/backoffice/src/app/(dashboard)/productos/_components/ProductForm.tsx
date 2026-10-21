@@ -5,7 +5,6 @@ import FormTopBar from './product-form/FormTopBar';
 import BasicInfoSection from './product-form/BasicInfoSection';
 import PricingSection from './product-form/PricingSection';
 import ImagesSection from './product-form/ImagesSection';
-import PerformanceSection from './product-form/PerformanceSection';
 import FeaturesSection from './product-form/FeaturesSection';
 import VideoSection from './product-form/VideoSection';
 import HighlightsSection from './product-form/HighlightsSection';
@@ -22,7 +21,7 @@ interface Props {
 export default function ProductForm({ mode, productId }: Props) {
   const {
     router, categories, brands, loading, saving, newImageUrl, setNewImageUrl, newHighlight, setNewHighlight,
-    register, handleSubmit, watch, setValue, errors, perfArray, featuresArray, imagesWatch, highlightsWatch, paymentWatch,
+    register, handleSubmit, watch, setValue, errors, featuresArray, imagesWatch, highlightsWatch, paymentWatch,
     addImage, removeImage, onSubmit,
   } = useProductForm(mode, productId);
 
@@ -45,7 +44,6 @@ export default function ProductForm({ mode, productId }: Props) {
           <BasicInfoSection register={register} errors={errors} categories={categories} brands={brands} />
           <PricingSection register={register} errors={errors} />
           <ImagesSection imagesWatch={imagesWatch} newImageUrl={newImageUrl} setNewImageUrl={setNewImageUrl} onAdd={addImage} onRemove={removeImage} />
-          <PerformanceSection register={register} watch={watch} perfArray={perfArray} />
           <FeaturesSection register={register} featuresArray={featuresArray} />
           <VideoSection register={register} watch={watch} />
           <HighlightsSection highlightsWatch={highlightsWatch} newHighlight={newHighlight} setNewHighlight={setNewHighlight} setValue={setValue} />

@@ -10,15 +10,20 @@ export default function BasicInfoSection({ register, errors, categories, brands 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="sm:col-span-2">
           <Label required>Nombre</Label>
-          <input {...register('name')} className="input-field" placeholder="Ej: Paleta Nox AT10 Genius 18K" />
+          <input {...register('name')} className="input-field" placeholder="Ej: Astra" />
           <ErrorMsg msg={errors.name?.message} />
         </div>
 
         <div>
           <Label required>SKU</Label>
-          <input {...register('sku')} className="input-field" placeholder="NOX-AT10-18K" />
+          <input {...register('sku')} className="input-field" placeholder="AST-NEG" />
           <ErrorMsg msg={errors.sku?.message} />
           <p className="text-xs text-gray-400 mt-1">Identificador único del producto</p>
+        </div>
+
+        <div>
+          <Label>Material</Label>
+          <input {...register('material')} className="input-field" placeholder="Eco cuero" />
         </div>
 
         <div>

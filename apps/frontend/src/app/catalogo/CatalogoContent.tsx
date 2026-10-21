@@ -9,7 +9,6 @@ import { useCatalogPage } from './useCatalogPage';
 import { useVistaDeCategoria } from './useVistaDeCategoria';
 import type { CatalogResult } from './getCatalogData';
 import CatalogHeader from './components/CatalogHeader';
-import CatalogAdvisor from './components/CatalogAdvisor';
 import CatalogChips from './components/CatalogChips';
 import CatalogSidebar from './components/CatalogSidebar';
 import CatalogGrid from './components/CatalogGrid';
@@ -57,8 +56,6 @@ export default function CatalogoContent({ result }: Props) {
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-        <CatalogAdvisor selectedCategory={sidebarProps.selectedCategory} />
-
         <div className="flex gap-6">
           <aside className="hidden lg:block">
             <CatalogSidebar {...sidebarProps} />

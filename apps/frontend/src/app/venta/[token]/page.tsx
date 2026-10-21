@@ -8,6 +8,7 @@ import { useCartStore } from '@/store/cartStore';
 import { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 
+import { MARCA } from '@/config/marca';
 interface LinkItem {
   productId: string;
   variantId?: string;
@@ -59,7 +60,7 @@ export default function SalesLinkPage() {
     <main className="min-h-screen bg-page px-5 py-16 text-fg">
       <section className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-fg/10 bg-card">
         <div className="border-b border-fg/10 p-7">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#C8FF00] light:text-[#4B5A00]">Home Pádel</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#C8FF00] light:text-[#4B5A00]">{MARCA.nombre}</p>
           <h1 className="mt-2 text-3xl font-black">Tu compra está lista</h1>
           <p className="mt-2 text-sm text-fg-muted">
             Revisá los productos y completá tus datos en nuestro checkout seguro.

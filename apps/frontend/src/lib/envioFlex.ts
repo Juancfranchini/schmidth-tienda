@@ -1,4 +1,4 @@
-// Envío Flex (moto en AMBA, Kiosco Lo de Juan). Las zonas, localidades y
+// Envío Flex (moto en AMBA). Las zonas, localidades y
 // precios los define el backend (GET /envio-flex, fuente: apps/backend/src/
 // shipping/envio-flex.ts) y el costo real lo recalcula el servidor al crear el
 // pedido. Acá solo se ubica la localidad que escribe el cliente para mostrarle

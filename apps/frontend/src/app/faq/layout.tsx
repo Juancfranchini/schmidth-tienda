@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { MARCA } from '@/config/marca';
 /**
  * La página es un componente de navegador y no puede exportar metadatos, así
  * que el título y la descripción viven acá. Sin esto, esta ruta compartía el
@@ -7,7 +8,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Preguntas frecuentes',
-  description: 'Dudas sobre envíos, pagos, cambios y devoluciones en Home Pádel. Si no encontrás lo que buscás, escribinos.',
+  description: 'Dudas sobre envíos, pagos, cambios y devoluciones en ' + MARCA.nombre + '. Si no encontrás lo que buscás, escribinos.',
   alternates: { canonical: '/faq' },
 };
 

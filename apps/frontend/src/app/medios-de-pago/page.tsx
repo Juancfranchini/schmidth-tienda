@@ -5,6 +5,7 @@ import { CreditCard, ExternalLink, Landmark, ShieldCheck, Truck, Wallet } from '
 import { usePaymentMethods } from '@/hooks/usePaymentMethods';
 import { getImageUrl } from '@/lib/utils';
 
+import { MARCA } from '@/config/marca';
 export default function MediosPagoPage() {
   const { mercadopago, transferencia, ca, oca, andreani, isLoaded } = usePaymentMethods();
 
@@ -40,7 +41,7 @@ export default function MediosPagoPage() {
             </div>
           </div>
           <div className="grid sm:grid-cols-2 gap-3 text-sm">
-            <div className="flex items-start gap-2 rounded-xl bg-page p-4"><CreditCard size={17} className="text-brand-fg mt-0.5" /><p className="text-fg-soft">Los datos de la tarjeta se ingresan y procesan fuera de Home Pádel.</p></div>
+            <div className="flex items-start gap-2 rounded-xl bg-page p-4"><CreditCard size={17} className="text-brand-fg mt-0.5" /><p className="text-fg-soft">Los datos de la tarjeta se ingresan y procesan fuera de {MARCA.nombre}.</p></div>
             <div className="flex items-start gap-2 rounded-xl bg-page p-4"><ShieldCheck size={17} className="text-brand-fg mt-0.5" /><p className="text-fg-soft">No almacenamos números de tarjeta ni códigos de seguridad.</p></div>
           </div>
           <p className="flex items-center gap-2 text-xs text-fg-muted mt-4"><ExternalLink size={13} />Al realizar el pedido, te redirigimos a Mercado Pago para completar la compra.</p>

@@ -9,6 +9,8 @@ export interface VariantData {
   sku: string;
   size: string;
   color?: string;
+  /** Color de la muestra en la tienda (hexadecimal). */
+  colorHex?: string;
   dimensions?: string;
   dimensionLength?: number;
   dimensionWidth?: number;

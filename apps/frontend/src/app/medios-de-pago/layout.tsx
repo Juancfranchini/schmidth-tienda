@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { MARCA } from '@/config/marca';
 /**
  * La página es un componente de navegador y no puede exportar metadatos, así
  * que el título y la descripción viven acá. Sin esto, esta ruta compartía el
@@ -7,7 +8,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Medios de pago',
-  description: 'Pagá de forma segura con Mercado Pago Checkout Pro. Los datos de tu tarjeta se procesan fuera de Home Pádel.',
+  description: 'Pagá de forma segura con Mercado Pago Checkout Pro. Los datos de tu tarjeta se procesan fuera de ' + MARCA.nombre + '.',
   alternates: { canonical: '/medios-de-pago' },
 };
 

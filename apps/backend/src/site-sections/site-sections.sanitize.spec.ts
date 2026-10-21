@@ -24,7 +24,7 @@ const mediosDePago = {
   active: true,
   data: {
     mercadopago: { active: true, publicKey: 'APP_USR-pub-123', accessToken: 'APP_USR-SECRETO' },
-    transferencia: { cbu: '0000003100054279', alias: 'schmidt', titular: 'Home Pádel' },
+    transferencia: { cbu: '0000003100054279', alias: 'schmidt', titular: 'Schmidt' },
     correo_argentino: { usuario: 'admin', password: 'hunter2', apiKey: 'ca-key-1' },
   },
 };
@@ -53,7 +53,7 @@ describe('sanitizeSection — consulta anónima', () => {
     expect(data.transferencia).toEqual({
       cbu: '0000003100054279',
       alias: 'schmidt',
-      titular: 'Home Pádel',
+      titular: 'Schmidt',
     });
   });
 

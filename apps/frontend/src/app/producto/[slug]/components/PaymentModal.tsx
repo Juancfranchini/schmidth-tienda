@@ -3,6 +3,7 @@
 import { CreditCard, ExternalLink, ShieldCheck, Wallet, X } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 
+import { MARCA } from '@/config/marca';
 interface Props {
   onClose: () => void;
   displayPrice: number;
@@ -31,7 +32,7 @@ export default function PaymentModal({ onClose, displayPrice, installments, hasI
 
         <div className="p-5 space-y-4">
           <div className="bg-page border border-[#B7D31A]/20 rounded-xl p-4">
-            <p className="text-sm font-semibold text-fg">Checkout Pro es el único medio de pago de Home Pádel.</p>
+            <p className="text-sm font-semibold text-fg">Checkout Pro es el único medio de pago de {MARCA.nombre}.</p>
             <p className="text-xs text-fg-soft mt-1">Al comprar, te redirigimos a Mercado Pago. Ahí elegís tarjeta, saldo u otro medio disponible para tu cuenta.</p>
           </div>
 
@@ -51,7 +52,7 @@ export default function PaymentModal({ onClose, displayPrice, installments, hasI
             <ShieldCheck size={18} className="text-brand-fg mt-0.5" />
             <div>
               <p className="text-sm font-semibold text-fg">Tus datos de pago no pasan por nuestra plataforma</p>
-              <p className="text-xs text-fg-muted mt-1">Home Pádel no solicita ni almacena números de tarjeta o códigos de seguridad.</p>
+              <p className="text-xs text-fg-muted mt-1">{MARCA.nombre} no solicita ni almacena números de tarjeta o códigos de seguridad.</p>
             </div>
           </div>
 

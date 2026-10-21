@@ -107,7 +107,7 @@ function pie(tienda?: DatosTienda): string {
   return '<tr><td style="background-color:' + NEGRO + ';padding:28px 32px;font-family:' + FUENTE + ';font-size:13px;line-height:1.7;color:#9A9A94;text-align:center;">' +
     '<p style="margin:0 0 6px;">' + contacto + enlace(esc(web.replace(/^https?:\/\//, '')), web) + '</p>' +
     (tienda?.direccion ? '<p style="margin:0 0 6px;">' + esc(tienda.direccion) + '</p>' : '') +
-    '<p style="margin:12px 0 0;font-size:11px;color:#6B6B66;">Recibiste este mail por un pedido hecho en Home Pádel.</p>' +
+    '<p style="margin:12px 0 0;font-size:11px;color:#6B6B66;">Recibiste este mail por un pedido hecho en ' + esc(MARCA.nombre) + '.</p>' +
     '</td></tr>';
 }
 
@@ -202,5 +202,5 @@ export function mailCancelado(p: { orderNumber: string; customerName: string; re
 /** El "enviar mail de prueba" del backoffice: el mismo diseño que reciben los clientes. */
 export function mailDePrueba(tienda?: DatosTienda): MailArmado {
   const cuerpo = parrafo('Si estás leyendo esto, los mails de la tienda salen bien: llegan desde tu dominio y con este diseño.') + boton('Ir a la tienda', sitio());
-  return { subject: 'Email de prueba - Home Pádel', html: marco('Todo funciona', cuerpo, { etiqueta: 'Prueba', resumen: 'Los mails de la tienda están funcionando.', tienda }) };
+  return { subject: 'Email de prueba - ' + MARCA.nombre, html: marco('Todo funciona', cuerpo, { etiqueta: 'Prueba', resumen: 'Los mails de la tienda están funcionando.', tienda }) };
 }
