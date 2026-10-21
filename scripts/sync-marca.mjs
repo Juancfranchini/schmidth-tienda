@@ -26,7 +26,8 @@ const desactualizadas = [];
 
 for (const app of APPS) {
   const destino = join(raiz, 'apps', app, 'src/config/marca.ts');
-  const actual = existsSync(destino) ? readFileSync(destino, 'utf8') : '';
+  // Sin \r: en Windows git puede dejar el archivo con CRLF y no es un cambio real.
+  const actual = existsSync(destino) ? readFileSync(destino, 'utf8').replace(/\r\n/g, '\n') : '';
   if (actual === contenido) continue;
   if (soloChequear) {
     desactualizadas.push(app);
