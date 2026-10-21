@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { CUOTAS_POR_DEFECTO } from '../payments/cuotas';
 import { validarConfigBolsa } from '../orders/bolsas-regalo';
+import { TEXTOS_BASE } from './textos-base';
 import { MARCA } from '../config/marca';
 
 export type SectionKey = 'categories' | 'meta_pixel' | 'hero' | 'benefits' | 'promo_destacada' | 'featured_products' | 'banners' | 'about' | 'testimonials' | 'brands' | 'instagram' | 'final_message' | 'branding' | 'settings' | 'trust_bottom' | 'politica_devolución' | 'envíos' | 'medios_pago' | 'terminos' | 'privacidad' | 'contacto' | 'talles' | 'reviews_info' | 'payment_methods' | 'email_settings' | 'shipping_rates' | 'formatos_paleta' | 'cuentas_prueba' | 'cuotas' | 'bolsa_regalo';
@@ -129,12 +130,12 @@ export class SiteSectionsService {
           contact: true,
         },
       },
-      'politica_devolución': { title: 'Politica de Devolución', content: '' },
-      'envíos': { title: 'Envíos', sections: [{ title: 'Tiempos y costos', content: '' }] },
+      'politica_devolución': { ...MARCA.textos.devoluciones },
+      'envíos': { ...TEXTOS_BASE['envíos'] },
       'medios_pago': { title: 'Medios de Pago', content: '' },
-      'terminos': { title: 'Terminos y Condiciones', content: '' },
-      'privacidad': { title: 'Politica de Privacidad', content: '' },
-      'contacto': { chip: 'ESTAMOS PARA AYUDARTE', title: 'Contactanos', description: 'Tenes dudas sobre nuestros productos, envíos o pagos? Nuestro equipo esta para ayudarte.', heroImage: '', mapUrl: '', newsletterTitle: 'ENTERATE DE LAS NOVEDADES', newsletterText: 'Suscribite y recibi ofertas exclusivas y lanzamientos.', heroActive: true, benefitsActive: true, channelsActive: true, faqActive: true, mapActive: true, newsletterActive: true },
+      'terminos': { ...TEXTOS_BASE.terminos },
+      'privacidad': { ...TEXTOS_BASE.privacidad },
+      'contacto': { chip: 'ESTAMOS PARA AYUDARTE', title: 'Contactanos', description: '¿Tenés dudas sobre un modelo, un color, el envío o el pago? Escribinos.', heroImage: '', mapUrl: '', newsletterTitle: 'ENTERATE DE LAS NOVEDADES', newsletterText: 'Suscribite y recibi ofertas exclusivas y lanzamientos.', heroActive: true, benefitsActive: true, channelsActive: true, faqActive: true, mapActive: true, newsletterActive: true },
       'talles': { title: 'Guia de Talles', content: '' },
       'payment_methods': { mercadopago: { active: true, publicKey: '', accessToken: '' }, transferencia: { active: false, cbu: '', alias: '', titular: '', banco: '' }, tarjeta: { active: false }, correo_argentino: { active: true, usuario: '', password: '', apiKey: '', agreement: '', remitente: { nombre: '', calle: '', número: '', ciudad: '', códigoPostal: '', provincia: '', teléfono: '' } }, oca: { active: false, usuario: '', password: '' }, andreani: { active: false, usuario: '', password: '' } },
       'email_settings': {
@@ -147,12 +148,11 @@ export class SiteSectionsService {
           contactForm: true
         }
       },
-      // Imagen por formato de paleta, para mostrar al lado del texto en el
-      // catálogo. Vacío a propósito: sin imagen cargada no se dibuja nada.
-      'formatos_paleta': { Diamante: '', Lagrima: '', Redondo: '', Hibrido: '' },
+      // Heredado de HomePadel (formatos de paleta): el módulo está oculto en Schmidt.
+      'formatos_paleta': {},
       // Mails de prueba (ver common/test-accounts.ts). Privada: no se sirve a la tienda.
       'cuentas_prueba': { emails: [] },
-      'reviews_info': { content: 'Las opiniones son realizadas por clientes verificados que compraron el producto. El promedio se calcula en base a todas las resenas aprobadas.' },
+      'reviews_info': { content: 'Las opiniones son de clientas que compraron el producto. El promedio se calcula con todas las reseñas aprobadas.' },
       about: {
         title: 'Somos ' + MARCA.nombre,
         description: MARCA.descripcion,

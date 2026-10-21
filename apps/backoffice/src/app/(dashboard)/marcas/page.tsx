@@ -118,12 +118,12 @@ function BrandFormModal({ isOpen, editItem, previewUrl, register, errors, upload
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 content-start">
             <div>
               <label className={labelClass}>Nombre *</label>
-              <input {...register('name')} className={inputClass + ' mt-1'} placeholder="Ej: Bullpadel" />
+              <input {...register('name')} className={inputClass + ' mt-1'} placeholder="Ej: Schmidt" />
               {errors.name && <p className="text-xs text-red-600 mt-0.5">{errors.name.message}</p>}
             </div>
             <div>
               <label className={labelClass}>Sitio Web</label>
-              <input {...register('url')} className={inputClass + ' mt-1'} placeholder="https://bullpadel.com" />
+              <input {...register('url')} className={inputClass + ' mt-1'} placeholder="https://..." />
             </div>
             <div>
               <label className={labelClass}>Orden</label>

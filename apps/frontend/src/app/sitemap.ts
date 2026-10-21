@@ -19,6 +19,7 @@ const TODAS: { ruta: string; prioridad: number }[] = [
   { ruta: '/talles', prioridad: 0.3 },
   { ruta: '/terminos', prioridad: 0.2 },
   { ruta: '/privacidad', prioridad: 0.2 },
+  { ruta: '/arrepentimiento', prioridad: 0.2 },
 ];
 
 // Sin las páginas apagadas en la configuración de marca (responden 404).

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { User, ShoppingBag, Menu, X, Search } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
-import { useMenuCategorias } from '@/hooks/useMenuCategorias';
 import BrandLogo from '@/components/ui/BrandLogo';
 import CartDrawer from '@/components/cart/CartDrawer';
 import CartAddedFeedback from '@/components/cart/CartAddedFeedback';
@@ -22,21 +21,24 @@ const LINKS_INFO = [
 ];
 
 
+// Tres accesos, para no competir con el logo centrado. Las categorías están en
+// el catálogo, en el menú del celular y en el pie.
+const NAV = [
+  { label: 'Colección', href: '/catalogo' },
+  { label: 'Colores', href: '/#colores' },
+  { label: 'A pedido', href: '/#a-pedido' },
+];
+
 function NavEscritorio() {
-  const categorias = useMenuCategorias();
   const pathname = usePathname();
-  const items = [
-    { label: 'Colección', href: '/catalogo' },
-    ...categorias.slice(0, 3).map((c) => ({ label: c.name, href: '/catalogo?categoria=' + c.slug })),
-    { label: 'Colores', href: '/#colores' },
-  ];
+  const items = NAV;
   return (
     <nav className="hidden items-center gap-7 lg:flex" aria-label="Principal">
       {items.map((item) => (
         <Link
           key={item.href}
           href={item.href}
-          className={'rotulo py-1 transition-colors hover:text-bordo ' + (isNavActive(pathname, item.href) ? 'text-fg' : 'text-fg-soft')}
+          className={'rotulo whitespace-nowrap py-1 transition-colors hover:text-bordo ' + (isNavActive(pathname, item.href) ? 'text-fg' : 'text-fg-soft')}
         >
           {item.label}
         </Link>

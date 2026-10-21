@@ -11,6 +11,7 @@ import { PageLoader } from '@/components/ui/LoadingSpinner';
 import { useToast } from '@/components/ui/Toast';
 import RichTextEditor from '@/components/ui/RichTextEditor';
 
+import AvisoRevision from '@/components/ui/AvisoRevision';
 const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-xs font-medium text-gray-400 uppercase tracking-wider';
 
@@ -50,6 +51,7 @@ export default function PrivacidadPage() {
 
   return (
     <div className="space-y-6">
+      <AvisoRevision seccion="privacidad" />
       <div className="flex items-center gap-3">
         <Link href="/configuracion" className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"><ArrowLeft className="w-4 h-4" /></Link>
         <div>

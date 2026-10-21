@@ -14,8 +14,9 @@ import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_BASE } from '@/lib/seoPortada'
 import { MARCA } from '@/config/marca';
 
 // Tipografías del branding: Playfair Display para el logo y los títulos, Montserrat para los textos.
-const display = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
-const sans = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' });
+// Las dos son fuentes variables: se cargan sin lista de pesos.
+const display = Playfair_Display({ subsets: ['latin'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
+const sans = Montserrat({ subsets: ['latin'], variable: '--font-sans', display: 'swap' });
 
 async function getFaviconUrl(): Promise<string> {
   try {

@@ -53,7 +53,7 @@ function EditorDeAccion({ contacto, onGuardar }: { contacto: Contacto; onGuardar
   };
   return (
     <div className="space-y-2">
-      <input value={texto} onChange={(e) => setTexto(e.target.value)} maxLength={200} placeholder="Ej: Llamar para ofrecerle la paleta nueva" className={CAMPO} />
+      <input value={texto} onChange={(e) => setTexto(e.target.value)} maxLength={200} placeholder="Ej: Avisarle cuando llegue el color camel" className={CAMPO} />
       <div className="flex gap-2">
         <input type="date" value={dia} onChange={(e) => setDia(e.target.value)} className={CAMPO} aria-label="Fecha de la acción" />
         <button type="button" disabled={sinCambios || guardando} onClick={() => guardar({ proximaAccion: texto.trim(), proximaAccionFecha: aIso(dia) })}

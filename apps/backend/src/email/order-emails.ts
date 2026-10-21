@@ -6,9 +6,11 @@ import { MARCA } from '../config/marca';
  * seguimiento, productos) pasa por `esc`: va a un HTML que abre el mail de
  * otra persona.
  *
- * Diseño: tablas y estilos en línea (lo único que respetan Gmail y Outlook),
- * 600 px de ancho, encabezado negro con el logo y franja verde, cuerpo blanco,
- * un solo botón de acción y pie con los datos de la tienda.
+ * Diseño (branding de la marca): tablas y estilos en línea (lo único que
+ * respetan Gmail y Outlook), 600 px de ancho, encabezado negro con el logo en
+ * texto serif y franja bordó, cuerpo blanco sobre blanco roto, un solo botón de
+ * acción y pie con los datos de la tienda. El logo va en texto y no en imagen:
+ * así no depende de un archivo publicado ni de que el cliente de mail muestre imágenes.
  */
 
 export interface ItemMail {
@@ -42,12 +44,14 @@ export interface DatosTienda {
   direccion?: string | null;
 }
 
-const NEGRO = '#0C0C0C';
-const VERDE = '#C8FF00';
-const TEXTO = '#3D3D3A';
-const SUAVE = '#8A8A85';
-const LINEA = '#E6E6E1';
-const FUENTE = "'Helvetica Neue',Helvetica,Arial,sans-serif";
+const NEGRO = MARCA.colores.negro;
+const ACENTO = MARCA.colores.bordo;
+const CLARO = MARCA.colores.blancoRoto;
+const TEXTO = '#3D3A37';
+const SUAVE = '#857D75';
+const LINEA = '#E6E0D6';
+const FUENTE = "Montserrat,'Helvetica Neue',Helvetica,Arial,sans-serif";
+const SERIF = "'Playfair Display',Georgia,'Times New Roman',serif";
 
 /** Dirección de la tienda (para el logo y los botones). */
 export function sitio(): string {
@@ -77,15 +81,15 @@ const fuerte = (texto: string) => '<strong style="color:' + NEGRO + ';">' + text
 /** Botón "a prueba de Outlook": una celda con fondo, no un <a> con padding. */
 export function boton(texto: string, url: string): string {
   return '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:8px 0 24px;"><tr>' +
-    '<td style="background-color:' + VERDE + ';border-radius:8px;">' +
-    '<a href="' + esc(url) + '" style="display:inline-block;padding:14px 28px;font-family:' + FUENTE + ';font-size:15px;font-weight:bold;color:' + NEGRO + ';text-decoration:none;">' + esc(texto) + '</a>' +
+    '<td style="background-color:' + ACENTO + ';">' +
+    '<a href="' + esc(url) + '" style="display:inline-block;padding:14px 30px;font-family:' + FUENTE + ';font-size:13px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;color:' + CLARO + ';text-decoration:none;">' + esc(texto) + '</a>' +
     '</td></tr></table>';
 }
 
-/** Recuadro gris con borde verde a la izquierda, para datos que hay que leer con atención. */
+/** Recuadro piedra con borde bordó a la izquierda, para datos que hay que leer con atención. */
 export function recuadro(contenido: string): string {
   return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px;"><tr>' +
-    '<td style="background-color:#F6F7F2;border-left:4px solid ' + VERDE + ';border-radius:6px;padding:16px 18px;font-family:' + FUENTE + ';font-size:14px;line-height:1.6;color:' + TEXTO + ';">' +
+    '<td style="background-color:' + MARCA.colores.piedra + ';border-left:3px solid ' + ACENTO + ';padding:16px 18px;font-family:' + FUENTE + ';font-size:14px;line-height:1.6;color:' + TEXTO + ';">' +
     contenido + '</td></tr></table>';
 }
 
@@ -102,7 +106,7 @@ function tablaDelPedido(p: PedidoMail): string {
 function pie(tienda?: DatosTienda): string {
   const web = sitio();
   const whatsapp = enlaceWhatsapp(tienda?.whatsapp);
-  const enlace = (texto: string, url: string) => '<a href="' + esc(url) + '" style="color:' + VERDE + ';text-decoration:none;">' + texto + '</a>';
+  const enlace = (texto: string, url: string) => '<a href="' + esc(url) + '" style="color:' + MARCA.colores.camel + ';text-decoration:none;">' + texto + '</a>';
   const contacto = whatsapp ? '¿Dudas? Escribinos por ' + enlace('WhatsApp', whatsapp) + ' · ' : '';
   return '<tr><td style="background-color:' + NEGRO + ';padding:28px 32px;font-family:' + FUENTE + ';font-size:13px;line-height:1.7;color:#9A9A94;text-align:center;">' +
     '<p style="margin:0 0 6px;">' + contacto + enlace(esc(web.replace(/^https?:\/\//, '')), web) + '</p>' +
@@ -116,17 +120,18 @@ export function marco(titulo: string, cuerpo: string, opciones: { etiqueta: stri
   const web = sitio();
   return '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<meta http-equiv="Content-Language" content="es"><title>' + esc(titulo) + '</title></head>' +
-    '<body style="margin:0;padding:0;background-color:#EFEFEA;">' +
+    '<body style="margin:0;padding:0;background-color:' + CLARO + ';">' +
     // Texto que muestran Gmail y el celular junto al asunto, antes de abrir el mail.
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + esc(opciones.resumen) + '</div>' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#EFEFEA;"><tr><td align="center" style="padding:24px 12px;">' +
-    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#FFFFFF;border-radius:14px;overflow:hidden;">' +
-    '<tr><td align="center" style="background-color:' + NEGRO + ';padding:28px 32px 24px;">' +
-    '<a href="' + esc(web) + '"><img src="' + esc(web) + MARCA.logo.mail + '" width="150" alt="' + esc(MARCA.nombre) + '" style="display:block;width:150px;height:auto;border:0;"></a></td></tr>' +
-    '<tr><td style="background-color:' + VERDE + ';height:4px;line-height:4px;font-size:0;">&nbsp;</td></tr>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:' + CLARO + ';"><tr><td align="center" style="padding:24px 12px;">' +
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background-color:#FFFFFF;">' +
+    '<tr><td align="center" style="background-color:' + NEGRO + ';padding:30px 32px 26px;">' +
+    '<a href="' + esc(web) + '" style="font-family:' + SERIF + ';font-size:30px;letter-spacing:4px;color:' + CLARO + ';text-decoration:none;">' + esc(MARCA.nombreLogo) + '</a>' +
+    '<p style="margin:10px 0 0;font-family:' + FUENTE + ';font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#B8B0A6;">' + esc(MARCA.bajada) + '</p></td></tr>' +
+    '<tr><td style="background-color:' + ACENTO + ';height:3px;line-height:3px;font-size:0;">&nbsp;</td></tr>' +
     '<tr><td style="padding:32px 32px 8px;">' +
     '<p style="margin:0 0 12px;font-family:' + FUENTE + ';font-size:11px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:' + SUAVE + ';">' + esc(opciones.etiqueta) + '</p>' +
-    '<h1 style="margin:0 0 20px;font-family:' + FUENTE + ';font-size:26px;line-height:1.25;color:' + NEGRO + ';">' + esc(titulo) + '</h1>' +
+    '<h1 style="margin:0 0 20px;font-family:' + SERIF + ';font-size:28px;font-weight:normal;line-height:1.25;color:' + NEGRO + ';">' + esc(titulo) + '</h1>' +
     cuerpo + '</td></tr>' + pie(opciones.tienda) +
     '</table></td></tr></table></body></html>';
 }

@@ -3,6 +3,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { Resend } from 'resend';
 import { MARCA } from '../config/marca';
 import { DatosBancarios, DatosTienda, enlaceWhatsapp, mailCancelado, mailDePrueba, mailDespachado, mailPagoRecibido, mailTransferencia, PedidoMail } from './order-emails';
+import { Arrepentimiento, mailArrepentimientoClienta, mailArrepentimientoTienda, mailConfirmacionRespaldo, mailContactoTienda } from './avisos-emails';
 
 interface TransferOrderNotification {
   orderNumber: string;
@@ -115,18 +116,7 @@ export class EmailService {
       });
       subject = this.replaceVariables(template.subject, { orderNumber, customerName });
     } else {
-      const itemsHtml = items.map(item =>
-        '<tr><td style="padding: 8px; border-bottom: 1px solid #1A1F21;">' + item.name + ' x' + item.quantity + '</td><td style="padding: 8px; border-bottom: 1px solid #1A1F21; text-align: right;">$' + (item.price * item.quantity).toFixed(2) + '</td></tr>'
-      ).join('');
-
-      html = '<!DOCTYPE html><html><body style="font-family: Arial, sans-serif; background-color: #0C0C0C; color: #F7F6F7; padding: 20px;">' +
-        '<div style="max-width: 600px; margin: 0 auto; background-color: #1A1F21; border-radius: 8px; padding: 30px;">' +
-        '<h1 style="color: #C8FF00; text-align: center;">¡Gracias por tu compra!</h1>' +
-        '<p style="color: #C7C7C0;">Tu pedido <strong style="color: #C8FF00;">' + orderNumber + '</strong> ha sido confirmado.</p>' +
-        '<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">' + itemsHtml + '</table>' +
-        '<p style="color: #C7C7C0; text-align: right;"><strong style="color: #C8FF00;">Total: $' + total.toFixed(2) + '</strong></p>' +
-        '</div></body></html>';
-      subject = 'Confirmacion de Pedido ' + orderNumber + ' - ' + MARCA.nombre;
+      ({ html, subject } = mailConfirmacionRespaldo({ orderNumber, items, total, tienda: await this.datosDeLaTienda() }));
     }
 
     return this.sendEmail(to, subject, html);
@@ -212,20 +202,24 @@ export class EmailService {
         contactSubject: data.subject || 'Sin asunto',
       });
     } else {
-      html = '<!DOCTYPE html><html><body style="font-family: Arial, sans-serif; background-color: #0C0C0C; color: #F7F6F7; padding: 20px;">' +
-        '<div style="max-width: 600px; margin: 0 auto; background-color: #1A1F21; border-radius: 8px; padding: 30px;">' +
-        '<h1 style="color: #C8FF00;">Nuevo mensaje de contacto</h1>' +
-        '<p><strong style="color: #C8FF00;">Nombre:</strong> ' + data.name + '</p>' +
-        '<p><strong style="color: #C8FF00;">Email:</strong> ' + data.email + '</p>' +
-        '<p><strong style="color: #C8FF00;">Teléfono:</strong> ' + (data.phone || 'No proporcionado') + '</p>' +
-        '<p><strong style="color: #C8FF00;">Asunto:</strong> ' + (data.subject || 'Sin asunto') + '</p>' +
-        '<div style="background-color: #0C0C0C; padding: 15px; border-radius: 5px; margin: 20px 0;">' +
-        '<p style="color: #C7C7C0;">' + data.message.replace(/\n/g, '<br>') + '</p></div>' +
-        '</div></body></html>';
-      emailSubject = 'Nuevo mensaje de contacto: ' + (data.subject || 'Sin asunto');
+      // Sin plantilla: el armado escapa lo que escribió la persona (antes iba crudo al HTML).
+      ({ html, subject: emailSubject } = mailContactoTienda(data));
     }
 
     return this.sendEmail(adminEmail, emailSubject, html);
+  }
+
+  /**
+   * Botón de arrepentimiento: avisa a la tienda y le confirma a la clienta con
+   * el código. Si los mails no están configurados, falla: el pedido no puede
+   * quedar perdido creyendo que se mandó.
+   */
+  async sendArrepentimiento(datos: Arrepentimiento) {
+    const config = await this.getConfig();
+    if (!config?.resendApiKey) throw new Error('Los mails de la tienda no están configurados');
+    const adminEmail = config.adminEmail || MARCA.email.avisos;
+    await this.enviarArmado(adminEmail, mailArrepentimientoTienda(datos));
+    await this.enviarArmado(datos.email, mailArrepentimientoClienta(datos, await this.datosDeLaTienda()));
   }
 
   async sendCampaign(to: string, subject: string, content: string) {

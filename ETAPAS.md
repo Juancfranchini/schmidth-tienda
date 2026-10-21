@@ -8,23 +8,46 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | 1. Proyecto limpio + configuración central de marca | ✅ Terminada (2026-10-20) |
 | 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20); seed y migraciones probados en la etapa 3 |
 | 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | ✅ Terminada (2026-10-21), probada en local con datos |
-| 4. Textos, mails y páginas legales | 🟡 En curso (cortada por límite de uso) |
+| 4. Textos, mails, páginas legales + branding completo | ✅ Terminada (2026-10-21); textos legales a revisar por un profesional |
 | 5. Revisión final y pendientes del cliente | Pendiente |
 
-## Etapa 4: estado (en curso)
+## Etapa 4: qué se hizo
 
-**Hecho**
-- **Branding del tablero aplicado al 100%** (pedido en esta etapa): paleta #1A1A1A / #B3855C / #6B2A37 / #D9C8C8 / #F7F5EF, Playfair Display (logo y títulos) + Montserrat (textos), isotipo "S" con línea (, favicon de tienda y backoffice), bajada "Carteras · Accesorios · Mujeres reales", eslogan, valores y frases en , rótulos con guion corto, sección "Manifiesto" en rosado en la home. Backoffice: el lima pasó a camel y el azul noche al negro de la marca; se sacaron las iniciales "HP" del favicon y del login, y un  viejo.
-- Política de cambios y devoluciones centralizada en  (, marcada ) y leída por tienda y backoffice: 10 días corridos de arrepentimiento con gastos a cargo de la tienda (Ley 24.240 art. 34), excepción de carteras hechas a pedido (CCyC art. 1116). **A revisar por un profesional.**
-- : datos legales pendientes (, , ) y horario de atención.
-- Compilación () de las tres apps OK después de estos cambios. **No se corrieron** tests, lint ni builds completos de esta etapa, ni se revisó el branding en el navegador.
+**Branding del tablero, aplicado completo** (pedido durante esta etapa):
+- `packages/marca/marca.json`: paleta `#1A1A1A` / `#B3855C` / `#6B2A37` / `#D9C8C8` / `#F7F5EF`, tipografías, bajada "Carteras · Accesorios · Mujeres reales", eslogan "Carteras que te acompañan todos los días.", valores (Elegancia · Funcionalidad · Diseño atemporal) y frases ("Diseñadas para tu ritmo", "Más que una cartera…").
+- Tienda: Playfair Display (logo y títulos) + Montserrat (textos), cargadas como fuentes variables; tokens de color nuevos (incluye `rosado`); rótulos espaciados con la línea corta del branding (`.guion`); sección "Manifiesto" en rosado en la home; menú de escritorio reducido a Colección · Colores · A pedido (con Montserrat el menú largo chocaba con el logo).
+- Isotipo "S" con línea (`public/marca/isotipo.svg`) como favicon de tienda y backoffice. Logo SVG provisorio en Playfair.
+- Backoffice: el lima de HomePadel pasó a camel y el azul noche al negro de la marca (142 archivos). Se sacaron las iniciales "HP" que quedaban en el favicon y el login, y un `.bak` viejo versionado.
 
-**Falta**
-- Textos base de términos, privacidad y envíos (backend: defaults + seed, marcados a revisar) y aviso "a revisar" en los editores del backoffice.
-- **Botón de arrepentimiento** (obligatorio en Argentina, Res. 424/2020): página + link en el pie; DTO con validación para  (hoy recibe el body sin validar).
-- Mails: colores del branding y logo en texto (hoy apuntan a , que no existe).
-- Restos de pádel en placeholders y textos por defecto del backoffice y backend, y en .
-- Tests, lint, builds y revisión visual; commit final de la etapa.
+**Textos y páginas legales** (borradores **a revisar por un profesional**; no son asesoramiento legal):
+- Términos, privacidad y envíos: `apps/backend/src/site-sections/textos-base.ts`. Son el valor por defecto de cada sección y los carga el seed; se editan en el backoffice.
+- Cambios y devoluciones: `marca.json` → `textos.devoluciones`, leído por tienda y backoffice (antes estaba copiado en los dos). Corrige lo heredado: **10 días corridos de arrepentimiento con la devolución a cargo de la tienda** (art. 34, Ley 24.240; HomePadel decía 30 días y cobraba el envío al cliente) y la excepción de carteras hechas a pedido (art. 1116 CCyC).
+- Backoffice: aviso amarillo "Texto base, a revisar" en los editores de términos, privacidad, envíos y devoluciones (componente `AvisoRevision`). Desaparece al guardar desde el editor.
+- Datos de la empresa: `marca.json` → `legal.razonSocial`, `legal.cuit`, `legal.domicilio` (vacíos; los textos muestran "[completar …]").
+
+**Botón de arrepentimiento** (obligatorio, Res. 424/2020):
+- Página `/arrepentimiento` (react-hook-form + zod) y link fijo en el pie de todas las páginas; también en el sitemap.
+- `POST /api/contact/arrepentimiento` (DTO validado, máx. 3 por minuto): genera un código `ARR-AAAAMMDD-XXXXXX` y manda mail a la tienda y a la clienta con el código. **Si los mails no están configurados responde 503** y la página muestra el mail de contacto: no da por recibido un pedido que se perdió.
+- `POST /api/contact` ahora tiene DTO (antes recibía el body sin validar) y límite de 5 por minuto.
+
+**Mails**:
+- Diseño con el branding: encabezado negro con el logo **en texto serif** (ya no depende de una imagen; la anterior no existía), franja y botón bordó, fondo blanco roto, Montserrat.
+- Arreglo de seguridad: el aviso de contacto a la tienda insertaba **sin escapar** lo que escribía la persona; ahora se escapa (hay test). Lo mismo la confirmación de pedido de respaldo.
+
+**Restos de pádel**: textos visibles del backoffice (placeholders de banners, marcas, CRM, newsletter), comentarios con datos del repartidor de HomePadel en `docs/backend.md`, sección de tema de `docs/frontend.md` reescrita, nota en `docs/README.md`. Quedan comentarios técnicos con ejemplos de pádel en el backend (explican decisiones del código heredado) y el módulo oculto "Formatos de paleta".
+
+### Etapa 4: qué se corrió (resultado real)
+
+Base nueva (PGlite) → migraciones → seed → backend y tienda en local. Revisado en el navegador: home con el branding, términos, botón de arrepentimiento (validación y error 503 sin mails configurados). Endpoint probado también con datos inválidos (400).
+
+| App | Compilación | Tests | Lint | Build |
+|---|---|---|---|---|
+| backend | ✅ | ✅ 58 suites, 428 tests (+7 nuevos: arrepentimiento, contacto, escapado) | 0 errores, 167 warnings | — |
+| frontend | ✅ | ✅ 4 tests | 0 errores, 54 warnings | ✅ |
+| backoffice | ✅ | sin tests | 0 errores, 293 warnings | ✅ |
+
+- Falló y se arregló: el build de la tienda con `next/font` al pedir pesos fijos de Playfair Display; se cargan como fuentes variables.
+- **No se probó**: el envío real de mails (no hay Resend), el backoffice en el navegador.
 
 ## Etapa 3: qué se hizo
 

@@ -1,6 +1,7 @@
 ﻿import { PrismaClient, Role } from '@prisma/client';
 import { hashPassword } from '../src/common/security/password';
 import { MARCA } from '../src/config/marca';
+import { TEXTOS_BASE } from '../src/site-sections/textos-base';
 
 const prisma = new PrismaClient();
 
@@ -140,7 +141,7 @@ async function main() {
   // Hero y beneficios de la portada (textos provisorios; la etapa 3 rediseña la portada).
   if ((await prisma.heroSlide.count()) === 0) {
     await prisma.heroSlide.create({
-      data: { title: MARCA.eslogan, subtitle: 'Colección 2026', description: 'Carteras que te acompañan todos los días.', ctaPrimary: 'VER COLECCIÓN', ctaPrimaryUrl: '/catalogo', order: 1 },
+      data: { title: MARCA.eslogan, subtitle: MARCA.bajada, description: MARCA.frases.ritmo + '.', ctaPrimary: 'Ver colección', ctaPrimaryUrl: '/catalogo', order: 1 },
     });
   }
   if ((await prisma.benefit.count()) === 0) {
@@ -168,6 +169,12 @@ async function main() {
     });
   }
   console.log(' Contenido base listo');
+
+  // Páginas legales e informativas: borradores a revisar (ver src/site-sections/textos-base.ts).
+  for (const [key, data] of Object.entries(TEXTOS_BASE)) {
+    await prisma.siteSection.upsert({ where: { key }, update: {}, create: { key, data: { ...data } } });
+  }
+  await prisma.siteSection.upsert({ where: { key: 'politica_devolución' }, update: {}, create: { key: 'politica_devolución', data: { ...MARCA.textos.devoluciones } } });
 
   // Secciones del sitio.
   await prisma.siteSection.upsert({

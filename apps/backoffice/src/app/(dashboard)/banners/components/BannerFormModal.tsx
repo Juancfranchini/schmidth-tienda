@@ -35,7 +35,7 @@ export default function BannerFormModal({ isOpen, editItem, isMobile, imageDeskt
           </div>
           <div>
             <label className={labelClass}>Subtitulo</label>
-            <input {...register('subtitle')} className={inputClass + ' mt-1'} placeholder="Ej: Zapatillas premium" />
+            <input {...register('subtitle')} className={inputClass + ' mt-1'} placeholder="Ej: Nueva colección" />
           </div>
           <div>
             <label className={labelClass}>Texto del boton</label>

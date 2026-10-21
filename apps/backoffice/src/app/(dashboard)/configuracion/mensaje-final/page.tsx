@@ -114,10 +114,10 @@ const DEFAULT_CTA_NEWSLETTER: FormData = {
   secondaryButtonText: '',
   secondaryButtonUrl: '',
   newsletterTitle: 'Enterate de las novedades',
-  newsletterText: 'Ofertas exclusivas, nuevos productos y contenido relevante sobre padel.',
+  newsletterText: 'Enterate primero de los modelos y colores nuevos.',
   newsletterPlaceholder: 'Tu email',
   newsletterButtonText: 'Suscribirme',
-  newsletterFooterText: 'Sin spam. Solo contenido relevante sobre padel.',
+  newsletterFooterText: 'Sin spam. Podés darte de baja cuando quieras.',
   active: true,
 };
 
@@ -146,10 +146,10 @@ export default function CtaNewsletterConfigPage() {
           secondaryButtonText: data.secondaryButtonText ?? '',
           secondaryButtonUrl: data.secondaryButtonUrl ?? '',
           newsletterTitle: data.newsletterTitle ?? 'Enterate de las novedades',
-          newsletterText: data.newsletterText ?? 'Ofertas exclusivas, nuevos productos y contenido relevante sobre padel.',
+          newsletterText: data.newsletterText ?? 'Enterate primero de los modelos y colores nuevos.',
           newsletterPlaceholder: data.newsletterPlaceholder ?? 'Tu email',
           newsletterButtonText: data.newsletterButtonText ?? 'Suscribirme',
-          newsletterFooterText: data.newsletterFooterText ?? 'Sin spam. Solo contenido relevante sobre padel.',
+          newsletterFooterText: data.newsletterFooterText ?? 'Sin spam. Podés darte de baja cuando quieras.',
           active: data.active !== false,
         });
       }

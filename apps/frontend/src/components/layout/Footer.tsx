@@ -102,6 +102,8 @@ export default function Footer() {
           <div className="flex gap-5">
             <Link href="/terminos" className="transition-colors hover:text-bordo">Términos y condiciones</Link>
             <Link href="/privacidad" className="transition-colors hover:text-bordo">Privacidad</Link>
+            {/* Obligatorio en Argentina (Res. 424/2020): visible y de fácil acceso. */}
+            <Link href="/arrepentimiento" className="font-medium text-fg underline underline-offset-4 transition-colors hover:text-bordo">Botón de arrepentimiento</Link>
           </div>
         </div>
       </div>

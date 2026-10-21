@@ -27,49 +27,30 @@ Excepción: las páginas que tienen que llegar completas a buscadores y vistas p
 
 TailwindCSS 3. Sin librería de componentes (no hay `packages/ui` — cada componente en `components/ui/` es local a esta app y no se comparte con `backoffice`).
 
-### Tema claro / oscuro
+### Tema y branding
 
-La tienda tiene dos temas. El oscuro es el de siempre y el que ve quien entra por primera vez; el claro se elige con el botón de luna/sol del header (`components/layout/ThemeToggle.tsx`) y el navegador lo recuerda (`localStorage`, clave `hp-tema`). El tema vive en `data-theme` de `<html>`; un script chico en el `<head>` (`lib/tema.ts`) lo aplica antes de pintar, para que no haya destello.
+Un solo tema, claro, con el branding de Schmidt: paleta `#1A1A1A` (negro), `#B3855C` (camel), `#6B2A37` (bordó), `#D9C8C8` (rosado) y `#F7F5EF` (blanco roto); Playfair Display para el logo y los títulos y Montserrat para los textos (`next/font` en `app/layout.tsx`). Los valores de marca salen de `packages/marca/marca.json`.
 
-**Los colores no se escriben en hex: se usan por nombre.** Cada nombre está definido para los dos temas en `src/app/globals.css` (variables `--c-*`) y registrado en `tailwind.config.ts`:
+**Los colores no se escriben en hex: se usan por nombre.** Cada nombre es una variable `--c-*` de `src/app/globals.css`, registrada en `tailwind.config.ts`:
 
-| Nombre | Para qué | Oscuro | Claro |
-|---|---|---|---|
-| `page` | fondo de página | `#050606` | `#F5F5F0` |
-| `panel` / `card` | paneles, modales, tarjetas | `#0C0C0C` / `#0F1111` | blanco |
-| `field` | inputs | `#161818` | `#F4F4EF` |
-| `chip` | chips, bordes marcados, íconos apagados | `#1A1F21` | `#E6E6DF` |
-| `line` | bordes sutiles | `#0D0F0F` | `#E7E7E1` |
-| `night`, `ocean`, `ocean-2`, `olive` | fondos de secciones de la home | azules / oliva | tintes claros |
-| `fg` / `fg-soft` / `fg-muted` | texto principal / secundario / apagado | `#F7F6F7` / `#C7C7C0` / `#8A8A85` | `#15171A` / `#43443E` / `#66675E` |
-| `brand-fg` | el lima de marca **como texto o ícono** | `#B7D31A` | `#5C6E00` |
+| Nombre | Para qué |
+|---|---|
+| `page`, `panel`, `card`, `field` | fondos de página, paneles, tarjetas, inputs |
+| `chip`, `night`, `line` | fondos de foto, secciones alternadas, bordes |
+| `fg` / `fg-soft` / `fg-muted` | texto principal / secundario / apagado |
+| `accent` / `accent-hover` / `on-accent` | botón principal (negro → bordó al pasar) y su texto |
+| `ink`, `camel`, `bordo`, `rosado`, `brand-fg` | colores de la marca (`brand-fg` = bordó como texto) |
 
-Se usan con cualquier propiedad y con opacidad: `bg-page`, `text-fg-muted`, `border-line`, `bg-fg/5`.
-
-- El lima `#B7D31A` de botones, bordes y rellenos **no cambia** entre temas y se sigue escribiendo como hex; como texto sobre claro no se lee (1,6:1), por eso existe `brand-fg`. Lo mismo el texto `#050606` sobre botones lima.
-- Para un color que no tiene nombre (se usa una o dos veces) o para ajustar algo solo en el claro, está la variante `light:` — por ejemplo `bg-[#101416] light:bg-[#EFF2EC]` o `text-green-400 light:text-green-700` (los colores de estado `-300`/`-400` están pensados para fondo oscuro).
-- Texto sobre fotos con velo negro (tarjetas de categoría, botones sobre la imagen de un producto): va claro en los dos temas, con el hex fijo, no con `fg`.
-- Al agregar un color nuevo que se vaya a repetir: sumarlo en `globals.css` (los dos temas) y en `tailwind.config.ts`, y chequear contraste en el claro.
+- Se usan con cualquier propiedad y con opacidad: `bg-page`, `text-fg-muted`, `border-line`, `bg-ink/70`.
+- `<html>` lleva siempre `data-theme="light"`: las clases `light:` heredadas del proyecto base siguen aplicando.
+- Esquinas casi rectas en toda la tienda: la escala `rounded-*` está achicada en `tailwind.config.ts` (`rounded-full` no cambia).
+- Utilidades de marca: `.rotulo` (mayúsculas chicas espaciadas), `.guion` (la línea corta del branding) y `font-display` (la serif).
+- Al agregar un color que se vaya a repetir: sumarlo en `globals.css` y en `tailwind.config.ts`, y chequear contraste sobre `page`.
 
 ## Checkout como invitado y precio por transferencia
 
 - "Finalizar compra" (carrito y panel lateral) va directo a `/checkout`, sin pedir login (`components/auth/useCheckoutNavigation.ts`). En el checkout, ingresar es opcional (`useCheckoutAuthGate.ts`: "¿Ya tenés cuenta? Ingresá" completa nombre y mail).
 - El carrito muestra el precio por transferencia de cada producto (`PrecioTransferencia`) y el total pagando así (`carrito/CarritoTotalTransferencia.tsx`), con la misma cuenta que el checkout y el servidor: subtotal a precio de transferencia, y cupón y envío gratis calculados sobre ese subtotal.
-
-## URLs viejas de Tiendanube
-
-La tienda vivía en Tiendanube y Google todavía tiene indexadas sus URLs. `src/middleware.ts` las redirige con 308 (permanente), y **solo** corre para esas rutas (ver su `matcher`):
-
-| URL vieja | Destino |
-|---|---|
-| `/productos/<handle>/` | `/producto/<slug>` si el handle (sin el sufijo aleatorio tipo `-9l2i6`) coincide exacto con un único producto; si no, `/catalogo?q=<palabras>` |
-| `/productos/` | `/catalogo` |
-| `/<categoria>/` | `/catalogo?categoria=<categoria>` |
-| `/<categoria>/<marca>/` | `/catalogo?categoria=<categoria>&marca=<marca>` si la marca tiene productos en esa categoría; si no, sin marca |
-
-Los parámetros de campaña (`utm_*`, `fbclid`, `gclid`, `gbraid`, `wbraid`, `msclkid`, `ttclid`, `_gl`) pasan a la URL nueva (`withAttribution`); los demás de Tiendanube se descartan. Antes se perdían y el anuncio que traía la visita quedaba sin atribuir.
-
-La lógica está en `lib/legacyUrls.ts` (pura, con tests en `lib/legacyUrls.test.ts` — correr con `npm test`). Si aparece otra categoría vieja de Tiendanube dando 404, sumarla en `LEGACY_CATEGORY_SLUGS` **y** en el `matcher` del middleware.
 
 ## SEO y datos para compartir
 

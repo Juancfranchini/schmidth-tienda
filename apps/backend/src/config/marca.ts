@@ -64,7 +64,6 @@ export const MARCA = {
   },
   "logo": {
     "archivo": "/marca/logo.svg",
-    "mail": "/email/logo.png",
     "isotipo": "/marca/isotipo.svg"
   },
   "backoffice": {
