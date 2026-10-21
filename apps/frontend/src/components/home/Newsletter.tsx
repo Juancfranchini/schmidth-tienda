@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { FOTO_NEWSLETTER } from '@/config/editorial';
+import TituloEditorial from './TituloEditorial';
+import { MARCA } from '@/config/marca';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
@@ -40,11 +43,16 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="border-t border-line">
-      <div className="mx-auto grid max-w-7xl gap-6 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:items-center lg:py-20">
+    <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+      <div className="grid overflow-hidden bg-night lg:grid-cols-[1fr_1.2fr]">
+        <div className="hidden aspect-[4/5] lg:block">
+          <img src={FOTO_NEWSLETTER.src} alt={FOTO_NEWSLETTER.alt} loading="lazy" className="h-full w-full object-cover" />
+        </div>
+        <div className="flex flex-col justify-center gap-8 p-8 sm:p-12 lg:p-16">
         <div>
-          <p className="rotulo mb-3 text-bordo">Newsletter</p>
-          <h2 className="text-4xl sm:text-5xl">Enterate primero de los modelos nuevos</h2>
+          <p className="rotulo mb-4 text-bordo">El club {MARCA.nombre}</p>
+          <TituloEditorial texto="Enterate *primero* de los modelos nuevos" className="text-4xl leading-tight sm:text-5xl" />
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-fg-soft">Lanzamientos, colores nuevos y ediciones limitadas. Sin spam: solo cuando hay algo lindo para contarte.</p>
         </div>
         {estado === 'ok' ? (
           <p className="font-display text-2xl text-fg">¡Listo! Te vamos a escribir cuando haya novedades.</p>
@@ -63,6 +71,7 @@ export default function Newsletter() {
             )}
           </form>
         )}
+        </div>
       </div>
     </section>
   );

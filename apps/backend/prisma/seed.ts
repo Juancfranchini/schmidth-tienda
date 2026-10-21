@@ -44,7 +44,9 @@ async function main() {
   // Productos. Todo lo de este bloque sale del catálogo de Canva y está
   // A CONFIRMAR CON LA CLIENTA: medidas, bolsillos, forrado, colores y precios.
   // El stock por color es un valor de PRUEBA (STOCK_DE_PRUEBA), no el real.
-  // Las fotos son provisorias (placehold.co) hasta tener las reales.
+  // Las fotos son PROVISORIAS, de Unsplash (licencia libre), elegidas por color
+  // y tipo de cartera. No son productos de la marca: reemplazarlas por las reales
+  // desde el backoffice antes de publicar.
   const STOCK_DE_PRUEBA = 10;
   const COLORES = {
     negro: { nombre: 'Negro', hex: MARCA.colores.negro },
@@ -54,10 +56,19 @@ async function main() {
     grisRosado: { nombre: 'Gris rosado', hex: MARCA.colores.grisRosado },
   };
   type ClaveColor = keyof typeof COLORES;
+  const UNSPLASH = (id: string) => 'https://images.unsplash.com/photo-' + id + '?w=1000&h=1250&fit=crop&crop=entropy&q=80&auto=format';
+  const FOTOS: Record<string, Partial<Record<ClaveColor, string>>> = {
+    Soho: { blanco: '1682745230951-8a5aa9a474a0', negro: '1614179689702-355944cd0918', camel: '1624687943971-e86af76d57de' },
+    Ambar: { camel: '1613482184972-f9c1022d0928', negro: '1702326626601-74d2e86922b4', grisRosado: '1683921590274-a83862cb11c3' },
+    Siena: { camel: '1792066329499-97aa32997438', negro: '1702325107940-88f9cd4468c2' },
+    Astra: { negro: '1628149453636-23e882b3c1fc', camel: '1647540945262-7da3bd1a3d96', bordo: '1713425885987-fa917f173fa9' },
+    Monaco: { camel: '1713425886176-2c618d1e63cd', negro: '1789110854494-196f41b1197c' },
+  };
   const foto = (modelo: string, color: ClaveColor) => {
+    const id = FOTOS[modelo]?.[color];
+    if (id) return UNSPLASH(id);
     const fondo = COLORES[color].hex.replace('#', '');
-    const texto = ['negro', 'bordo'].includes(color) ? 'F4F0EA' : '161413';
-    return 'https://placehold.co/800x1000/' + fondo + '/' + texto + '.png?text=' + encodeURIComponent(modelo + '\n' + COLORES[color].nombre);
+    return 'https://placehold.co/800x1000/' + fondo + '/161413.png?text=' + encodeURIComponent(modelo + ' ' + COLORES[color].nombre);
   };
 
   const MODELOS = [
@@ -108,6 +119,14 @@ async function main() {
       features: m.detalles.map(([icon, title, subtitle]) => ({ icon, title, subtitle })),
     };
     const producto = await prisma.product.upsert({ where: { slug }, update: {}, create: datos });
+    // Bases sembradas con las fotos viejas de placehold.co: se pasan a las nuevas. Las cargadas a mano no se tocan.
+    if (producto.images.some((u) => u.includes('placehold.co'))) {
+      await prisma.product.update({ where: { id: producto.id }, data: { images: imagenes } });
+      await prisma.productVariant.updateMany({ where: { id: producto.id + '-base' }, data: { imageUrl: imagenes[0], images: imagenes.slice(1) } });
+      for (const clave of m.colores) {
+        await prisma.productVariant.updateMany({ where: { productId: producto.id, color: COLORES[clave].nombre, imageUrl: { contains: 'placehold.co' } }, data: { imageUrl: foto(m.nombre, clave) } });
+      }
+    }
     // La variante base que crea ProductsService.create (`<id>-base`) y una variante por color.
     await prisma.productVariant.upsert({
       where: { id: producto.id + '-base' }, update: {},

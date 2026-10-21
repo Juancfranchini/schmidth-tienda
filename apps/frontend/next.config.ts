@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       // Fotos provisorias del seed hasta tener las reales (ver prisma/seed.ts).
       { protocol: 'https', hostname: 'placehold.co' },
+      // Fotos provisorias de Unsplash (seed y portada) hasta tener las de la marca.
+      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
   },
   // El login con Google pasa por el dominio de la tienda: Google muestra

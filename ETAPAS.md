@@ -13,6 +13,19 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | Backoffice, fase 1 de 5 (menú, Inicio, link de pago, Clientes) | ✅ Terminada (2026-10-21) |
 | Backoffice, fase 2 de 5 (pedidos, remitos, acciones masivas, devoluciones) | ✅ Terminada (2026-10-21) |
 
+## Portada nueva de la tienda (2026-10-21)
+
+Pedido: "mucho más distintiva, no tan básica, diseño moderno". Qué cambió:
+
+- **Fotos provisorias reales** en vez de los cuadros de texto de placehold.co: fotos de Unsplash (licencia libre) elegidas por color y tipo de cartera, en el seed (`apps/backend/prisma/seed.ts`, las bases viejas se actualizan solas al correr el seed) y las de ambiente en `apps/frontend/src/config/editorial.ts`. **No son carteras de Schmidt: reemplazarlas por la producción de fotos real antes de publicar.**
+- **Portada editorial**: título grande con "acompañan" en cursiva bordó, foto en arco, bloque rosado detrás, sello giratorio "Eco cuero · Hecho en Argentina" con la S, tarjeta de "La favorita" y fila "Recién llegadas". Si se carga un Hero en el backoffice, usa esa foto y ese título (con `*palabra*` se marca la cursiva).
+- **Cinta bordó** con las frases de la marca corriendo bajo la portada.
+- **Lookbook "Una cartera para cada momento"** (nuevo): tres escenas en arco, la del medio desfasada.
+- **Colores** en sección negra con muestras alargadas tipo pastilla; **Manifiesto** con la frase en cursiva grande y la S de fondo; **A pedido** con foto en arco; **Newsletter** con foto.
+- Títulos de sección con una palabra en cursiva (`TituloEditorial`), botones redondeados, animaciones suaves que se apagan con "reducir movimiento".
+
+Corrido: tsc ✅, lint 0 errores, tests 4/4 ✅, build ✅. Revisado con capturas a 1366 px y en celular (375 px): sin desborde horizontal.
+
 ## Rediseño del backoffice
 
 Plan acordado (5 fases, cada una se puede usar sola):

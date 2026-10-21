@@ -9,6 +9,8 @@ import PromoBanners from '@/components/home/PromoBanners';
 import InstagramSection from '@/components/home/InstagramSection';
 import Newsletter from '@/components/home/Newsletter';
 import Manifiesto from '@/components/home/Manifiesto';
+import Cinta from '@/components/home/Cinta';
+import Momentos from '@/components/home/Momentos';
 import { Product, Banner, HeroSlide, Benefit, InstagramConfig, SiteSection } from '@/types';
 import type { Metadata } from 'next';
 import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_BASE } from '@/lib/seoPortada';
@@ -83,14 +85,17 @@ export default async function HomePage() {
   const { heroSlides, benefits, products, banners, heroSection, benefitsSection, bannersSection, instagramConfig } = await fetchAll();
   const coleccion = ordenColeccion(products);
   const destacado = coleccion.find((p) => p.images?.length) ?? null;
+  const nuevos = coleccion.filter((p) => p.isNew && p.images?.length);
 
   return (
     <>
-      <HomeHero slide={heroSection !== null ? heroSlides[0] ?? null : null} destacado={destacado} />
+      <HomeHero slide={heroSection !== null ? heroSlides[0] ?? null : null} destacado={destacado} nuevos={nuevos} />
+      <Cinta />
       <ColeccionGrid products={coleccion} />
+      <Momentos />
       <ColoresStrip products={coleccion} />
-      <AEscala products={coleccion} />
       <Manifiesto />
+      <AEscala products={coleccion} />
       <APedido />
       {benefitsSection !== null && <Beneficios benefits={benefits} />}
       {bannersSection !== null && banners.length > 0 && <PromoBanners banners={banners} />}

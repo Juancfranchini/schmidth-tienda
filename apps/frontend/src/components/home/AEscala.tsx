@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Product } from '@/types';
 import { medidasDe } from '@/lib/colores';
 import SiluetaCartera from '@/components/ui/SiluetaCartera';
+import TituloEditorial from './TituloEditorial';
 
 const ESCALA = 4; // px por cm
 
@@ -31,7 +32,7 @@ export default function AEscala({ products }: { products: Product[] }) {
       <div className="mb-10 grid gap-4 lg:grid-cols-[1fr_1fr] lg:items-end">
         <div>
           <p className="rotulo mb-3 text-bordo">A escala</p>
-          <h2 className="text-4xl sm:text-5xl">¿Qué tan grande es?</h2>
+          <TituloEditorial texto="¿Qué tan *grande* es?" className="text-4xl leading-tight sm:text-6xl" />
         </div>
         <p className="max-w-md text-fg-soft lg:justify-self-end">Todos los modelos dibujados en proporción real, junto a un celular. Tocá uno para ver sus fotos.</p>
       </div>

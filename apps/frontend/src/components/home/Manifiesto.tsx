@@ -1,14 +1,23 @@
 import { MARCA } from '@/config/marca';
 
-/** La frase de la marca, como en el branding: centrada, en mayúsculas espaciadas, sobre el rosado. */
+/** La frase de la marca en grande, en cursiva, sobre el rosado del branding, con la S de fondo. */
 export default function Manifiesto() {
   return (
-    <section className="bg-rosado">
-      <div className="mx-auto flex max-w-3xl flex-col items-center gap-8 px-5 py-20 text-center sm:py-28">
-        <p className="rotulo !text-sm leading-loose !tracking-[0.28em] text-fg sm:!text-base">{MARCA.frases.companera}</p>
-        <span className="guion text-fg" aria-hidden />
-        <ul className="rotulo flex flex-wrap justify-center gap-x-6 gap-y-2 text-fg-soft">
-          {MARCA.valores.map((v) => <li key={v}>{v}</li>)}
+    <section className="relative overflow-hidden bg-rosado">
+      <span aria-hidden className="pointer-events-none absolute -right-10 -top-24 select-none font-display text-[22rem] italic leading-none text-page/40 sm:text-[30rem]">
+        {MARCA.nombre.charAt(0)}
+      </span>
+      <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-10 px-5 py-24 text-center sm:py-32">
+        <span className="rotulo text-bordo">Nuestra promesa</span>
+        <blockquote className="font-display text-4xl italic leading-[1.15] text-fg sm:text-6xl">
+          “{MARCA.frases.companera}”
+        </blockquote>
+        <ul className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+          {MARCA.valores.map((v, i) => (
+            <li key={v} className="rotulo flex items-center gap-4 text-fg-soft">
+              {i > 0 && <span className="text-bordo" aria-hidden>✦</span>}{v}
+            </li>
+          ))}
         </ul>
       </div>
     </section>
