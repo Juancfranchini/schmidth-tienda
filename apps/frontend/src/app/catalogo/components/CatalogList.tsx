@@ -30,7 +30,7 @@ export default function CatalogList({ products, onAddToCart }: Props) {
         const imageUrl = product.images?.length > 0 ? getImageUrl(product.images[0], 320) : null;
 
         return (
-          <div key={product.id} className="bg-panel rounded-2xl border border-[#B7D31A]/20 hover:border-[#B7D31A]/60 hover:shadow-2xl hover:shadow-[#B7D31A]/10 transition-all duration-300 overflow-hidden">
+          <div key={product.id} className="bg-panel rounded-2xl border border-accent/20 hover:border-accent/60 hover:shadow-2xl hover:shadow-accent/10 transition-all duration-300 overflow-hidden">
             <div className="flex gap-4 p-4">
               {/* Imagen */}
               <Link href={'/producto/' + product.slug} className="w-24 h-24 flex-shrink-0 bg-page rounded-xl overflow-hidden">
@@ -64,7 +64,7 @@ export default function CatalogList({ products, onAddToCart }: Props) {
                 <button
                   onClick={(e) => { e.preventDefault(); onAddToCart(product); }}
                   disabled={product.stock === 0}
-                  className="px-6 py-2.5 bg-[#B7D31A] text-[#050606] rounded-lg font-semibold text-xs uppercase tracking-wider btn-primary-glow disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
+                  className="px-6 py-2.5 bg-accent text-on-accent rounded-lg font-semibold text-xs uppercase tracking-wider btn-primary-glow disabled:opacity-40 disabled:cursor-not-allowed whitespace-nowrap"
                 >
                   {product.stock === 0 ? 'Sin stock' : 'AGREGAR'}
                 </button>

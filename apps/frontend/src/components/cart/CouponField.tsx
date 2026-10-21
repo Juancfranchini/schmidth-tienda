@@ -28,16 +28,16 @@ export default function CouponField({ coupon }: { coupon: CouponState }) {
             onKeyDown={onKeyDown}
             disabled={aplicado}
             aria-label="Código de cupón"
-            className="w-full pl-9 pr-3 py-2 bg-chip border border-line rounded-lg text-xs text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/50 disabled:opacity-60"
+            className="w-full pl-9 pr-3 py-2 bg-chip border border-line rounded-lg text-xs text-fg placeholder-fg-muted focus:outline-none focus:border-accent/50 disabled:opacity-60"
             placeholder="Escribí tu código de cupón"
           />
         </div>
         {aplicado ? (
-          <button type="button" onClick={remove} className="px-4 py-2 border border-[#B7D31A]/30 text-fg rounded-lg text-xs font-bold hover:border-[#B7D31A]/60 transition-colors">
+          <button type="button" onClick={remove} className="px-4 py-2 border border-accent/30 text-fg rounded-lg text-xs font-bold hover:border-accent/60 transition-colors">
             Quitar
           </button>
         ) : (
-          <button type="button" onClick={() => void apply()} disabled={loading} className="px-4 py-2 bg-[#B7D31A] text-[#050606] rounded-lg text-xs font-bold hover:bg-[#c8e81f] transition-colors disabled:opacity-60">
+          <button type="button" onClick={() => void apply()} disabled={loading} className="px-4 py-2 bg-accent text-on-accent rounded-lg text-xs font-bold hover:bg-accent-hover transition-colors disabled:opacity-60">
             {loading ? 'Validando...' : 'Aplicar'}
           </button>
         )}

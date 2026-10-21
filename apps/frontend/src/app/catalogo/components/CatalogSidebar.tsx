@@ -5,7 +5,6 @@ import { LayoutGrid, Tag, SlidersHorizontal, ArrowDownUp, Percent, Grid3x3, Rows
 import { Category, Brand } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { sortLabel } from '../sortOptions';
-import { etiquetaFormato } from '../useCatalogFilters';
 import { valoresDe } from '../catalogQuery';
 import CatalogSidebarPanel, { ActivePanel, PanelProps } from './CatalogSidebarPanel';
 import CatalogSidebarButton from './CatalogSidebarButton';
@@ -23,12 +22,12 @@ interface Props extends PanelProps {
 export default function CatalogSidebar(props: Props) {
   const {
     viewMode, onViewModeChange, categories, brands, hasFilters, onClear,
-    selectedCategory, selectedBrand, selectedShape, selectedSize, selectedColor, selectedWeight, selectedGender,
-    selectedLevel, minPrice, maxPrice, isOffer, onOfferChange, currentSort,
+    selectedCategory, selectedBrand, selectedSize, selectedColor, selectedWeight,
+    minPrice, maxPrice, isOffer, onOfferChange, currentSort,
   } = props;
 
   // Varias secciones pueden estar abiertas a la vez. Combinar categoría y
-  // marca —"paletas" de "Babolat"— es el caso corriente, y con una sola
+  // color —"totes" en "negro"— es el caso corriente, y con una sola
   // abierta había que cerrar una para poder llegar a la otra.
   const [abiertas, setAbiertas] = useState<Seccion[]>([]);
   const alternar = (s: Seccion) =>
@@ -48,7 +47,6 @@ export default function CatalogSidebar(props: Props) {
   const nombreCategoria = nombres(selectedCategory, categories);
   const nombreMarca = nombres(selectedBrand, brands);
   const atributos = [
-    valoresDe(selectedGender).join(', '), valoresDe(selectedShape).map(etiquetaFormato).join(', '), valoresDe(selectedLevel).join(', '),
     valoresDe(selectedSize).join(', '), valoresDe(selectedColor).join(', '), selectedWeight,
   ].filter(Boolean);
   const rangoPrecio = minPrice != null || maxPrice != null

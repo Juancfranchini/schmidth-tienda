@@ -66,6 +66,12 @@ export const MARCA = {
     ],
     "nota": "Rutas del backoffice ocultas del menú y bloqueadas. El código no se borra: para reactivar un módulo, sacar su ruta de esta lista y correr node scripts/sync-marca.mjs."
   },
+  "tienda": {
+    "rutasOcultas": [
+      "/talles"
+    ],
+    "nota": "Páginas de la tienda apagadas (responden 404). Para reactivar una, sacarla de la lista y correr node scripts/sync-marca.mjs."
+  },
   "prefijoPedido": "SCH",
   "prefijoStorage": "schmidt",
   "carpetaImagenes": "schmidt",

@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: 'Contacto',
-  description: 'Escribinos por WhatsApp o dejanos tu consulta. Te asesoramos para que elijas la paleta que mejor se adapta a tu juego.',
+  description: 'Escribinos por WhatsApp o dejanos tu consulta. Te ayudamos a elegir tu cartera y tu color.',
   alternates: { canonical: '/contacto' },
 };
 

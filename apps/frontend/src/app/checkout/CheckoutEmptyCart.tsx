@@ -5,7 +5,7 @@ export default function CheckoutEmptyCart() {
     <div className="min-h-screen bg-page flex items-center justify-center">
       <div className="text-center">
         <p className="text-fg-muted mb-4">Tu carrito esta vacio</p>
-        <Link href="/catalogo" className="bg-[#B7D31A] text-[#050606] px-6 py-3 rounded-xl font-bold text-sm hover:bg-[#c8e81f] transition-colors">Ir al catálogo</Link>
+        <Link href="/catalogo" className="bg-accent text-on-accent px-6 py-3 rounded-xl font-bold text-sm hover:bg-accent-hover transition-colors">Ir al catálogo</Link>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export default function CheckoutDireccionesGuardadas({ direcciones, onUsar }: Pr
       <p className="text-xs font-semibold text-fg-muted uppercase tracking-wide mb-2">Tus direcciones</p>
       <div className="flex flex-wrap gap-2">
         {direcciones.map((d) => (
-          <button key={d.id} type="button" onClick={() => onUsar(d)} className="flex items-center gap-2 rounded-lg border border-chip px-3 py-2 text-left text-xs text-fg-soft hover:border-[#B7D31A]/50 hover:text-fg transition-colors">
+          <button key={d.id} type="button" onClick={() => onUsar(d)} className="flex items-center gap-2 rounded-lg border border-chip px-3 py-2 text-left text-xs text-fg-soft hover:border-accent/50 hover:text-fg transition-colors">
             <MapPin size={13} className="text-brand-fg flex-shrink-0" />
             <span><strong className="text-fg">{d.label || d.street}</strong>{d.label ? ` · ${d.street}` : ''}, {d.city}</span>
           </button>

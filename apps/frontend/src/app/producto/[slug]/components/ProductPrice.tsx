@@ -54,7 +54,7 @@ export default function ProductPrice({
       {/* Precio principal */}
       {hasDiscount && !isMadeToOrder && <p className="text-base text-fg-muted line-through">{formatPrice(originalPrice)}</p>}
       <div className="flex flex-wrap items-baseline gap-3">
-        <span className="text-4xl md:text-5xl font-black text-fg tracking-tight">
+        <span className="font-display text-4xl font-medium text-fg md:text-5xl">
           {formatPrice(displayPrice)}
         </span>
         {hasDiscount && !isMadeToOrder && (

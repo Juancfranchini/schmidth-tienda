@@ -11,7 +11,8 @@ export interface ConfigFlex {
 }
 
 export const CONFIG_FLEX_POR_DEFECTO: ConfigFlex = {
-  activo: true,
+  // Apagado salvo que se active en el backoffice: Schmidt no tiene repartidor en moto (por ahora).
+  activo: false,
   precios: { 1: 4500, 2: 7000, 3: 9000 },
 };
 

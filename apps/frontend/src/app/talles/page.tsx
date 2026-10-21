@@ -87,7 +87,7 @@ export default function TallesPage() {
                   <button
                     key={guide.id}
                     onClick={() => setActiveTab(guide.id)}
-                    className={'px-5 py-2 rounded-xl text-sm font-semibold transition-all ' + (activeTab === guide.id ? 'bg-[#B7D31A] text-[#050606]' : 'bg-night border border-line text-fg-soft hover:border-[#B7D31A]/30')}
+                    className={'px-5 py-2 rounded-xl text-sm font-semibold transition-all ' + (activeTab === guide.id ? 'bg-accent text-on-accent' : 'bg-night border border-line text-fg-soft hover:border-accent/30')}
                   >
                     {guide.name}
                     {guide.category && <span className="text-xs opacity-70 ml-1">({guide.category.name})</span>}

@@ -6,7 +6,7 @@ import { formatPrice } from '@/lib/utils';
 import { CheckoutFormData } from './checkoutSchema';
 import { CheckoutFlex } from './useCheckoutFlex';
 
-const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors';
+const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors';
 const errorInputClass = 'w-full bg-field border border-red-500/50 rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-red-500 transition-colors';
 const labelClass = 'block text-xs font-semibold text-fg-muted uppercase tracking-wide mb-1';
 
@@ -66,7 +66,7 @@ export default function CheckoutFlexFields({ register, errors, flex }: Props) {
 export function SugerenciaFlex({ flex }: { flex: CheckoutFlex }) {
   if (flex.esFlex || !flex.zona) return null;
   return (
-    <div className="mt-3 rounded-xl border border-[#B7D31A]/40 bg-[#B7D31A]/5 p-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+    <div className="mt-3 rounded-xl border border-accent/40 bg-accent/5 p-3 flex flex-wrap items-center justify-between gap-2 text-sm">
       <span className="text-fg-soft"><Bike size={14} className="inline mr-1.5 text-brand-fg" />En {flex.zona.localidad} tenés Envío Flex en moto por <strong className="text-fg">{formatPrice(flex.zona.precio)}</strong>.</span>
       <button type="button" onClick={flex.usarFlex} className="text-xs font-bold uppercase tracking-wide text-brand-fg hover:underline">Usar Envío Flex</button>
     </div>

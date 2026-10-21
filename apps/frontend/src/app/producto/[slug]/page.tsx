@@ -37,7 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { alternates: { canonical }, robots: { index: false, follow: true } };
   }
 
-  const marca = producto.brand?.name?.trim();
+  // La marca propia no se repite: el layout ya agrega " | <tienda>" al título.
+  const marca = producto.brand?.name?.trim() === MARCA.nombre ? undefined : producto.brand?.name?.trim();
   const titulo = marca ? `${producto.name} — ${marca}` : producto.name;
   const descripcion =
     producto.description?.trim() ||

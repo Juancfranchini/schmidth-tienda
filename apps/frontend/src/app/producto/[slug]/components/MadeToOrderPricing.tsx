@@ -36,7 +36,7 @@ export default function MadeToOrderPricing({
   const plazo = estimatedDays && estimatedDays > 0 ? `en unos ${estimatedDays} días` : PLAZO_POR_DEFECTO;
 
   return (
-    <div className="rounded-xl border border-[#B7D31A]/30 bg-[#B7D31A]/[0.07] p-4 space-y-3">
+    <div className="rounded-xl border border-accent/30 bg-accent/[0.07] p-4 space-y-3">
       <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-fg">
         <PackageCheck size={15} /> Se hace a pedido
       </p>
@@ -71,7 +71,7 @@ export default function MadeToOrderPricing({
           href={consulta}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-brand-fg transition-colors hover:text-[#CAE52E] light:hover:text-[#4B5A00]"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-brand-fg transition-colors hover:text-accent-hover light:hover:text-brand-fg"
         >
           <MessageCircle size={14} /> Consultá por WhatsApp cuándo llega
         </a>

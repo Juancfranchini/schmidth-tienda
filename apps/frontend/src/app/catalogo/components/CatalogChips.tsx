@@ -22,7 +22,7 @@ export default function CatalogChips({ chips, onClearAll }: Props) {
           type="button"
           onClick={chip.onRemove}
           aria-label={'Quitar filtro ' + chip.label}
-          className="flex items-center gap-1.5 bg-[#B7D31A]/10 border border-[#B7D31A]/20 text-brand-fg text-xs font-semibold px-3 py-1 rounded-full hover:bg-[#B7D31A]/20 transition-colors"
+          className="flex items-center gap-1.5 bg-accent/10 border border-accent/20 text-brand-fg text-xs font-semibold px-3 py-1 rounded-full hover:bg-accent/20 transition-colors"
         >
           {chip.label}
           <X size={11} aria-hidden="true" />

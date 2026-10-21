@@ -16,16 +16,6 @@ interface Params {
   searchQuery: string;
 }
 
-const ORDEN_FORMATOS = ['Diamante', 'Lagrima', 'Redondo', 'Hibrido'];
-const ORDEN_NIVELES = ['Principiante', 'Intermedio', 'Avanzado'];
-
-/** Valores cargados, en el orden natural de la lista y los desconocidos al final. */
-function presentesEnOrden(valores: (string | null | undefined)[], orden: string[]): string[] {
-  const unicos = [...new Set(valores.filter((v): v is string => !!v))];
-  const posicion = (v: string) => (orden.includes(v) ? orden.indexOf(v) : orden.length);
-  return unicos.sort((a, b) => posicion(a) - posicion(b));
-}
-
 function valoresUnicos(products: Product[], key: 'size' | 'color', hasKey: 'hasSize' | 'hasColor') {
   return [...new Set(products.flatMap((p) => [
     ...(p[hasKey] && p[key] ? [p[key] as string] : []),
@@ -34,14 +24,14 @@ function valoresUnicos(products: Product[], key: 'size' | 'color', hasKey: 'hasS
 }
 
 /**
- * Las opciones de un filtro (talle, color, peso, género, formato, nivel) tienen que salir de
+ * Las opciones de un filtro (talle, color, peso) tienen que salir de
  * todo lo que hay en el catálogo, no solo de los 12 productos de la página
- * visible — si no, una opción real (por ejemplo "Mujer") desaparecía del
+ * visible — si no, una opción real (por ejemplo "Bordó") desaparecía del
  * desplegable solo porque esos productos no entraban en la primera página.
  *
  * Por eso esto es un fetch aparte, con category/brand/búsqueda pero sin
- * paginar ni filtrar por los atributos que está calculando: elegir "Mujer"
- * no debe hacer desaparecer "Hombre" de la misma lista.
+ * paginar ni filtrar por los atributos que está calculando: elegir "Negro"
+ * no debe hacer desaparecer "Camel" de la misma lista.
  */
 export function useCatalogFacets({ selectedCategory, selectedBrand, isOffer, searchQuery }: Params) {
   const [products, setProducts] = useState<Product[]>([]);
@@ -72,10 +62,5 @@ export function useCatalogFacets({ selectedCategory, selectedBrand, isOffer, sea
     sizes: valoresUnicos(products, 'size', 'hasSize'),
     colors: valoresUnicos(products, 'color', 'hasColor'),
     weights,
-    genders: [...new Set(products.map((p) => p.gender).filter((g): g is string => !!g))],
-    // Como el resto: solo los formatos y niveles que algún producto tiene
-    // cargados. Un "Principiante" fijo devolvería cero resultados hasta que se cargue.
-    shapes: presentesEnOrden(products.map((p) => p.shape), ORDEN_FORMATOS),
-    levels: presentesEnOrden(products.map((p) => p.level), ORDEN_NIVELES),
   };
 }

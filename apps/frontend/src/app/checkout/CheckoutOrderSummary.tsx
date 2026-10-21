@@ -44,7 +44,7 @@ export default function CheckoutOrderSummary({
 
   return (
     <div className="lg:col-span-1">
-      <div className="bg-card rounded-2xl border border-[#B7D31A]/20 p-6 sticky top-24">
+      <div className="bg-card rounded-2xl border border-accent/20 p-6 sticky top-24">
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="font-black text-base uppercase tracking-tight text-fg">Tu pedido</h2>
           <Link href="/catalogo" className="text-xs text-brand-fg hover:underline">Agregar más</Link>
@@ -89,7 +89,7 @@ export default function CheckoutOrderSummary({
         {orderError && <p className="text-red-500 light:text-red-600 text-xs text-center mt-3">{orderError}</p>}
 
         <button type="submit" disabled={isSubmitting || vacio}
-          className="mt-5 w-full flex items-center justify-center gap-2 bg-[#B7D31A] text-[#050606] py-4 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-[#c8e81f] transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+          className="mt-5 w-full flex items-center justify-center gap-2 bg-accent text-on-accent py-4 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-accent-hover transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
           {isSubmitting ? 'Procesando...' : shippingToCoordinate ? <><MessageCircle size={15} /> Coordinar por WhatsApp <ChevronRight size={15} /></> : <><Lock size={15} /> {paymentMethod === 'transfer' ? 'Solicitar compra' : 'Ir a Mercado Pago'} <ChevronRight size={15} /></>}
         </button>
         <p className="text-fg-muted text-xs text-center mt-3">Tus datos estan protegidos con encriptacion SSL</p>

@@ -13,12 +13,12 @@ const TEXTOS: Record<Exclude<Resultado, 'cargando'>, { titulo: string; detalle: 
     titulo: '¡Pago aprobado!',
     // Sin prometer un email: el envío de correos no está en servicio.
     detalle: 'Tu pago fue procesado y ya registramos el pedido. Guardá el número de orden; nos comunicamos con vos para coordinar el envío.',
-    borde: 'border-[#B7D31A]/30',
+    borde: 'border-accent/30',
   },
   acreditando: {
     titulo: 'Pago realizado',
     detalle: 'Mercado Pago confirmó el pago y lo estamos registrando. Puede tardar unos segundos; no hace falta volver a pagar.',
-    borde: 'border-[#B7D31A]/30',
+    borde: 'border-accent/30',
   },
   pendiente: {
     titulo: 'Pago en proceso',
@@ -80,7 +80,7 @@ export default function CheckoutOutcome({ porDefecto }: { porDefecto: Resultado 
 
         <div className="flex flex-col gap-3">
           {resultado === 'rechazado' && (
-            <Link href="/checkout" className="bg-[#B7D31A] text-[#050606] py-3 rounded-xl font-bold text-sm hover:bg-[#c8e81f] transition-colors">Intentar de nuevo</Link>
+            <Link href="/checkout" className="bg-accent text-on-accent py-3 rounded-xl font-bold text-sm hover:bg-accent-hover transition-colors">Intentar de nuevo</Link>
           )}
           <Link href="/" className="border border-line py-3 rounded-xl font-bold text-sm text-fg-soft hover:bg-panel transition-colors">Volver al inicio</Link>
         </div>

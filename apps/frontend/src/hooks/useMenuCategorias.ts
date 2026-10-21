@@ -75,14 +75,3 @@ export function useMenuCategorias(): CategoriaMenu[] {
   return useMenuNavegacion().categorias;
 }
 
-/**
- * Accesos por género. Una paleta unisex le sirve a los dos, así que "Hombre"
- * y "Mujer" aparecen si hay productos de ese género o unisex (el backend las
- * incluye al filtrar).
- */
-export function accesosPorGenero(generos: string[]): { label: string; href: string }[] {
-  const hayUnisex = generos.includes('Unisex');
-  return ['Hombre', 'Mujer']
-    .filter((g) => hayUnisex || generos.includes(g))
-    .map((g) => ({ label: g, href: '/catalogo?genero=' + g }));
-}

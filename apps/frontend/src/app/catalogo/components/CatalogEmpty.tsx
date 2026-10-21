@@ -14,7 +14,7 @@ export default function CatalogEmpty({ hasFilters, onClear }: Props) {
         {hasFilters ? 'Proba con otros filtros o amplia la busqueda.' : 'No hay productos disponibles por el momento.'}
       </p>
       {hasFilters && (
-        <button onClick={onClear} className="bg-[#B7D31A] text-[#050606] px-6 py-2.5 rounded-xl text-sm font-semibold btn-primary-glow">
+        <button onClick={onClear} className="bg-accent text-on-accent px-6 py-2.5 rounded-xl text-sm font-semibold btn-primary-glow">
           Ver todos los productos
         </button>
       )}

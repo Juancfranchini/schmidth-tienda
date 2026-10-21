@@ -58,7 +58,7 @@ export default function MisreseñasTab() {
                   <p className="text-sm font-semibold text-fg">{review.product?.name || 'Producto'}</p>
                   <div className="flex gap-0.5 my-1">
                     {[1,2,3,4,5].map((s) => (
-                      <Star key={s} className={'w-3 h-3 ' + (s <= review.rating ? 'text-brand-fg fill-[#B7D31A]' : 'text-chip')} />
+                      <Star key={s} className={'w-3 h-3 ' + (s <= review.rating ? 'text-brand-fg fill-accent' : 'text-chip')} />
                     ))}
                   </div>
                   <p className="text-sm text-fg-soft">{review.comment}</p>

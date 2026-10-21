@@ -30,8 +30,8 @@ export default function HighlightsSection({ highlights, highlightsTitle, highlig
         <ul className="space-y-3">
           {highlights.map((text, i) => (
             <li key={i} className="flex items-start gap-3">
-              <span className="w-5 h-5 rounded-full bg-[#B7D31A] border border-[#B7D31A] flex items-center justify-center flex-none mt-0.5">
-                <Check size={10} className="text-[#050606]" />
+              <span className="w-5 h-5 rounded-full bg-accent border border-accent flex items-center justify-center flex-none mt-0.5">
+                <Check size={10} className="text-on-accent" />
               </span>
               <span className="text-fg-soft text-sm leading-relaxed">{text}</span>
             </li>

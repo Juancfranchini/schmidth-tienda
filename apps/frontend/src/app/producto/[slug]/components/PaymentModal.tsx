@@ -31,7 +31,7 @@ export default function PaymentModal({ onClose, displayPrice, installments, hasI
         </div>
 
         <div className="p-5 space-y-4">
-          <div className="bg-page border border-[#B7D31A]/20 rounded-xl p-4">
+          <div className="bg-page border border-accent/20 rounded-xl p-4">
             <p className="text-sm font-semibold text-fg">Checkout Pro es el único medio de pago de {MARCA.nombre}.</p>
             <p className="text-xs text-fg-soft mt-1">Al comprar, te redirigimos a Mercado Pago. Ahí elegís tarjeta, saldo u otro medio disponible para tu cuenta.</p>
           </div>

@@ -20,17 +20,17 @@ export default function HeaderSearch({ onSearch }: { onSearch?: () => void }) {
   };
 
   return (
-    <form onSubmit={buscar} role="search" className="flex w-full overflow-hidden rounded-lg border border-fg/10 bg-chip focus-within:border-[#B7D31A]/60">
+    <form onSubmit={buscar} role="search" className="flex w-full overflow-hidden rounded-lg border border-fg/10 bg-chip focus-within:border-accent/60">
       <label htmlFor={id} className="sr-only">Buscar productos</label>
       <input
         id={id}
         type="search"
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
-        placeholder="Buscá paletas, marcas, zapatillas…"
+        placeholder="Buscá un modelo o un color…"
         className="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none"
       />
-      <button type="submit" aria-label="Buscar" className="flex items-center gap-2 bg-[#B7D31A] px-4 text-xs font-bold uppercase tracking-wide text-[#050606] transition-colors hover:bg-[#CAE52E]">
+      <button type="submit" aria-label="Buscar" className="flex items-center gap-2 bg-accent px-4 text-xs font-bold uppercase tracking-wide text-on-accent transition-colors hover:bg-accent-hover">
         <Search size={16} />
         <span className="hidden sm:inline">Buscar</span>
       </button>

@@ -12,7 +12,7 @@ export function ReturnPolicyBenefits({ benefits }: { benefits: any[] }) {
           {benefits.map((b: any, i: number) => {
             const IconComp = BENEFIT_ICONS[b.icon] || Shield;
             return (
-              <div key={i} className="bg-chip border border-line rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col gap-2 sm:gap-3 hover:border-[#B7D31A]/30 transition-colors">
+              <div key={i} className="bg-chip border border-line rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col gap-2 sm:gap-3 hover:border-accent/30 transition-colors">
                 <div className="flex items-start">
                   <span className="text-brand-fg flex-shrink-0 mr-0.5"><IconComp size={22} /></span>
                   <h3 className="text-fg font-semibold text-xs sm:text-sm uppercase tracking-wide text-left pl-1">{b.title}</h3>
@@ -36,7 +36,7 @@ export function ReturnPolicyConditionsOk({ conditions }: { conditions: string[] 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {conditions.map((c: string, i: number) => (
               <div key={i} className="flex items-start gap-3 text-sm text-fg-soft">
-                <div className="w-5 h-5 rounded-full bg-[#B7D31A]/10 border border-[#B7D31A]/30 flex items-center justify-center flex-none mt-0.5"><Check size={10} className="text-brand-fg" /></div>
+                <div className="w-5 h-5 rounded-full bg-accent/10 border border-accent/30 flex items-center justify-center flex-none mt-0.5"><Check size={10} className="text-brand-fg" /></div>
                 {c}
               </div>
             ))}
@@ -62,8 +62,8 @@ export function ReturnPolicySteps({ steps }: { steps: any[] }) {
                 <div className="flex items-center gap-1 w-full">
                   <div className="relative z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-chip border-2 border-line flex items-center justify-center flex-shrink-0">
                     <span className="text-fg-muted"><StepIcon size={18} /></span>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#B7D31A] flex items-center justify-center">
-                      <span className="text-[#050606] font-bold text-[9px]">{i + 1}</span>
+                    <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-accent flex items-center justify-center">
+                      <span className="text-on-accent font-bold text-[9px]">{i + 1}</span>
                     </div>
                   </div>
                   <p className="text-fg font-semibold text-[10px] sm:text-xs uppercase tracking-wide pl-1">{step.title}</p>
@@ -122,7 +122,7 @@ export function ReturnPolicyHelp({ help }: { help: Help }) {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
-            <a href={'https://wa.me/' + help.whatsapp} onClick={() => trackMetaEvent('Contact', { content_type: 'whatsapp' })} target="_blank" rel="noopener noreferrer" className="btn-primary-glow bg-[#B7D31A] text-[#050606] px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wider inline-flex items-center justify-center gap-2 hover:bg-[#CAE52E] transition-colors whitespace-nowrap w-full sm:w-auto"><MessageCircle size={16} />WHATSAPP</a>
+            <a href={'https://wa.me/' + help.whatsapp} onClick={() => trackMetaEvent('Contact', { content_type: 'whatsapp' })} target="_blank" rel="noopener noreferrer" className="btn-primary-glow bg-accent text-on-accent px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wider inline-flex items-center justify-center gap-2 hover:bg-accent-hover transition-colors whitespace-nowrap w-full sm:w-auto"><MessageCircle size={16} />WHATSAPP</a>
             <a href={'mailto:' + help.email} className="bg-ocean text-fg px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wider inline-flex items-center justify-center gap-2 hover:bg-ocean-2 transition-colors whitespace-nowrap w-full sm:w-auto"><Mail size={16} />ENVIAR EMAIL</a>
           </div>
         </div>

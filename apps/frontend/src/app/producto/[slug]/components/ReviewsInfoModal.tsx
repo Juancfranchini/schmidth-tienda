@@ -12,7 +12,7 @@ export default function ReviewsInfoModal({ title, text, onClose }: Props) {
       <div className="bg-chip border border-line rounded-xl p-5 w-full h-full flex flex-col justify-center">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#B7D31A]/10 flex items-center justify-center"><HelpCircle size={16} className="text-brand-fg" /></div>
+            <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center"><HelpCircle size={16} className="text-brand-fg" /></div>
             <h4 className="text-sm font-semibold text-fg">{title}</h4>
           </div>
           <button onClick={onClose} className="text-fg-muted hover:text-fg"><X size={16} /></button>
@@ -21,7 +21,7 @@ export default function ReviewsInfoModal({ title, text, onClose }: Props) {
           {text || 'Las opiniones son realizadas por clientes verificados que compraron el producto. El promedio se calcula en base a todas las resenas aprobadas.'}
         </p>
         <div className="mt-auto pt-3 border-t border-line flex items-center gap-2 text-xs text-fg-muted justify-end">
-          <Star className="w-3 h-3 text-brand-fg fill-[#B7D31A]" />
+          <Star className="w-3 h-3 text-brand-fg fill-accent" />
           <span>Resenas 100% verificadas</span>
         </div>
       </div>

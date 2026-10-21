@@ -17,7 +17,7 @@ export default function FeaturesSection({ features }: Props) {
             const IconComp = ICON_MAP[f.icon] || Zap;
             return (
               <div key={i} className="bg-panel rounded-xl border border-line p-4 flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#B7D31A]/10 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
                   {createElement(IconComp, { size: 18, className: 'text-brand-fg' })}
                 </div>
                 <div>

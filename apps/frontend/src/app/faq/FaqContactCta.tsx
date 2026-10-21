@@ -14,7 +14,7 @@ export default function FaqContactCta() {
             href={WHATSAPP_URL} onClick={() => trackMetaEvent("Contact", { content_type: "whatsapp" })}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 bg-[#B7D31A] text-[#050606] font-semibold text-sm rounded-xl hover:bg-[#CAE52E] transition-colors"
+            className="flex items-center gap-2 px-6 py-3 bg-accent text-on-accent font-semibold text-sm rounded-xl hover:bg-accent-hover transition-colors"
           >
             <MessageCircle size={16} />
             Escribinos por WhatsApp

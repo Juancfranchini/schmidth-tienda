@@ -23,7 +23,7 @@ export default function GoogleAuthButton({ returnTo = '/cuenta' }: Props) {
   return (
     <a
       href={href}
-      className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#3C4043] bg-white px-4 py-3 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F8F9FA] focus:outline-none focus:ring-2 focus:ring-[#B7D31A]/70"
+      className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#3C4043] bg-white px-4 py-3 text-sm font-semibold text-[#202124] transition-colors hover:bg-[#F8F9FA] focus:outline-none focus:ring-2 focus:ring-accent/70"
     >
       <GoogleMark />
       <span>Continuar con Google</span>

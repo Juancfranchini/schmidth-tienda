@@ -8,7 +8,7 @@ interface Props {
   onChange: (min: number | null, max: number | null) => void;
 }
 
-const input = 'w-full rounded-lg border border-chip bg-field px-3 py-2 text-sm text-fg placeholder-fg-muted focus:border-[#B7D31A]/60 focus:outline-none';
+const input = 'w-full rounded-lg border border-chip bg-field px-3 py-2 text-sm text-fg placeholder-fg-muted focus:border-accent/60 focus:outline-none';
 
 const aNumero = (texto: string): number | null => {
   const limpio = texto.replace(/\D/g, '');
@@ -51,7 +51,7 @@ export default function CatalogPriceRange({ minPrice, maxPrice, onChange }: Prop
         </label>
       </div>
       <div className="flex gap-2">
-        <button type="submit" className="flex-1 rounded-lg bg-[#B7D31A] py-2 text-xs font-bold uppercase tracking-wide text-[#050606] transition-colors hover:bg-[#CAE52E]">
+        <button type="submit" className="flex-1 rounded-lg bg-accent py-2 text-xs font-bold uppercase tracking-wide text-on-accent transition-colors hover:bg-accent-hover">
           Aplicar
         </button>
         {hayFiltro && (

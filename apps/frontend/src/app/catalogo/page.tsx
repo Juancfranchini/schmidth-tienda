@@ -7,7 +7,7 @@ import { getCatalogProducts, getMenuCatalogo } from './getCatalogData';
 /**
  * Catálogo.
  *
- * Antes era entero del navegador: quien pedía /catalogo?categoria=paletas sin
+ * Antes era entero del navegador: quien pedía /catalogo?categoria=totes sin
  * ejecutar JavaScript —Google, la vista previa de WhatsApp, el rastreador de
  * Meta— recibía solo "Cargando catálogo..." y ningún enlace a una ficha. Ahora
  * el servidor lee los filtros de la URL, trae la página de productos y la

@@ -5,9 +5,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { formatPrice } from '@/lib/utils';
 import { alternarValor, parseCatalogFilters, valoresDe } from './catalogQuery';
 
-const ETIQUETA_FORMATO: Record<string, string> = { Lagrima: 'Lágrima', Hibrido: 'Híbrido' };
-export const etiquetaFormato = (valor: string) => ETIQUETA_FORMATO[valor] ?? valor;
-
 function textoRangoPrecio(min: number | null, max: number | null): string {
   if (min != null && max != null) return formatPrice(min) + ' – ' + formatPrice(max);
   if (min != null) return 'desde ' + formatPrice(min);
@@ -27,7 +24,7 @@ interface NombresDeFiltros {
   brands: { slug: string; name: string }[];
 }
 
-/** El nombre visible de un slug ("royal-padel" → "Royal Pádel"); el slug si todavía no cargó la lista. */
+/** El nombre visible de un slug ("de-hombro" → "De hombro"); el slug si todavía no cargó la lista. */
 const nombreDe = (lista: { slug: string; name: string }[] | undefined, slug: string) =>
   lista?.find((x) => x.slug === slug)?.name.trim() ?? slug;
 
@@ -39,7 +36,7 @@ export function useCatalogFilters(nombres?: NombresDeFiltros) {
   const filters = parseCatalogFilters((clave) => searchParams.get(clave));
   const {
     selectedCategory, selectedBrand, isOffer, searchQuery, selectedSize, selectedColor,
-    selectedWeight, selectedShape, selectedGender, selectedLevel, minPrice, maxPrice,
+    selectedWeight, minPrice, maxPrice,
   } = filters;
 
   const navegar = (url: string) => startTransition(() => router.push(url));
@@ -60,7 +57,7 @@ export function useCatalogFilters(nombres?: NombresDeFiltros) {
 
   const clearFilters = () => navegar('/catalogo');
   const hasFilters = !!selectedCategory || !!selectedBrand || isOffer || !!searchQuery || !!selectedSize || !!selectedColor
-    || !!selectedWeight || !!selectedShape || !!selectedGender || !!selectedLevel || minPrice != null || maxPrice != null;
+    || !!selectedWeight || minPrice != null || maxPrice != null;
 
   const activeChips: { label: string; onRemove: () => void }[] = [];
   // Un chip por valor: con dos marcas elegidas se puede sacar una sola.
@@ -75,19 +72,14 @@ export function useCatalogFilters(nombres?: NombresDeFiltros) {
   chips(selectedSize, 'talle', (v) => 'Talle: ' + v);
   chips(selectedColor, 'color', (v) => 'Color: ' + v);
   if (selectedWeight) activeChips.push({ label: 'Peso: ' + selectedWeight, onRemove: () => setParam('peso', null) });
-  chips(selectedShape, 'formato', (v) => 'Formato: ' + etiquetaFormato(v));
-  chips(selectedGender, 'genero', (v) => 'Género: ' + v);
-  chips(selectedLevel, 'nivel', (v) => 'Nivel: ' + v);
   if (minPrice != null || maxPrice != null) {
     activeChips.push({ label: 'Precio: ' + textoRangoPrecio(minPrice, maxPrice), onRemove: () => setParams({ desde: null, hasta: null }) });
   }
   if (searchQuery) activeChips.push({ label: '"' + searchQuery + '"', onRemove: () => setParam('q', null) });
 
   const capitalizar = (texto: string) => texto.charAt(0).toUpperCase() + texto.slice(1);
-  // Entrando desde "Hombre" o "Mujer" del menú, el título lo dice.
   const enTitulo = (seleccion: string) => valoresDe(seleccion).map(capitalizar).join(' y ');
-  const pageTitle = isOffer ? 'Ofertas' : selectedCategory ? enTitulo(selectedCategory)
-    : selectedGender ? enTitulo(selectedGender) : 'Catálogo';
+  const pageTitle = isOffer ? 'Ofertas' : selectedCategory ? enTitulo(selectedCategory) : 'La colección';
 
   return {
     ...filters,

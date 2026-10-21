@@ -6,10 +6,69 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | Etapa | Estado |
 |---|---|
 | 1. Proyecto limpio + configuración central de marca | ✅ Terminada (2026-10-20) |
-| 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20), seed y migración sin probar contra una base |
-| 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | Pendiente |
+| 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20); seed y migraciones probados en la etapa 3 |
+| 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | ✅ Terminada (2026-10-21), probada en local con datos |
 | 4. Textos, mails y páginas legales | Pendiente |
 | 5. Revisión final y pendientes del cliente | Pendiente |
+
+## Etapa 3: qué se hizo
+
+**Investigación** (qué hacen las tiendas de carteras que venden bien, y por qué): muestras de color que cambian la foto, con el nombre del color (el color en pantalla engaña, el nombre no) y los colores sin stock marcados; fotos por color; referencia de tamaño (la duda que más frena comprar una cartera sin tocarla); estética sin logos ni recargo, el material como protagonista (caso Polène).
+
+**Tema** (`apps/frontend/src/app/globals.css` + `tailwind.config.ts`):
+- Un solo tema claro: blanco roto, negro, camel y bordó (de `marca.json`). Se sacó el modo oscuro y el lima de HomePadel: ~300 usos en 108 archivos reemplazados por tokens (`bg-accent`, `text-on-accent`, `text-bordo`…).
+- Tipografías: Cormorant Garamond (títulos, como el logo) y Jost (texto), con `next/font`. Esquinas casi rectas en toda la tienda (escala de `rounded` reducida en Tailwind).
+- Logo provisorio: "SCHMIDT" en la serif de títulos (componente `BrandLogo`), toma el color del texto.
+
+**Estructura nueva**:
+- Header: barra de anuncio, menú a la izquierda (colección, categorías, colores), logo centrado, buscador desplegable, cuenta y carrito. Menú de celular a pantalla, con tipografía grande.
+- Footer: logo y eslogan, colección, ayuda, contacto (WhatsApp y mail de `marca.json`), medios de pago.
+- Home (`app/page.tsx`):
+  1. Hero editorial (con foto del backoffice va a sangre; sin foto, se arma con la del modelo destacado).
+  2. **La colección numerada** (N°01…N°05) con tarjetas 4:5 y muestras de color que cambian la foto.
+  3. **Elegí tu color**: compra por color (link al catálogo filtrado).
+  4. **A escala**: los modelos dibujados en proporción real junto a un celular.
+  5. **A pedido** (fondo bordó): el texto del catálogo de la marca, "stock inmediato / a pedido", con botón a WhatsApp.
+  6. Beneficios, banners (si hay), Instagram y newsletter (nuevo, con react-hook-form + zod).
+- Ficha de producto: galería 4:5, título en serif, precio, **color con nombre y estado** (stock inmediato / a pedido), color preseleccionado (el de la URL si viene de una muestra, o el primero con stock), comprar/agregar, **si el color no tiene stock: "Pedilo en este color por WhatsApp"**, detalles (medidas con dibujo y cotas, material, bolsillos), envíos.
+- Catálogo: grilla de 2 columnas en celular y 3 en escritorio con la tarjeta nueva; filtrando por color, las tarjetas muestran la foto de ese color. Se sacaron los filtros de género, formato y nivel (frontend).
+- Carrito y checkout: toman el tema nuevo (no se rediseñó su estructura).
+
+**Limpieza de HomePadel**:
+- Borrados: componentes viejos de la home (marcas, categorías de pádel, testimonios, reseñas, etc.), imágenes de categorías de pádel, redirecciones del sitio viejo de Tiendanube (`middleware.ts`, `lib/legacyUrls.ts` y su test), badges "Garantía oficial / Cambios gratuitos" (no son promesas de Schmidt).
+- **Envío Flex y bolsa de regalo: ahora apagados por defecto** en backend, tienda y backoffice. Se activan desde el backoffice (Tarifa de envío / Productos → bolsa de regalo). Antes venían prendidos sin configurar.
+- Guía de talles de la tienda apagada con `tienda.rutasOcultas` en `marca.json` (responde 404 y sale del sitemap).
+
+**Migración nueva (importante)**: `20261020130000_sync_schema_drift`. Al correr las migraciones en una base nueva se vio que las heredadas de HomePadel **no creaban 9 columnas de `Product` (`isMadeToOrder`, `estimatedDays`, `requiredDeposit`, `show*`, `shape`) ni la tabla `Shipment`**, aunque el esquema y el código las usan (en HomePadel la base se armó por otra vía). Sin esto, la base de Schmidt quedaba rota y el seed fallaba. La migración solo agrega lo que falta; después de aplicarla, `prisma migrate diff` contra el esquema da **cero diferencias**. No cambia el esquema ni borra nada.
+
+### Etapa 3: qué se corrió (resultado real)
+
+Por primera vez con datos: base Postgres en memoria (PGlite, fuera del repo) → `prisma migrate deploy` (36 migraciones OK) → seed OK (4 categorías, 5 productos, variantes por color) → backend y tienda en local, revisados en el navegador en escritorio (1280 px) y celular (375 px): home, catálogo filtrado por color, ficha, agregar al carrito, carrito y checkout.
+
+| App | Compilación | Tests | Lint | Build |
+|---|---|---|---|---|
+| backend | ✅ | ✅ 57 suites, 421 tests | 0 errores, 168 warnings (igual que el origen) | — |
+| frontend | ✅ | ✅ 4 tests nuevos (colores y medidas) | 0 errores, 54 warnings (origen: 64) | ✅ |
+| backoffice | ✅ | sin tests | 0 errores, 292 warnings | ✅ |
+
+- Fallaron y se arreglaron: 3 tests del backend que daban por hecho Flex y bolsa de regalo prendidos por defecto (se reescribieron para el nuevo comportamiento y se sumó uno de cada caso apagado).
+- Los 21 tests del frontend del origen eran todos de las redirecciones de Tiendanube, que se borraron: por eso el frontend pasó de 21 a 4 tests.
+- **No se probó**: pagar (no hay credenciales de Mercado Pago), mails, login con Google, ni el backoffice en el navegador.
+
+### Pendiente de la etapa 3 / para la 4
+
+- Fotos reales (las actuales son placeholders de placehold.co con el nombre y el color).
+- Logo definitivo (hoy es texto) y favicon.
+- Checkout: ofrece "Retiro en el local", OCA y Andreani heredados; definir qué envíos quedan (los envíos se desestimaron por ahora).
+- El filtro "Marca" del catálogo y los parámetros de pádel del backend (`shape`, `gender`, `level`) siguen en el código; con una sola marca no molestan.
+- Etapa 4: textos (FAQ, páginas legales, envíos, medios de pago), mails y su logo.
+
+### Cómo levantarlo en local (lo que se usó)
+
+1. Una base Postgres (cualquiera; acá se usó PGlite con el servidor `@electric-sql/pglite-socket`, `maxConnections` alto y la extensión `unaccent`).
+2. `apps/backend/.env` con `DATABASE_URL`, `JWT_SECRET` y `SEED_ADMIN_PASSWORD` (ver `.env.example`).
+3. En `apps/backend`: `npx prisma migrate deploy`, `npx prisma db seed` (este sí lee el `.env`; `npm run prisma:seed` no) y `npm run start:dev`.
+4. En `apps/frontend`: `.env.local` con `NEXT_PUBLIC_API_URL="http://localhost:4000/api"` y `npm run dev`.
 
 ## Etapa 2: qué se hizo
 

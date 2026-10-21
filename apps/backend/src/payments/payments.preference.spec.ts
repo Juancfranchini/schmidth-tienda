@@ -268,8 +268,15 @@ describe('PaymentsService.createPreference — bolsa de regalo', () => {
     expect(cuerpoEnviado().items).toContainEqual({ id: 'bolsa-regalo', title: 'Bolsa de regalo Schmidt', quantity: 1, unit_price: 3000, currency_id: 'ARS' });
   });
 
-  it('sin precio (como hasta ahora): va sin cargo y sin renglón en Mercado Pago', async () => {
+  it('sin configurar no se ofrece: no se agrega aunque el navegador la pida', async () => {
     const { service, ordenesCreadas } = conBolsa({});
+    await service.createPreference({ ...DTO_BASE, bolsasRegalo: 1 });
+    expect(JSON.parse(ordenesCreadas[0].notes).bolsasRegalo).toBe(0);
+    expect(cuerpoEnviado().items).toHaveLength(1);
+  });
+
+  it('activada sin precio: va sin cargo y sin renglón en Mercado Pago', async () => {
+    const { service, ordenesCreadas } = conBolsa({ activa: true });
     await service.createPreference({ ...DTO_BASE, bolsasRegalo: 1 });
     expect(ordenesCreadas[0].total).toBe(512000);
     expect(JSON.parse(ordenesCreadas[0].notes)).toMatchObject({ bolsasRegalo: 1 });

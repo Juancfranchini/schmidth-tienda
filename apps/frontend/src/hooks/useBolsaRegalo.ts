@@ -12,8 +12,8 @@ export interface ConfigBolsa {
   activa: boolean;
 }
 
-/** Sin configurar (o sin respuesta): ofrecida y sin cargo, como fue siempre. */
-const POR_DEFECTO: ConfigBolsa = { precio: 0, activa: true };
+/** Sin configurar (o sin respuesta): no se ofrece. Se activa desde el backoffice (igual que en el servidor). */
+const POR_DEFECTO: ConfigBolsa = { precio: 0, activa: false };
 
 let pedido: Promise<ConfigBolsa> | null = null;
 
@@ -23,7 +23,7 @@ function leer(): Promise<ConfigBolsa> {
     .then((res) => {
       const d = (res?.data ?? {}) as { precio?: unknown; activa?: unknown };
       const precio = Number(d.precio);
-      return { precio: Number.isFinite(precio) && precio > 0 ? precio : 0, activa: d.activa !== false };
+      return { precio: Number.isFinite(precio) && precio > 0 ? precio : 0, activa: d.activa === true };
     })
     .catch(() => {
       pedido = null;

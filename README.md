@@ -47,7 +47,7 @@ cd apps/backend
 npm install
 npx prisma generate
 npx prisma migrate dev
-npm run prisma:seed     # datos de ejemplo
+npx prisma db seed      # datos de ejemplo (lee el .env; npm run prisma:seed no)
 npm run start:dev
 ```
 

@@ -19,11 +19,11 @@ export default function ReturnPolicyHero({ hero }: Props) {
               <div className="w-28 h-28 bg-panel border-2 border-line rounded-2xl flex items-center justify-center">
                 <Package size={48} className="text-fg-muted" />
               </div>
-              <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-[#B7D31A] flex items-center justify-center">
-                <RefreshCw size={20} className="text-[#050606]" />
+              <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-accent flex items-center justify-center">
+                <RefreshCw size={20} className="text-on-accent" />
               </div>
             </div>
-            <div className="absolute bottom-6 left-6 right-6 bg-[#B7D31A]/10 border border-[#B7D31A]/20 rounded-xl px-4 py-2 text-center">
+            <div className="absolute bottom-6 left-6 right-6 bg-accent/10 border border-accent/20 rounded-xl px-4 py-2 text-center">
               <p className="text-brand-fg font-semibold text-sm">30 DIAS</p>
               <p className="text-fg-muted text-[10px]">Sin complicaciones</p>
             </div>

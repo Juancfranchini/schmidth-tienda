@@ -23,7 +23,7 @@ export default function ProductStars({ rating, count }: Props) {
 
   const StarIcon = ({ type }: { type: string }) => {
     if (type === 'full') {
-      return <Star size={16} fill="#B7D31A" stroke="#B7D31A" />;
+      return <Star size={16} fill="rgb(var(--c-accent))" stroke="rgb(var(--c-accent))" />;
     }
     
     if (type === 'half') {
@@ -31,7 +31,7 @@ export default function ProductStars({ rating, count }: Props) {
         <div className="relative w-[16px] h-[16px]">
           <Star size={16} fill="none" stroke="currentColor" className="absolute inset-0 text-fg-muted" />
           <div className="absolute inset-0 overflow-hidden" style={{ width: '50%' }}>
-            <Star size={16} fill="#B7D31A" stroke="#B7D31A" />
+            <Star size={16} fill="rgb(var(--c-accent))" stroke="rgb(var(--c-accent))" />
           </div>
         </div>
       );
@@ -42,7 +42,7 @@ export default function ProductStars({ rating, count }: Props) {
         <div className="relative w-[16px] h-[16px]">
           <Star size={16} fill="none" stroke="currentColor" className="absolute inset-0 text-fg-muted" />
           <div className="absolute inset-0 overflow-hidden" style={{ width: '25%' }}>
-            <Star size={16} fill="#B7D31A" stroke="#B7D31A" />
+            <Star size={16} fill="rgb(var(--c-accent))" stroke="rgb(var(--c-accent))" />
           </div>
         </div>
       );

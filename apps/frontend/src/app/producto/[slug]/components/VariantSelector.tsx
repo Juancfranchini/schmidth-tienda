@@ -71,7 +71,7 @@ export default function VariantSelector({ variants, selectedColor, selectedSize,
                 }}
                 className={'px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wide border transition-all ' +
                   (selectedColor === color
-                    ? 'bg-[#B7D31A] text-[#050606] border-[#B7D31A]'
+                    ? 'bg-accent text-on-accent border-accent'
                     : 'bg-chip text-fg-soft border-line hover:border-fg-muted')}
               >
                 {color}

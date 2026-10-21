@@ -11,9 +11,9 @@ export const conSucursal = (metodo: CheckoutFormData['shippingMethod']) => metod
 
 const opcion = (activa: boolean) =>
   'flex items-center gap-2 rounded-xl border-2 px-3 py-2.5 text-sm cursor-pointer transition-colors ' +
-  (activa ? 'border-[#B7D31A] bg-[#B7D31A]/10 text-fg' : 'border-chip text-fg-soft hover:border-[#B7D31A]/40');
+  (activa ? 'border-accent bg-accent/10 text-fg' : 'border-chip text-fg-soft hover:border-accent/40');
 
-const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors';
+const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors';
 const errorInputClass = 'w-full bg-field border border-red-500/50 rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-red-500 transition-colors';
 
 interface Props {

@@ -32,7 +32,7 @@ export default function CuentaOrdersTab({ orders, loading }: Props) {
           <Package size={48} className="mx-auto text-chip mb-4" />
           <p className="text-fg-muted font-medium mb-1">Todavia no realizaste pedidos</p>
           <p className="text-fg-muted text-sm mb-5">Explora nuestro catálogo y hace tu primer pedido</p>
-          <Link href="/catalogo" className="inline-flex items-center gap-2 bg-[#B7D31A] text-[#050606] px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-[#c8e81f] transition-colors">Ver catálogo <ChevronRight size={14} /></Link>
+          <Link href="/catalogo" className="inline-flex items-center gap-2 bg-accent text-on-accent px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-accent-hover transition-colors">Ver catálogo <ChevronRight size={14} /></Link>
         </div>
       ) : (
         <div className="space-y-3">

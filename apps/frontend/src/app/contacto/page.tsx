@@ -21,7 +21,7 @@ export default function ContactoPage() {
 
       {sections.faqActive && (
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="h-[2px] bg-gradient-to-r from-transparent via-[#B7D31A]/25 to-transparent" />
+          <div className="h-[2px] bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
         </div>
       )}
 

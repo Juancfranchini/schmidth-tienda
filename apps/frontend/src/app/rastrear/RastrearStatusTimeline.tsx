@@ -14,7 +14,7 @@ export default function RastrearStatusTimeline({ order }: { order: TrackedOrder 
   const isCancelled = order.status === 'CANCELLED';
 
   return (
-    <div className="bg-card rounded-2xl border border-[#B7D31A]/20 p-6">
+    <div className="bg-card rounded-2xl border border-accent/20 p-6">
       <h3 className="text-sm font-semibold text-fg mb-6">Estado del envío</h3>
       <div className="relative">
         {STATUS_STEPS.filter((s) => s.key !== 'CANCELLED' || isCancelled).map((step, index, arr) => {
@@ -31,13 +31,13 @@ export default function RastrearStatusTimeline({ order }: { order: TrackedOrder 
                 </div>
               )}
               <div className={'relative z-10 w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ' +
-                (showCancelled ? 'bg-red-500/20 text-red-500 light:text-red-600' : isCurrent ? 'bg-[#B7D31A] text-[#050606] shadow-[0_0_20px_rgba(183,211,26,0.3)]' : isActive ? step.bg + ' ' + step.color : 'bg-chip text-fg-muted')}>
+                (showCancelled ? 'bg-red-500/20 text-red-500 light:text-red-600' : isCurrent ? 'bg-accent text-on-accent shadow-[0_0_20px_rgba(183,211,26,0.3)]' : isActive ? step.bg + ' ' + step.color : 'bg-chip text-fg-muted')}>
                 <step.icon size={22} />
               </div>
               <div className="flex-1 min-w-0 pt-3 pb-8">
                 <p className={'text-base font-bold transition-colors duration-300 ' + (isActive || showCancelled ? 'text-fg' : 'text-fg-muted')}>{step.label}</p>
                 <p className="text-sm text-fg-muted mt-1">{step.desc}</p>
-                {isCurrent && !isCancelled && <div className="flex items-center gap-2 mt-2"><span className="w-2 h-2 rounded-full bg-[#B7D31A] animate-pulse" /><span className="text-xs text-brand-fg font-medium">Estado actual</span></div>}
+                {isCurrent && !isCancelled && <div className="flex items-center gap-2 mt-2"><span className="w-2 h-2 rounded-full bg-accent animate-pulse" /><span className="text-xs text-brand-fg font-medium">Estado actual</span></div>}
               </div>
             </div>
           );

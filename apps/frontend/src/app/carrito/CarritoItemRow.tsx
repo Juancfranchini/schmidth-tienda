@@ -24,7 +24,7 @@ export default function CarritoItemRow({ item, onRemove, onUpdateQuantity }: Pro
     : product.stock;
 
   return (
-    <div className="bg-card rounded-xl border border-[#B7D31A]/20 p-4 flex gap-4 hover:border-[#B7D31A]/50 hover:shadow-[0_0_12px_rgba(183,211,26,0.08)] transition-all duration-300">
+    <div className="bg-card rounded-xl border border-accent/20 p-4 flex gap-4 hover:border-accent/50 hover:shadow-[0_0_12px_rgba(183,211,26,0.08)] transition-all duration-300">
       <div className="w-20 h-20 md:w-24 md:h-24 flex-none rounded-lg overflow-hidden bg-chip">
         {variantImageUrl || product.images[0] ? (
           <img src={getImageUrl(variantImageUrl || product.images[0], 240)} alt={product.name} className="w-full h-full object-cover" />

@@ -11,7 +11,7 @@ import CheckoutShippingOptions from './CheckoutShippingOptions';
 import CheckoutModalidad from './CheckoutModalidad';
 import { DireccionGuardada } from '@/lib/api';
 
-const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors';
+const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors';
 const errorInputClass = 'w-full bg-field border border-red-500/50 rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-red-500 transition-colors';
 
 
@@ -34,9 +34,9 @@ export default function CheckoutShippingFields({ register, errors, selectedMetho
   const enSucursal = enSucursalDe({ shippingMethod: selectedMethod, modalidad });
 
   return (
-    <div className="bg-card rounded-2xl border border-[#B7D31A]/20 p-6">
+    <div className="bg-card rounded-2xl border border-accent/20 p-6">
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-8 h-8 bg-[#B7D31A] rounded-full flex items-center justify-center text-[#050606] font-black text-sm">2</div>
+        <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-on-accent font-black text-sm">2</div>
         <h2 className="font-black text-base uppercase tracking-wide text-fg flex items-center gap-2"><Truck size={16} /> Entrega</h2>
       </div>
 

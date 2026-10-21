@@ -1,7 +1,7 @@
 import { DEFAULT_SORT } from './sortOptions';
 
 /**
- * Traducción de la URL del catálogo (?categoria=paletas&marca=nox...) a la
+ * Traducción de la URL del catálogo (?categoria=totes&color=Negro...) a la
  * consulta de la API. Vive acá, sin 'use client', porque la usan el servidor
  * —que arma la primera página y los metadatos— y el navegador —que arma los
  * filtros—. Si cada uno leyera la URL a su manera, el HTML inicial y la
@@ -20,9 +20,6 @@ export interface CatalogFilters {
   selectedSize: string;
   selectedColor: string;
   selectedWeight: string;
-  selectedShape: string;
-  selectedGender: string;
-  selectedLevel: string;
   minPrice: number | null;
   maxPrice: number | null;
 }
@@ -52,9 +49,6 @@ export function parseCatalogFilters(get: LeerParam): CatalogFilters {
     selectedSize: get('talle') || '',
     selectedColor: get('color') || '',
     selectedWeight: get('peso') || '',
-    selectedShape: get('formato') || '',
-    selectedGender: get('genero') || '',
-    selectedLevel: get('nivel') || '',
     minPrice: precioDeParam(get('desde')),
     maxPrice: precioDeParam(get('hasta')),
   };
@@ -91,9 +85,6 @@ export function buildProductsQuery(f: CatalogFilters): URLSearchParams {
   if (f.searchQuery) q.set('search', f.searchQuery);
   if (f.selectedSize) q.set('size', f.selectedSize);
   if (f.selectedColor) q.set('color', f.selectedColor);
-  if (f.selectedShape) q.set('shape', f.selectedShape);
-  if (f.selectedGender) q.set('gender', f.selectedGender);
-  if (f.selectedLevel) q.set('level', f.selectedLevel);
   if (f.minPrice != null) q.set('minPrice', String(f.minPrice));
   if (f.maxPrice != null) q.set('maxPrice', String(f.maxPrice));
   if (f.selectedWeight) {

@@ -36,10 +36,10 @@ export default function ProductGalleryThumbnails({ thumbnails, selectedImg, hove
             className={
               'h-20 w-20 flex-shrink-0 overflow-hidden rounded-xl border-2 bg-panel transition-all ' +
               (activa
-                ? 'border-[#B7D31A] shadow-[0_0_12px_rgba(183,211,26,0.3)]'
+                ? 'border-accent shadow-[0_0_12px_rgba(183,211,26,0.3)]'
                 : hoveredImg === i
-                ? 'border-[#B7D31A] shadow-[0_0_8px_rgba(183,211,26,0.2)]'
-                : 'border-chip hover:border-[#B7D31A]/70')
+                ? 'border-accent shadow-[0_0_8px_rgba(183,211,26,0.2)]'
+                : 'border-chip hover:border-accent/70')
             }
           >
             <img src={getImageUrl(img, 240)} alt="" className="h-full w-full object-contain p-1" />

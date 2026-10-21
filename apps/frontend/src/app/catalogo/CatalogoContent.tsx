@@ -66,7 +66,7 @@ export default function CatalogoContent({ result }: Props) {
               <button onClick={() => setSidebarOpen(true)}
                 className="lg:hidden flex items-center gap-2 bg-panel border border-line rounded-lg px-4 py-2 text-sm font-medium text-fg hover:border-fg-muted transition-colors">
                 <Filter size={15} />Filtros
-                {hasFilters && <span className="w-5 h-5 bg-[#B7D31A] text-[#050606] rounded-full text-[10px] font-bold flex items-center justify-center">{activeChips.length}</span>}
+                {hasFilters && <span className="w-5 h-5 bg-accent text-on-accent rounded-full text-[10px] font-bold flex items-center justify-center">{activeChips.length}</span>}
               </button>
               <p className="text-sm text-fg-soft hidden sm:block">{totalCount} productos</p>
             </div>
@@ -77,7 +77,7 @@ export default function CatalogoContent({ result }: Props) {
               error ? <CatalogError onRetry={retry} /> :
               products.length === 0 ? <CatalogEmpty hasFilters={hasFilters} onClear={clearFilters} /> :
                 (viewMode === 'grid' ?
-                  <CatalogGrid products={products} onAddToCart={addCatalogItem} />
+                  <CatalogGrid products={products} onAddToCart={addCatalogItem} colorFiltrado={sidebarProps.selectedColor} />
                 :
                   <CatalogList products={products} onAddToCart={addCatalogItem} />
                 )

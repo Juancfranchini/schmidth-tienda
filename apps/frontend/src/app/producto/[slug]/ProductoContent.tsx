@@ -14,7 +14,6 @@ import ProductDescription from './components/ProductDescription';
 import ProductInfoColumn from './ProductInfoColumn';
 import PaymentModal from './components/PaymentModal';
 import ProductVideoHighlightsSection from './ProductVideoHighlightsSection';
-import ProductReviewsSection from './ProductReviewsSection';
 import RelatedProducts from './components/RelatedProducts';
 import TrustBottom from './components/TrustBottom';
 
@@ -25,7 +24,7 @@ interface Props {
 
 export default function ProductoContent({ initialProduct }: Props) {
   const params = useParams<{ slug: string }>();
-  const { product, related, loading, error, retry, hasSizeGuide } = useProductoData(params.slug, initialProduct);
+  const { product, related, loading, error, retry } = useProductoData(params.slug, initialProduct);
   const variants = useProductVariants(product);
   const actions = useProductoActions(product, variants.selectedVariant, variants.activeProductVariants);
   const cuotas = useConfigCuotas();
@@ -48,25 +47,21 @@ export default function ProductoContent({ initialProduct }: Props) {
         />
       )}
 
-      <div className="border-b border-line">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center gap-1.5 text-[10px] sm:text-[11px] text-fg-muted">
-          <Link href="/" className="hover:text-fg transition-colors">Inicio</Link><span>/</span>
-          <Link href="/catalogo" className="hover:text-fg transition-colors">Catálogo</Link><span>/</span>
-          <Link href={'/catalogo?marca=' + product.brand.slug} className="hover:text-fg transition-colors">{product.brand.name}</Link><span>/</span>
-          <span className="text-fg truncate">{product.name}</span>
-        </div>
-      </div>
+      <nav aria-label="Ubicación" className="mx-auto flex max-w-7xl items-center gap-2 px-5 pt-6 text-xs text-fg-muted sm:px-8">
+        <Link href="/" className="transition-colors hover:text-fg">Inicio</Link><span>/</span>
+        <Link href="/catalogo" className="transition-colors hover:text-fg">Colección</Link><span>/</span>
+        {product.category && (<><Link href={'/catalogo?categoria=' + product.category.slug} className="transition-colors hover:text-fg">{product.category.name}</Link><span>/</span></>)}
+        <span className="truncate text-fg">{product.name}</span>
+      </nav>
 
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 xl:gap-16">
+      <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:py-10">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.25fr_1fr] xl:gap-16">
           <ProductGallery images={display.images} productName={product.name} hasDiscount={display.hasDiscount} discountPct={display.discountPct} isNew={product.isNew || false} />
           <ProductInfoColumn
             product={product}
             display={display}
-            activeVariants={variants.activeProductVariants}
             variants={variants}
             actions={actions}
-            hasSizeGuide={hasSizeGuide}
           />
         </div>
       </div>
@@ -83,8 +78,6 @@ export default function ProductoContent({ initialProduct }: Props) {
         highlightsTitle={display.highlightsTitle}
         highlightsDescription={display.highlightsDescription}
       />
-
-      {(product.reviewCount || 0) > 0 && <ProductReviewsSection productId={product.id} />}
 
       {display.showRelated && <RelatedProducts products={related} />}
 

@@ -22,7 +22,7 @@ export default function VariantOptionPicker({ label, selected, options, onChange
             onClick={() => onChange(option)}
             className={(minWidth ? 'min-w-[48px] ' : '') + 'px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wide border transition-all ' +
               (selected === option
-                ? 'bg-[#B7D31A] text-[#050606] border-[#B7D31A]'
+                ? 'bg-accent text-on-accent border-accent'
                 : 'bg-chip text-fg-soft border-line hover:border-fg-muted')}
           >
             {option}

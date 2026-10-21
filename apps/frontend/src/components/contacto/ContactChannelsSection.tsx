@@ -17,8 +17,8 @@ export default function ContactChannelsSection({ channels }: Props) {
 
   return (
     <section className="relative bg-[#080D11] light:bg-[#F1F3EE]">
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B7D31A]/25 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-[#B7D31A]/[0.03] to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-accent/[0.03] to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="text-center mb-10">
           <p className="text-brand-fg text-xs font-semibold uppercase tracking-[0.2em] mb-3">CONTACTO DIRECTO</p>
@@ -26,7 +26,7 @@ export default function ContactChannelsSection({ channels }: Props) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {channels.map((channel) => (
-            <div key={channel.id} className="bg-panel/80 border border-[#B7D31A]/20 rounded-2xl p-6 flex flex-col items-center text-center gap-5 hover:border-[#B7D31A]/60 hover:bg-[#0F1417] light:hover:bg-[#EFF2EC] hover:shadow-[0_0_20px_rgba(183,211,26,0.08)] transition-all group">
+            <div key={channel.id} className="bg-panel/80 border border-accent/20 rounded-2xl p-6 flex flex-col items-center text-center gap-5 hover:border-accent/60 hover:bg-[#0F1417] light:hover:bg-[#EFF2EC] hover:shadow-[0_0_20px_rgba(183,211,26,0.08)] transition-all group">
               <div className="w-16 h-16 rounded-2xl bg-chip border border-line flex items-center justify-center overflow-hidden">
                 {channel.logo ? (
                   <img src={getImageUrl(channel.logo, 200)} alt={channel.title} className="w-full h-full object-cover" />
@@ -36,7 +36,7 @@ export default function ContactChannelsSection({ channels }: Props) {
               </div>
               <h3 className="text-fg font-semibold text-base">{channel.title}</h3>
               <p className="text-fg-soft text-sm leading-relaxed flex-1">{channel.description}</p>
-              <a href={channel.url} target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-2 px-5 py-2.5 border border-[#B7D31A]/40 text-brand-fg font-semibold text-sm rounded-xl hover:bg-[#B7D31A] hover:text-[#050606] transition-all group/btn">
+              <a href={channel.url} target="_blank" rel="noopener noreferrer" className="mt-auto flex items-center gap-2 px-5 py-2.5 border border-accent/40 text-brand-fg font-semibold text-sm rounded-xl hover:bg-accent hover:text-on-accent transition-all group/btn">
                 {channel.buttonText || 'Ir al canal'}
                 <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
               </a>
@@ -44,7 +44,7 @@ export default function ContactChannelsSection({ channels }: Props) {
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B7D31A]/25 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent/25 to-transparent" />
     </section>
   );
 }

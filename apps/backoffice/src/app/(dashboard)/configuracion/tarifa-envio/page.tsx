@@ -26,7 +26,7 @@ export type TarifaEnvioForm = z.infer<typeof schema>;
 type FormData = TarifaEnvioForm;
 
 // Tarifario por zona: lo que se usa si nunca se guardó otra cosa.
-const FLEX_POR_DEFECTO = { flexActivo: true, flexZona1: 4500, flexZona2: 7000, flexZona3: 9000 };
+const FLEX_POR_DEFECTO = { flexActivo: false, flexZona1: 4500, flexZona2: 7000, flexZona3: 9000 };
 
 export default function TarifaEnvioPage() {
   const { toast } = useToast();

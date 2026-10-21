@@ -27,9 +27,18 @@ const config: Config = {
         olive: tema('olive'),
         fg: { DEFAULT: tema('fg'), soft: tema('fg-soft'), muted: tema('fg-muted') },
         'brand-fg': tema('brand-fg'),
+        accent: { DEFAULT: tema('accent'), hover: tema('accent-hover') },
+        'on-accent': tema('on-accent'),
+        ink: tema('ink'),
+        camel: tema('camel'),
+        bordo: tema('bordo'),
       },
+      // Esquinas casi rectas en toda la tienda (estilo editorial). `rounded-full` no cambia:
+      // las muestras de color y los íconos redondos siguen siendo círculos.
+      borderRadius: { sm: '1px', DEFAULT: '2px', md: '2px', lg: '2px', xl: '3px', '2xl': '3px', '3xl': '4px' },
       fontFamily: {
-        sans: ['Poppins', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Jost', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['var(--font-display)', 'Cormorant Garamond', 'Georgia', 'serif'],
       },
     },
   },

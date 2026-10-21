@@ -46,7 +46,7 @@ describe('Envío Flex — zona según la localidad', () => {
 
 describe('Envío Flex — configuración', () => {
   it('sin nada guardado usa el tarifario del kiosco', () => {
-    expect(configFlex(undefined)).toEqual({ activo: true, precios: { 1: 4500, 2: 7000, 3: 9000 } });
+    expect(configFlex(undefined)).toEqual({ activo: false, precios: { 1: 4500, 2: 7000, 3: 9000 } });
   });
 
   it('un precio inválido o vacío cae al del tarifario', () => {

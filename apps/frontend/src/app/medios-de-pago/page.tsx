@@ -30,7 +30,7 @@ export default function MediosPagoPage() {
         <h1 className="text-3xl font-bold text-fg mb-2">Medios de Pago</h1>
         <p className="text-fg-muted mb-10">{transferencia.active === true ? 'Pagá con Mercado Pago o por transferencia bancaria.' : 'El pago se procesa exclusivamente en Mercado Pago Checkout Pro.'}</p>
 
-        <div className="bg-panel rounded-2xl border border-[#B7D31A]/25 p-6 mb-12">
+        <div className="bg-panel rounded-2xl border border-accent/25 p-6 mb-12">
           <div className="flex items-center gap-4 mb-5">
             <div className="w-16 h-11 rounded-lg bg-fg/5 flex items-center justify-center overflow-hidden flex-shrink-0">
               {mercadopago.logo ? <img src={getImageUrl(mercadopago.logo, 200)} alt="Mercado Pago" className="w-full h-full object-contain" /> : <Wallet size={28} className="text-brand-fg" />}

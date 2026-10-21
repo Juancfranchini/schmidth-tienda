@@ -9,9 +9,13 @@ import ModoPruebaAviso from '@/components/layout/ModoPruebaAviso';
 import CarritoDeCuenta from '@/components/layout/CarritoDeCuenta';
 import FavoritosSync from '@/components/layout/FavoritosSync';
 import { getSiteUrl } from '@/lib/siteUrl';
-import { SCRIPT_TEMA } from '@/lib/tema';
+import { Cormorant_Garamond, Jost } from 'next/font/google';
 import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_BASE } from '@/lib/seoPortada';
 import { MARCA } from '@/config/marca';
+
+// Títulos en serif (como el logo) y texto en una sans geométrica liviana.
+const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
+const sans = Jost({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' });
 
 async function getFaviconUrl(): Promise<string> {
   try {
@@ -84,12 +88,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // El tema (oscuro por defecto) lo cambia ThemeToggle; el script lo aplica antes
-    // de pintar para que quien eligió el claro no vea un destello oscuro al entrar.
-    <html lang="es" data-theme="dark" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
-      </head>
+    // Un solo tema (claro). data-theme="light" mantiene las clases `light:` heredadas.
+    <html lang="es" data-theme="light" className={display.variable + ' ' + sans.variable}>
       <body>
         <Header />
         <main>{children}</main>

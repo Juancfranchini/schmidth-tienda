@@ -19,7 +19,7 @@ export default function CatalogSort({ value, onChange }: Props) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-4 py-2 bg-panel border border-line rounded-lg text-sm text-fg hover:border-[#B7D31A] transition-colors"
+        className="flex items-center gap-2 px-4 py-2 bg-panel border border-line rounded-lg text-sm text-fg hover:border-accent transition-colors"
       >
         <ArrowDownUp size={14} className="text-brand-fg" />
         <span className="hidden sm:inline">{currentLabel}</span>
@@ -34,7 +34,7 @@ export default function CatalogSort({ value, onChange }: Props) {
                 key={opt.value}
                 onClick={() => { onChange(opt.value); setOpen(false); }}
                 className={'w-full text-left px-4 py-2.5 text-sm transition-colors ' +
-                  (value === opt.value ? 'text-brand-fg bg-[#B7D31A]/5' : 'text-fg-soft hover:text-fg hover:bg-fg/[0.04]')}
+                  (value === opt.value ? 'text-brand-fg bg-accent/5' : 'text-fg-soft hover:text-fg hover:bg-fg/[0.04]')}
               >
                 {opt.label}
               </button>

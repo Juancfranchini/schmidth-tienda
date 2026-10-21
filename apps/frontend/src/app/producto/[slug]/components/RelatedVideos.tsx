@@ -33,10 +33,10 @@ export default function RelatedVideos({ videos }: Props) {
           const thumb = getYouTubeThumb(video.url);
           return (
             <a key={i} href={video.url} target="_blank" rel="noopener noreferrer"
-              className="bg-chip border border-line rounded-xl overflow-hidden cursor-pointer group hover:border-[#B7D31A]/40 transition-all">
+              className="bg-chip border border-line rounded-xl overflow-hidden cursor-pointer group hover:border-accent/40 transition-all">
               <div className="aspect-video bg-panel flex items-center justify-center relative">
                 {thumb ? <img src={thumb} alt={video.title} className="w-full h-full object-cover" />
-                  : <div className="w-12 h-12 rounded-full bg-[#B7D31A]/20 flex items-center justify-center group-hover:bg-[#B7D31A]/40 transition-all"><Play size={20} className="text-brand-fg ml-0.5" /></div>}
+                  : <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center group-hover:bg-accent/40 transition-all"><Play size={20} className="text-brand-fg ml-0.5" /></div>}
               </div>
               <div className="p-3"><p className="text-fg text-xs font-medium line-clamp-2">{video.title}</p></div>
             </a>
@@ -49,7 +49,7 @@ export default function RelatedVideos({ videos }: Props) {
             className="w-6 h-6 rounded flex items-center justify-center text-fg-muted hover:text-fg disabled:opacity-30"><ChevronUp size={14} /></button>
           {Array.from({ length: totalPages }).map((_, i) => (
             <button key={i} onClick={() => setPage(i)}
-              className={'w-2 h-2 rounded-full transition-all ' + (i === page ? 'bg-[#B7D31A] w-2.5 h-2.5' : 'bg-fg-muted/40 hover:bg-fg-muted')} />
+              className={'w-2 h-2 rounded-full transition-all ' + (i === page ? 'bg-accent w-2.5 h-2.5' : 'bg-fg-muted/40 hover:bg-fg-muted')} />
           ))}
           <button onClick={() => setPage(Math.min(totalPages - 1, page + 1))} disabled={page === totalPages - 1}
             className="w-6 h-6 rounded flex items-center justify-center text-fg-muted hover:text-fg disabled:opacity-30"><ChevronDown size={14} /></button>

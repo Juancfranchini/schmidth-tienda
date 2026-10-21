@@ -54,11 +54,11 @@ export default function CuentaAuthForm({ onAuth, initialError = '', embedded = f
     <div className={embedded ? 'w-full' : 'min-h-screen bg-page flex items-center justify-center py-12'}>
       <div className={embedded ? 'w-full' : 'w-full max-w-md mx-4'}>
         <div className="flex rounded-xl overflow-hidden border border-chip mb-6">
-          <button onClick={() => { setIsRegister(false); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (!isRegister ? 'bg-[#B7D31A] text-[#050606]' : 'bg-transparent text-fg-muted hover:text-fg')}>Iniciar sesión</button>
-          <button onClick={() => { setIsRegister(true); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (isRegister ? 'bg-[#B7D31A] text-[#050606]' : 'bg-transparent text-fg-muted hover:text-fg')}>Crear cuenta</button>
+          <button onClick={() => { setIsRegister(false); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (!isRegister ? 'bg-accent text-on-accent' : 'bg-transparent text-fg-muted hover:text-fg')}>Iniciar sesión</button>
+          <button onClick={() => { setIsRegister(true); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (isRegister ? 'bg-accent text-on-accent' : 'bg-transparent text-fg-muted hover:text-fg')}>Crear cuenta</button>
         </div>
 
-        <div className={'bg-card rounded-2xl border border-[#B7D31A]/20 ' + (embedded ? 'p-6 sm:p-8' : 'p-8')}>
+        <div className={'bg-card rounded-2xl border border-accent/20 ' + (embedded ? 'p-6 sm:p-8' : 'p-8')}>
           <div className="text-center mb-6">
             <Link href="/" aria-label={MARCA.nombre} className="inline-block">
               <BrandLogo size="lg" />
@@ -87,7 +87,7 @@ export default function CuentaAuthForm({ onAuth, initialError = '', embedded = f
           <div className="mt-5 pt-5 border-t border-line text-center">
             <p className="text-sm text-fg-muted">
               {isRegister ? 'Ya tenes cuenta? ' : 'No tenes cuenta? '}
-              <button onClick={() => { setIsRegister(!isRegister); setApiError(''); }} className="text-brand-fg font-bold hover:text-[#c8e81f] light:hover:text-[#4B5A00] transition-colors">{isRegister ? 'Inicia sesión' : 'Registrate gratis'}</button>
+              <button onClick={() => { setIsRegister(!isRegister); setApiError(''); }} className="text-brand-fg font-bold hover:text-accent-hover light:hover:text-brand-fg transition-colors">{isRegister ? 'Inicia sesión' : 'Registrate gratis'}</button>
             </p>
           </div>
         </div>

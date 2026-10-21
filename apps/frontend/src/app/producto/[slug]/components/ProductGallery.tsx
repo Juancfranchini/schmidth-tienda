@@ -51,14 +51,14 @@ export default function ProductGallery({ images, productName, hasDiscount, disco
       <div className="flex flex-col gap-3 self-start">
         {/* Imagen principal - click para abrir lightbox */}
         <div
-          className="aspect-square max-h-[36rem] bg-panel rounded-2xl border border-line overflow-hidden relative cursor-zoom-in"
+          className="aspect-[4/5] bg-chip overflow-hidden relative cursor-zoom-in"
           onClick={() => thumbnails.length > 0 && openLightbox(currentImageIndex)}
         >
           {images.length > 0 ? (
             <img
               src={getImageUrl(images[currentImageIndex] ?? images[0], 1200)}
               alt={productName}
-              className="w-full h-full object-contain p-3 sm:p-4 transition-opacity duration-200"
+              className="w-full h-full object-cover transition-opacity duration-200"
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center gap-3">
@@ -71,7 +71,7 @@ export default function ProductGallery({ images, productName, hasDiscount, disco
           {/* Badges */}
           <div className="absolute top-4 left-4 flex flex-col gap-2">
             {hasDiscount && <span className="bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full">-{discountPct % 1 === 0 ? discountPct.toFixed(0) : discountPct.toFixed(1)}%</span>}
-            {isNew && <span className="bg-[#B7D31A] text-[#050606] text-xs font-bold px-3 py-1 rounded-full">NUEVO</span>}
+            {isNew && <span className="rotulo bg-page/90 px-2.5 py-1 text-fg">Nuevo</span>}
           </div>
 
           {/* Indicador zoom */}

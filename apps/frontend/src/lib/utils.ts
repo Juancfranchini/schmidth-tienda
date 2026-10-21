@@ -35,7 +35,7 @@ const YA_TRANSFORMADA = /^[a-z]{1,3}_[^/,]+(,[a-z]{1,3}_[^/,]+)*\//;
  * URL de una imagen, lista para mostrar.
  *
  * Las fotos de Cloudinary se piden comprimidas (WebP/AVIF según el navegador)
- * y al ancho en que se van a ver: el original de una paleta pesa ~950 KB y la
+ * y al ancho en que se van a ver: el original de una foto pesa ~950 KB y la
  * versión de tarjeta ~50 KB. Servir originales fue lo que agotó el plan de
  * Cloudinary. `ancho` es el máximo en píxeles (nunca se agranda una foto chica).
  */

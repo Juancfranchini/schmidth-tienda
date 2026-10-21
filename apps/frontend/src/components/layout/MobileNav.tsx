@@ -2,9 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useMenuNavegacion, accesosPorGenero } from '@/hooks/useMenuCategorias';
-import MobileNavAccordion from './MobileNavAccordion';
-import BrandMenuItem from './BrandMenuItem';
+import { useMenuCategorias } from '@/hooks/useMenuCategorias';
 import { isNavActive } from './navState';
 
 interface Props {
@@ -12,87 +10,48 @@ interface Props {
   onNavigate: () => void;
 }
 
-const enlaceHoja = 'block rounded-md px-3 py-2.5 text-sm text-fg-soft transition-colors hover:bg-fg/[0.05] hover:text-brand-fg';
-const enlaceRaiz = 'my-0.5 block rounded-lg px-3 py-3 text-sm font-semibold uppercase tracking-wide transition-colors hover:bg-fg/[0.06] hover:text-fg';
-
 /**
- * Menú de navegación en móvil, al estilo Pádel CABA: cada categoría se
- * despliega en las marcas que tienen productos en ella, con su logo. Debajo,
- * los links informativos que en escritorio van en el pie.
- *
- * Si la API no responde, las categorías no aparecen y el menú sigue
- * funcionando con los links fijos.
+ * Menú del celular: la colección, sus categorías y los colores arriba; debajo,
+ * los links informativos que en escritorio van en el pie. Si la API no
+ * responde, las categorías no aparecen y el resto sigue funcionando.
  */
 export default function MobileNav({ links, onNavigate }: Props) {
-  const { categorias, marcas, generos } = useMenuNavegacion();
+  const categorias = useMenuCategorias();
   const pathname = usePathname();
 
-  const claseRaiz = (href: string) =>
-    enlaceRaiz + (isNavActive(pathname, href) ? ' bg-[#B7D31A] text-[#050606]' : ' text-fg-soft');
+  const principales = [
+    { label: 'Toda la colección', href: '/catalogo' },
+    ...categorias.map((c) => ({ label: c.name, href: '/catalogo?categoria=' + c.slug })),
+    { label: 'Colores', href: '/#colores' },
+    { label: 'A pedido', href: '/#a-pedido' },
+  ];
+  const secundarios = [...links, { label: 'Mi cuenta', href: '/cuenta' }];
 
   return (
-    <nav className="max-h-[calc(100dvh-120px)] overflow-y-auto border-t border-[#303638] light:border-[#D2D2CA] bg-[#101416] light:bg-[#EFF2EC] shadow-2xl lg:hidden" aria-label="Navegación móvil">
-      <div className="mx-auto flex max-w-7xl flex-col px-6 py-3">
-        {categorias.map((categoria) => (
-          <MobileNavAccordion key={categoria.id} label={categoria.name}>
-            <Link href={'/catalogo?categoria=' + categoria.slug} className={enlaceHoja} onClick={onNavigate}>
-              Ver todo en {categoria.name}
+    <nav className="max-h-[calc(100dvh-110px)] overflow-y-auto border-t border-line bg-page lg:hidden" aria-label="Navegación móvil">
+      <ul className="px-6 py-4">
+        {principales.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              onClick={onNavigate}
+              aria-current={isNavActive(pathname, link.href) ? 'page' : undefined}
+              className="block border-b border-line py-3.5 font-display text-2xl text-fg transition-colors hover:text-bordo"
+            >
+              {link.label}
             </Link>
-            {categoria.brands.map((marca) => (
-              <BrandMenuItem
-                key={marca.id}
-                marca={marca}
-                href={'/catalogo?categoria=' + categoria.slug + '&marca=' + marca.slug}
-                onNavigate={onNavigate}
-              />
-            ))}
-          </MobileNavAccordion>
+          </li>
         ))}
-
-        {accesosPorGenero(generos).map((g) => (
-          <Link key={g.href} href={g.href} className={enlaceRaiz + ' text-fg-soft'} onClick={onNavigate}>
-            {g.label}
-          </Link>
-        ))}
-
-        {marcas.length > 0 && (
-          <MobileNavAccordion label="Marcas">
-            <Link href="/catalogo" className={enlaceHoja} onClick={onNavigate}>
-              Ver todo el catálogo
+      </ul>
+      <ul className="px-6 pb-6">
+        {secundarios.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} onClick={onNavigate} className="rotulo block py-2.5 text-fg-soft transition-colors hover:text-bordo">
+              {link.label}
             </Link>
-            {marcas.map((marca) => (
-              <BrandMenuItem key={marca.id} marca={marca} href={'/catalogo?marca=' + marca.slug} onNavigate={onNavigate} />
-            ))}
-          </MobileNavAccordion>
-        )}
-
-        <Link href="/catalogo?oferta=true" className={enlaceRaiz + ' text-brand-fg'} onClick={onNavigate}>
-          Ofertas
-        </Link>
-
-        <div className="my-2 h-px bg-[#303638] light:bg-[#DADAD2]" />
-
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            aria-current={isNavActive(pathname, link.href) ? 'page' : undefined}
-            className={claseRaiz(link.href)}
-            onClick={onNavigate}
-          >
-            {link.label}
-          </Link>
+          </li>
         ))}
-
-        <Link
-          href="/cuenta"
-          aria-current={isNavActive(pathname, '/cuenta') ? 'page' : undefined}
-          className={claseRaiz('/cuenta')}
-          onClick={onNavigate}
-        >
-          Mi cuenta
-        </Link>
-      </div>
+      </ul>
     </nav>
   );
 }

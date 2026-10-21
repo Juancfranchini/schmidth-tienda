@@ -30,7 +30,7 @@ export default function CarritoSummary({
   const cuotasMercadoPago = configCuotas.activo ? cuotasPara(subtotal - discount, configCuotas) : 0;
   return (
     <div className="lg:col-span-1">
-      <div className="bg-card rounded-2xl border border-[#B7D31A]/20 p-6 sticky top-24">
+      <div className="bg-card rounded-2xl border border-accent/20 p-6 sticky top-24">
         <h2 className="font-black text-base uppercase tracking-tight text-fg mb-4">Resumen</h2>
 
         <CouponField coupon={coupon} />
@@ -47,7 +47,7 @@ export default function CarritoSummary({
         </div>
         <CarritoTotalTransferencia items={items} couponCode={coupon.couponCode} totalLista={total} extra={bolsas.total} flatRate={flatRate} freeShippingThreshold={freeShippingThreshold} />
 
-        <button type="button" onClick={onCheckout} className="mt-5 w-full flex items-center justify-center gap-2 bg-[#B7D31A] text-[#050606] py-4 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-[#c8e81f] transition-colors">
+        <button type="button" onClick={onCheckout} className="mt-5 w-full flex items-center justify-center gap-2 bg-accent text-on-accent py-4 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-accent-hover transition-colors">
           Finalizar compra <ArrowRight size={15} />
         </button>
 

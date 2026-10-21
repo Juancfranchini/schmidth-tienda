@@ -55,7 +55,7 @@ export default function CartDrawer({ isOpen, onClose }: Props) {
               <p className="text-fg-muted text-sm mb-6">Tu carrito esta vacio</p>
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-lg text-sm font-semibold bg-[#B7D31A] text-[#050606] hover:bg-[#c8e81f] transition-colors"
+                className="px-6 py-2.5 rounded-lg text-sm font-semibold bg-accent text-on-accent hover:bg-accent-hover transition-colors"
               >
                 Seguir comprando
               </button>

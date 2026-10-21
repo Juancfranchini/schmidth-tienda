@@ -34,7 +34,7 @@ function detalle(metodo: Metodo, correoCost: number, andreaniGratis: boolean, fl
 
 const tarjeta = (activa: boolean) =>
   'flex items-start gap-2.5 rounded-xl border-2 p-3 cursor-pointer transition-colors ' +
-  (activa ? 'border-[#B7D31A] bg-[#B7D31A]/10' : 'border-chip hover:border-[#B7D31A]/40');
+  (activa ? 'border-accent bg-accent/10' : 'border-chip hover:border-accent/40');
 
 /**
  * Primero envío o retiro (dos botones grandes); con envío, los transportistas

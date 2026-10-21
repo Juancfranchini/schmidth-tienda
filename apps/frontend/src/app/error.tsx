@@ -23,7 +23,7 @@ export default function ErrorDePagina({ error, reset }: { error: Error & { diges
         <h2 className="mt-3 text-2xl font-black text-fg">No pudimos cargar esta parte de la página</h2>
         <p className="mt-3 text-sm text-fg-soft">Probá de nuevo. Si sigue pasando, escribinos por WhatsApp y te ayudamos con tu compra.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <button type="button" onClick={reset} className="bg-[#B7D31A] text-[#050606] px-5 py-3 rounded-xl font-black text-sm uppercase tracking-wide hover:bg-[#c8e81f] transition-colors">
+          <button type="button" onClick={reset} className="bg-accent text-on-accent px-5 py-3 rounded-xl font-black text-sm uppercase tracking-wide hover:bg-accent-hover transition-colors">
             Reintentar
           </button>
           <Link href="/catalogo" className="border border-line px-5 py-3 rounded-xl font-bold text-sm uppercase tracking-wide text-fg hover:bg-card transition-colors">

@@ -64,9 +64,9 @@ export default function CarritoGuardarMail({ items }: { items: CartItem[] }) {
         <input
           id="carrito-mail" type="email" autoComplete="email" inputMode="email" placeholder="tu@mail.com"
           {...register('email')}
-          className="min-w-0 flex-1 rounded-lg border border-line bg-field px-3 py-2 text-sm text-fg placeholder:text-fg-muted focus:border-[#B7D31A] focus:outline-none"
+          className="min-w-0 flex-1 rounded-lg border border-line bg-field px-3 py-2 text-sm text-fg placeholder:text-fg-muted focus:border-accent focus:outline-none"
         />
-        <button type="submit" disabled={isSubmitting} className="shrink-0 rounded-lg border border-[#B7D31A]/50 px-3 py-2 text-xs font-bold text-brand-fg hover:bg-[#B7D31A]/10 disabled:opacity-50">
+        <button type="submit" disabled={isSubmitting} className="shrink-0 rounded-lg border border-accent/50 px-3 py-2 text-xs font-bold text-brand-fg hover:bg-accent/10 disabled:opacity-50">
           Guardar
         </button>
       </div>

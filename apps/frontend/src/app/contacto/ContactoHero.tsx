@@ -40,7 +40,7 @@ export default function ContactoHero({ hero, heroImage, infoCards }: Props) {
             <div className="space-y-5">
               {infoCards.map((item: any, i: number) => {
                 const IconComp = ICON_MAP[item.icon] || MessageCircle;
-                const iconColor = item.bgColor || (item.icon === 'MessageCircle' ? '#22c55e' : item.icon === 'Mail' ? '#B7D31A' : '#8A8A85');
+                const iconColor = item.bgColor || (item.icon === 'MessageCircle' ? '#22c55e' : item.icon === 'Mail' ? 'rgb(var(--c-accent))' : '#8A8A85');
                 return item.href ? (
                   <a key={i} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-start gap-4 group">
                     <div className="w-11 h-11 rounded-xl border flex items-center justify-center flex-none group-hover:scale-105 transition-transform" style={{ backgroundColor: iconColor + '20', borderColor: iconColor + '40' }}>

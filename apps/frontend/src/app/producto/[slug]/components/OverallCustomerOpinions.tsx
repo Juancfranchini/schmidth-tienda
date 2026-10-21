@@ -81,9 +81,9 @@ export default function OverallCustomerOpinions({ productId }: Props) {
         {stats.distribution.map((d) => (
           <div key={d.stars} className="flex items-center gap-2 text-xs">
             <span className="w-4 text-fg-soft">{d.stars}</span>
-            <Star className="w-3 h-3 text-brand-fg fill-[#B7D31A] flex-shrink-0" />
+            <Star className="w-3 h-3 text-brand-fg fill-accent flex-shrink-0" />
             <div className="flex-1 h-2 bg-chip rounded-full overflow-hidden">
-              <div className="h-full bg-[#B7D31A] rounded-full" style={{ width: d.percentage + '%' }} />
+              <div className="h-full bg-accent rounded-full" style={{ width: d.percentage + '%' }} />
             </div>
             <span className="w-8 text-right text-fg-muted">{d.percentage}%</span>
           </div>
@@ -91,7 +91,7 @@ export default function OverallCustomerOpinions({ productId }: Props) {
       </div>
 
       {/* Footer - tirado al final */}
-      <button onClick={() => { setRefreshKey(k => k + 1); setShowInfo(true); }} className="mt-auto pt-3 flex items-center gap-1.5 text-xs text-brand-fg hover:text-[#c8e81f] light:hover:text-[#4B5A00] transition-colors w-fit ml-auto">
+      <button onClick={() => { setRefreshKey(k => k + 1); setShowInfo(true); }} className="mt-auto pt-3 flex items-center gap-1.5 text-xs text-brand-fg hover:text-accent-hover light:hover:text-brand-fg transition-colors w-fit ml-auto">
         <HelpCircle size={12} />
         {infoTitle}
       </button>

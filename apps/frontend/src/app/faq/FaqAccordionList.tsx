@@ -41,7 +41,7 @@ export default function FaqAccordionList({ loading, categories, grouped, isOpen,
       {categories.map((cat) => (
         <div key={cat} className="mb-12">
           <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-fg mb-5 flex items-center gap-2">
-            <span className="w-4 h-px bg-[#B7D31A]" />
+            <span className="w-4 h-px bg-accent" />
             {cat}
           </h2>
           <div className="space-y-3">

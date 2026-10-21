@@ -9,31 +9,9 @@ interface Props {
   banners: Banner[];
 }
 
-const FALLBACK: Banner[] = [
-  {
-    id: '1',
-    title: 'NUEVA COLECCIÓN 2026',
-    subtitle: 'Zapatillas premium',
-    ctaText: 'VER COLECCIÓN',
-    link: '/catalogo?categoria=zapatillas',
-    image: '',
-    order: 0,
-    active: true,
-  },
-  {
-    id: '2',
-    title: 'HASTA 40% OFF',
-    subtitle: 'Indumentaria temporada anterior',
-    ctaText: 'VER OFERTAS',
-    link: '/catalogo?oferta=true',
-    image: '',
-    order: 1,
-    active: true,
-  },
-];
-
 export default function PromoBanners({ banners }: Props) {
-  const items = banners && banners.length > 0 ? banners : FALLBACK;
+  // Solo los banners cargados en el backoffice; la portada no lo dibuja si no hay ninguno.
+  const items = banners ?? [];
   const [current, setCurrent] = useState(0);
   const isCarousel = items.length > 2;
 
@@ -49,7 +27,7 @@ export default function PromoBanners({ banners }: Props) {
 
   return (
     <section className="relative bg-gradient-to-b from-[#030F14] to-[#0D2028] py-6 light:from-[#F2F5F4] light:to-[#E6EEEF] sm:py-10 md:py-14">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B7D31A]/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">

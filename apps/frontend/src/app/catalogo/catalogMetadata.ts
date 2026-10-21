@@ -4,6 +4,7 @@ import { OPEN_GRAPH_BASE } from '@/lib/seoPortada';
 import { valoresDe, type CatalogFilters } from './catalogQuery';
 import type { CatalogResult, MenuCatalogo, MarcaMenu } from './getCatalogData';
 
+import { MARCA } from '@/config/marca';
 /** Más de tres marcas y el título se corta en Google; el resto va en la descripción. */
 const MARCAS_EN_TITULO = 3;
 
@@ -21,13 +22,6 @@ function marcasParaTitulo(marcas: MarcaMenu[]): string {
   return nombres.slice(0, MARCAS_EN_TITULO).join(', ') + ' y más';
 }
 
-/** Hombre/Mujer existen si hay productos de ese género o unisex (el backend los incluye al filtrar). */
-function generoValido(genero: string, generos: string[]): string | null {
-  if (!genero || !generos.length) return null;
-  if (generos.includes(genero)) return genero;
-  return ['Hombre', 'Mujer'].includes(genero) && generos.includes('Unisex') ? genero : null;
-}
-
 interface Encabezado {
   /** Para <title>: corto, con a lo sumo tres marcas. */
   titulo: string;
@@ -36,29 +30,29 @@ interface Encabezado {
 }
 
 /**
- * Título armado solo con lo que existe: la categoría, la marca y el género
+ * Título armado solo con lo que existe: la categoría y la marca
  * salen de /categories/menu, y las marcas listadas son las que tienen
  * productos en esa categoría. Un slug que no figura ahí no se nombra.
  */
 function encabezado(f: CatalogFilters, menu: MenuCatalogo): Encabezado {
   const cat = menu.categorias.find((c) => c.slug === f.selectedCategory);
   const marca = menu.marcas.find((m) => m.slug === f.selectedBrand) ?? cat?.brands.find((m) => m.slug === f.selectedBrand);
-  const genero = generoValido(f.selectedGender, menu.generos);
-  const paraGenero = genero ? ' para ' + genero.toLowerCase() : '';
+  // "Carteras de eco cuero" → " de eco cuero", para "Totes de eco cuero".
+  const deMaterial = ' ' + MARCA.rubro.toLowerCase().replace(/^carteras /, '');
 
-  if (!cat && !marca && !genero && !f.isOffer) {
+  if (!cat && !marca && !f.isOffer) {
     // Solo los rubros que hoy tienen productos: uno vacío no se ofrece.
     const rubros = menu.categorias.filter((c) => c.brands.length > 0).map((c) => c.name.toLowerCase());
-    return { titulo: 'Catálogo de pádel', completo: 'Catálogo de pádel' + (rubros.length ? ': ' + enumerar(rubros) : '') };
+    return { titulo: 'Colección ' + MARCA.nombre, completo: MARCA.rubro + (rubros.length ? ': ' + enumerar(rubros) : '') };
   }
 
   let titulo: string;
   let completo: string;
   if (marca && !cat) {
     const rubros = menu.categorias.filter((c) => c.brands.some((b) => b.slug === marca.slug)).map((c) => c.name.toLowerCase());
-    titulo = completo = marca.name + ': ' + (enumerar(rubros) || 'productos') + ' de pádel' + paraGenero;
+    titulo = completo = marca.name + ': ' + (enumerar(rubros) || 'carteras');
   } else {
-    const base = (cat ? cat.name : 'Productos') + (marca ? ' ' + marca.name : '') + ' de pádel' + paraGenero;
+    const base = (cat ? cat.name : 'Carteras') + (marca ? ' ' + marca.name : '') + deMaterial;
     const marcasDeCat = cat && !marca ? cat.brands : [];
     titulo = marcasDeCat.length ? base + ' ' + marcasParaTitulo(marcasDeCat) : base;
     completo = marcasDeCat.length ? base + ' ' + enumerar(marcasDeCat.map((m) => m.name)) : base;
@@ -72,7 +66,7 @@ function encabezado(f: CatalogFilters, menu: MenuCatalogo): Encabezado {
 
 /**
  * La URL canónica conserva solo lo que define una página propia (categoría,
- * marca, género, ofertas, página). Talle, color, precio u orden son variantes
+ * marca, ofertas, página). Talle, color, precio u orden son variantes
  * del mismo listado: si cada combinación se indexara por separado, Google
  * vería cientos de páginas casi iguales compitiendo entre sí.
  */
@@ -80,7 +74,6 @@ function urlCanonica(f: CatalogFilters): string {
   const q = new URLSearchParams();
   if (f.selectedCategory) q.set('categoria', f.selectedCategory);
   if (f.selectedBrand) q.set('marca', f.selectedBrand);
-  if (f.selectedGender) q.set('genero', f.selectedGender);
   if (f.isOffer) q.set('oferta', 'true');
   if (f.currentPage > 1) q.set('page', String(f.currentPage));
   const query = q.toString();
@@ -88,21 +81,20 @@ function urlCanonica(f: CatalogFilters): string {
 }
 
 /**
- * Una combinación de varias marcas, categorías o géneros (?marca=nox,royal) no
+ * Una combinación de varias marcas o categorías (?categoria=totes,bandoleras) no
  * es una página para el buscador: con todas las combinaciones posibles, Google
  * vería cientos de listados casi iguales. Se titula y se canoniza como el
  * listado sin esos filtros, y no se indexa.
  */
 function sinFiltrosCombinados(f: CatalogFilters): { base: CatalogFilters; combinado: boolean } {
   const multiple = (v: string) => valoresDe(v).length > 1;
-  const combinado = multiple(f.selectedCategory) || multiple(f.selectedBrand) || multiple(f.selectedGender);
+  const combinado = multiple(f.selectedCategory) || multiple(f.selectedBrand);
   if (!combinado) return { base: f, combinado };
   return {
     base: {
       ...f,
       selectedCategory: multiple(f.selectedCategory) ? '' : f.selectedCategory,
       selectedBrand: multiple(f.selectedBrand) ? '' : f.selectedBrand,
-      selectedGender: multiple(f.selectedGender) ? '' : f.selectedGender,
     },
     combinado,
   };

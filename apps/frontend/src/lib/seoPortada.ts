@@ -1,7 +1,7 @@
 import { MARCA } from '@/config/marca';
 
 // Título y descripción de la portada (y de lo que se comparte en redes).
-// Llevan "pádel" con tilde y "Argentina" porque es como se busca, y solo
+// Llevan el rubro y "Argentina" porque es como se busca, y solo
 // ganchos que la tienda cumple de verdad: el envío gratis por Correo Argentino
 // depende del monto que se configura en el backoffice y las cuotas cambian
 // con cada promo, así que no se escriben números que después queden viejos.

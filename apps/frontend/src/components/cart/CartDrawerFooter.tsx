@@ -21,7 +21,7 @@ export default function CartDrawerFooter({ subtotal, onClose, onCheckout }: Prop
         <Link
           href="/carrito"
           onClick={onClose}
-          className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-semibold border border-[#B7D31A]/30 text-fg hover:border-[#B7D31A]/60 hover:bg-panel transition-all"
+          className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-semibold border border-accent/30 text-fg hover:border-accent/60 hover:bg-panel transition-all"
         >
           Ver carrito
           <ArrowRight className="w-4 h-4" />
@@ -29,7 +29,7 @@ export default function CartDrawerFooter({ subtotal, onClose, onCheckout }: Prop
         <button
           type="button"
           onClick={onCheckout}
-          className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-semibold bg-[#B7D31A] text-[#050606] hover:bg-[#c8e81f] transition-colors"
+          className="flex items-center justify-center gap-1 px-4 py-3 rounded-lg text-sm font-semibold bg-accent text-on-accent hover:bg-accent-hover transition-colors"
         >
           Finalizar compra
           <ShoppingBag className="w-4 h-4" />

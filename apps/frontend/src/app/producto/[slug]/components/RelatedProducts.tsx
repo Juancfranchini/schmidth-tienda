@@ -29,7 +29,7 @@ export default function RelatedProducts({ products }: Props) {
         </h2>
         <div className="relative">
           <button onClick={() => scrollRef.current?.scrollBy({ left: -280, behavior: 'smooth' })}
-            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-[#B7D31A]/30 flex items-center justify-center text-brand-fg hover:bg-[#B7D31A]/20 hover:border-[#B7D31A] transition-all hidden md:flex">
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-accent/30 flex items-center justify-center text-brand-fg hover:bg-accent/20 hover:border-accent transition-all hidden md:flex">
             <ChevronLeft size={14} />
           </button>
           <div ref={scrollRef} className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide" style={{ scrollSnapType: 'x mandatory' }}>
@@ -42,7 +42,7 @@ export default function RelatedProducts({ products }: Props) {
               const freeShipping = isLoaded && !relMadeToOrder && displayPrice >= freeShippingThreshold;
               return (
                 <Link key={p.id} href={'/producto/' + p.slug}
-                  className="flex-none w-36 sm:w-44 md:w-52 bg-chip border border-[#B7D31A]/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-[#B7D31A]/60 transition-all group relative"
+                  className="flex-none w-36 sm:w-44 md:w-52 bg-chip border border-accent/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-accent/60 transition-all group relative"
                   style={{ scrollSnapAlign: 'start' }}>
                   <div className="aspect-square bg-page overflow-hidden">
                     {p.images.length > 0 ? (
@@ -65,13 +65,13 @@ export default function RelatedProducts({ products }: Props) {
                     {installments && <p className="text-brand-fg text-[10px] mt-0.5">{installments.count} cuotas de {formatPrice(installments.amount)}</p>}
                     {freeShipping && <p className="flex items-center gap-1 text-brand-fg text-[10px] font-bold mt-1"><Truck size={10} />Envío gratis</p>}
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#B7D31A] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 </Link>
               );
             })}
           </div>
           <button onClick={() => scrollRef.current?.scrollBy({ left: 280, behavior: 'smooth' })}
-            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-[#B7D31A]/30 flex items-center justify-center text-brand-fg hover:bg-[#B7D31A]/20 hover:border-[#B7D31A] transition-all hidden md:flex">
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-accent/30 flex items-center justify-center text-brand-fg hover:bg-accent/20 hover:border-accent transition-all hidden md:flex">
             <ChevronRight size={14} />
           </button>
         </div>

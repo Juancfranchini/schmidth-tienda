@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { RegisterFormData } from './authFormSchemas';
 
-const inputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-chip rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
+const inputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-chip rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
 const errorInputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-red-500/50 rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-red-500 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
-const checkboxClass = 'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-chip bg-field accent-[#B7D31A]';
+const checkboxClass = 'mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded border-chip bg-field accent-accent';
 
 interface Props {
   form: UseFormReturn<RegisterFormData>;
@@ -46,7 +46,7 @@ export default function CuentaRegisterForm({ form, onSubmit, showPassword, onTog
         <div>
           <label htmlFor="register-accept-terms" className="flex items-start gap-2.5 text-sm text-[#C9C9C4] light:text-[#43443E] cursor-pointer">
             <input id="register-accept-terms" {...register('acceptTerms')} type="checkbox" className={checkboxClass} />
-            <span>Acepto los <Link href="/terminos" target="_blank" className="text-brand-fg font-semibold hover:text-[#c8e81f] light:hover:text-[#4B5A00] underline-offset-2 hover:underline">términos y condiciones</Link></span>
+            <span>Acepto los <Link href="/terminos" target="_blank" className="text-brand-fg font-semibold hover:text-accent-hover light:hover:text-brand-fg underline-offset-2 hover:underline">términos y condiciones</Link></span>
           </label>
           {errors.acceptTerms && <p className="text-red-500 light:text-red-600 text-xs mt-1">{String(errors.acceptTerms.message)}</p>}
         </div>
@@ -55,7 +55,7 @@ export default function CuentaRegisterForm({ form, onSubmit, showPassword, onTog
           <span>Acepto recibir novedades, ofertas</span>
         </label>
       </div>
-      <button type="submit" disabled={isSubmitting} className="w-full bg-[#B7D31A] text-[#050606] py-3.5 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-[#c8e81f] transition-colors disabled:opacity-70">{isSubmitting ? 'Creando cuenta...' : 'Crear cuenta'}</button>
+      <button type="submit" disabled={isSubmitting} className="w-full bg-accent text-on-accent py-3.5 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-accent-hover transition-colors disabled:opacity-70">{isSubmitting ? 'Creando cuenta...' : 'Crear cuenta'}</button>
     </form>
   );
 }

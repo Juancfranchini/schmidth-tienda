@@ -31,13 +31,13 @@ export function bolsasDeRegalo(pedidas: number | undefined, items: { quantity: n
   return Math.max(0, Math.min(n, unidades));
 }
 
-/** Lo guardado, saneado: sin configurar sigue como siempre (ofrecida y sin cargo). */
+/** Lo guardado, saneado. Sin configurar, la bolsa NO se ofrece: en Schmidt se activa desde el backoffice. */
 export function configBolsa(data: unknown): ConfigBolsa {
   const d = (data ?? {}) as { precio?: unknown; activa?: unknown };
   const precio = Number(d.precio);
   return {
     precio: Number.isFinite(precio) && precio > 0 ? Math.min(Math.round(precio), PRECIO_MAXIMO_BOLSA) : 0,
-    activa: d.activa !== false,
+    activa: d.activa === true,
   };
 }
 

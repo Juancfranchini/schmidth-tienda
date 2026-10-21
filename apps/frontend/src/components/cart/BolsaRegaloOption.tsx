@@ -40,7 +40,7 @@ export default function BolsaRegaloOption({ compacta = false }: { compacta?: boo
         <div className={`mt-2 ${compacta ? '' : 'sm:mt-0'} flex-shrink-0`}>
           {bolsas === 0 ? (
             <button type="button" onClick={() => setBolsas(1)}
-              className="bg-[#B7D31A] text-[#050606] px-3 py-2 rounded-lg font-black text-xs uppercase tracking-wide hover:bg-[#c8e81f] transition-colors">
+              className="bg-accent text-on-accent px-3 py-2 rounded-lg font-black text-xs uppercase tracking-wide hover:bg-accent-hover transition-colors">
               Agregar
             </button>
           ) : (

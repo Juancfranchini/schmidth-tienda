@@ -27,7 +27,7 @@ export default function CheckoutSuccessScreen({ orderNumber, pedido, whatsapp }:
 
   return (
     <div className="min-h-screen bg-page flex items-center justify-center py-10">
-      <div className="max-w-md w-full mx-4 bg-card rounded-2xl border border-[#B7D31A]/30 p-8 text-center">
+      <div className="max-w-md w-full mx-4 bg-card rounded-2xl border border-accent/30 p-8 text-center">
         <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-5">
           <CheckCircle size={32} className="text-green-500 light:text-green-700" />
         </div>
@@ -52,7 +52,7 @@ export default function CheckoutSuccessScreen({ orderNumber, pedido, whatsapp }:
         )}
 
         {comprobante && (
-          <a href={comprobante} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-[#B7D31A] text-[#050606] py-3 rounded-xl font-black text-sm uppercase tracking-wide mb-3">
+          <a href={comprobante} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-accent text-on-accent py-3 rounded-xl font-black text-sm uppercase tracking-wide mb-3">
             <MessageCircle size={16} /> Enviar comprobante por WhatsApp
           </a>
         )}

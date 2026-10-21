@@ -12,7 +12,7 @@ interface Props {
 
 const botonCantidad =
   'w-6 h-6 flex items-center justify-center rounded-md border border-line text-fg-soft ' +
-  'transition-colors hover:border-[#B7D31A] hover:text-brand-fg disabled:opacity-40 ' +
+  'transition-colors hover:border-accent hover:text-brand-fg disabled:opacity-40 ' +
   'disabled:hover:border-line disabled:hover:text-fg-soft disabled:cursor-not-allowed';
 
 /**

@@ -32,7 +32,7 @@ export default function CatalogSidebarButton({ icon: Icon, label, value, active,
       className={
         'flex w-full items-start gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ' +
         (active
-          ? 'border border-[#B7D31A]/30 bg-[#B7D31A]/10 text-brand-fg'
+          ? 'border border-accent/30 bg-accent/10 text-brand-fg'
           : 'border border-transparent text-fg-muted hover:bg-panel hover:text-fg')
       }
     >

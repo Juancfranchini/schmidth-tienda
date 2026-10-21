@@ -19,10 +19,10 @@ export default function CatalogSearch({ value, onChange, onSubmit }: Props) {
           onChange={(e) => onChange(e.target.value)}
           aria-label="Buscar productos"
           placeholder="Escribí el producto que buscás"
-          className="w-56 pl-10 pr-4 py-2 bg-night border border-[#B7D31A]/50 rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A] focus:ring-1 focus:ring-[#B7D31A]/20 transition-all"
+          className="w-56 pl-10 pr-4 py-2 bg-night border border-accent/50 rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/20 transition-all"
         />
       </div>
-      <button type="submit" className="px-4 py-2 bg-[#B7D31A] text-[#050606] rounded-lg text-xs font-semibold uppercase tracking-wide btn-primary-glow">
+      <button type="submit" className="px-4 py-2 bg-accent text-on-accent rounded-lg text-xs font-semibold uppercase tracking-wide btn-primary-glow">
         Buscar
       </button>
     </form>

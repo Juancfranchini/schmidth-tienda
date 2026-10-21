@@ -44,7 +44,7 @@ export default function CarritoTotalTransferencia({ items, couponCode, totalList
   if (!isLoaded || !transferencia.active || total >= totalLista) return null;
 
   return (
-    <div className="mt-3 rounded-xl border border-[#B7D31A]/30 bg-[#B7D31A]/5 px-4 py-3 text-sm">
+    <div className="mt-3 rounded-xl border border-accent/30 bg-accent/5 px-4 py-3 text-sm">
       <p className="flex items-center justify-between gap-2 font-bold text-fg">
         <span className="flex items-center gap-1.5"><Landmark size={14} /> Pagando por transferencia</span>
         <span>{formatPrice(total)}</span>

@@ -62,7 +62,7 @@ export default function ProductReviews({ productId }: Props) {
                 <span className="font-semibold text-sm text-fg">{review.name}</span>
                 <div className="flex gap-0.5 mt-0.5">
                   {[1,2,3,4,5].map((s) => (
-                    <Star key={s} className={'w-3.5 h-3.5 ' + (s <= review.rating ? 'text-brand-fg fill-[#B7D31A]' : 'text-chip')} />
+                    <Star key={s} className={'w-3.5 h-3.5 ' + (s <= review.rating ? 'text-brand-fg fill-accent' : 'text-chip')} />
                   ))}
                 </div>
               </div>
@@ -85,17 +85,17 @@ export default function ProductReviews({ productId }: Props) {
       {totalPages > 1 && (
         <div className="absolute bottom-1 left-0 right-0 flex items-center justify-center gap-3 z-10">
           <button onClick={prev} disabled={currentIndex === 0}
-            className="w-7 h-7 rounded-full bg-chip/90 border border-line flex items-center justify-center hover:border-[#B7D31A]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+            className="w-7 h-7 rounded-full bg-chip/90 border border-line flex items-center justify-center hover:border-accent/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
             <ChevronLeft size={14} className="text-fg-muted" />
           </button>
           <div className="flex gap-1.5">
             {Array.from({ length: totalPages }).map((_, i) => (
               <button key={i} onClick={() => setCurrentIndex(i)}
-                className={'rounded-full transition-all ' + (i === currentIndex ? 'w-5 h-1.5 bg-[#B7D31A]' : 'w-1.5 h-1.5 bg-fg/30 hover:bg-fg/50')} />
+                className={'rounded-full transition-all ' + (i === currentIndex ? 'w-5 h-1.5 bg-accent' : 'w-1.5 h-1.5 bg-fg/30 hover:bg-fg/50')} />
             ))}
           </div>
           <button onClick={next} disabled={currentIndex === totalPages - 1}
-            className="w-7 h-7 rounded-full bg-chip/90 border border-line flex items-center justify-center hover:border-[#B7D31A]/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
+            className="w-7 h-7 rounded-full bg-chip/90 border border-line flex items-center justify-center hover:border-accent/50 disabled:opacity-30 disabled:cursor-not-allowed transition-all">
             <ChevronRight size={14} className="text-fg-muted" />
           </button>
         </div>

@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { DireccionGuardada, DireccionInput } from '@/lib/api';
 import { PROVINCIAS } from '@/lib/provincias';
 
-const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors';
+const inputClass = 'w-full bg-field border border-chip rounded-lg px-4 py-2.5 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors';
 const labelClass = 'block text-xs font-semibold text-fg-muted uppercase tracking-wide mb-1';
 const MensajeError = ({ mensaje }: { mensaje?: string }) => (mensaje ? <p className="text-red-500 light:text-red-600 text-xs mt-1">{mensaje}</p> : null);
 
@@ -40,7 +40,7 @@ export default function DireccionForm({ inicial, guardando, onGuardar, onCancela
   const enviar = (d: Datos) => onGuardar({ ...d, label: d.label || undefined, phone: d.phone || undefined });
 
   return (
-    <form onSubmit={handleSubmit(enviar)} noValidate className="rounded-xl border border-[#B7D31A]/30 bg-field/40 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <form onSubmit={handleSubmit(enviar)} noValidate className="rounded-xl border border-accent/30 bg-field/40 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div className="sm:col-span-2">
         <label htmlFor="dir-label" className={labelClass}>Nombre (opcional)</label>
         <input id="dir-label" {...register('label')} placeholder="Casa, Trabajo…" className={inputClass} />
@@ -76,7 +76,7 @@ export default function DireccionForm({ inicial, guardando, onGuardar, onCancela
       </div>
       <div className="sm:col-span-2 flex justify-end gap-2">
         <button type="button" onClick={onCancelar} className="px-4 py-2 rounded-lg border border-chip text-sm text-fg-soft hover:text-fg">Cancelar</button>
-        <button type="submit" disabled={guardando} className="px-4 py-2 rounded-lg bg-[#B7D31A] text-[#050606] text-sm font-bold disabled:opacity-60">{guardando ? 'Guardando…' : 'Guardar dirección'}</button>
+        <button type="submit" disabled={guardando} className="px-4 py-2 rounded-lg bg-accent text-on-accent text-sm font-bold disabled:opacity-60">{guardando ? 'Guardando…' : 'Guardar dirección'}</button>
       </div>
     </form>
   );

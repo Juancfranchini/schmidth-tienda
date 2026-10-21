@@ -25,9 +25,9 @@ describe('precio de la bolsa', () => {
   const items = [{ quantity: 2 }];
 
   it('sin configurar: ofrecida y sin cargo; valores raros se sanean', () => {
-    expect(configBolsa(undefined)).toEqual({ precio: 0, activa: true });
+    expect(configBolsa(undefined)).toEqual({ precio: 0, activa: false });
     expect(configBolsa({ precio: '2500.4', activa: true })).toEqual({ precio: 2500, activa: true });
-    expect(configBolsa({ precio: -5 })).toEqual({ precio: 0, activa: true });
+    expect(configBolsa({ precio: -5 })).toEqual({ precio: 0, activa: false });
     expect(configBolsa({ precio: 'abc', activa: false })).toEqual({ precio: 0, activa: false });
   });
 

@@ -4,7 +4,7 @@ import { TrackedOrder } from './types';
 
 export default function RastrearOrderCard({ order }: { order: TrackedOrder }) {
   return (
-    <div className="bg-card rounded-2xl border border-[#B7D31A]/20 p-6">
+    <div className="bg-card rounded-2xl border border-accent/20 p-6">
       <div className="flex items-center justify-between mb-4">
         <div><p className="text-xs text-fg-muted uppercase tracking-wide">Pedido</p><p className="text-xl font-black text-brand-fg">{order.number}</p></div>
         <div className="text-right"><p className="text-xs text-fg-muted uppercase tracking-wide">Fecha</p><p className="text-sm font-semibold text-fg">{new Date(order.createdAt).toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' })}</p></div>

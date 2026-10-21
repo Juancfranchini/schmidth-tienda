@@ -33,7 +33,7 @@ interface Props {
  * aprobada, que no se tramitó.
  *
  * Antes, cuando no había ninguna, se dibujaban seis recuadros de relleno con
- * etiquetas inventadas —"Padel", "Equipo", "Cancha"— que no llevaban a ninguna
+ * etiquetas inventadas que no llevaban a ninguna
  * publicación real. Ahora, sin publicaciones cargadas, queda solo el
  * encabezado con el enlace al perfil; y sin datos de la sección, no se muestra
  * nada.
@@ -62,7 +62,7 @@ export default function InstagramSection({ config }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 mb-5 sm:mb-8">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#B7D31A] to-[#1699D3] flex items-center justify-center">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-accent to-[#1699D3] flex items-center justify-center">
               <InstagramIcon size={22} />
             </div>
             <div>

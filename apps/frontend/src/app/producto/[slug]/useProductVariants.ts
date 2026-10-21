@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Product } from '@/types';
 import { dimensionLabel, weightLabel } from './components/VariantSelector';
 
@@ -9,6 +10,17 @@ export function useProductVariants(product: Product | null) {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedDimensions, setSelectedDimensions] = useState<string | null>(null);
   const [selectedWeight, setSelectedWeight] = useState<string | null>(null);
+
+  // Color de entrada: el que viene en la URL (desde una muestra de la tarjeta) o,
+  // si no, el primero con stock. Sin color elegido no se puede comprar, y
+  // pedirle a quien entra que elija uno más es un paso que no aporta nada.
+  const colorDeUrl = useSearchParams().get('color');
+  useEffect(() => {
+    if (selectedColor || !product?.hasColor || !product.variants) return;
+    const conColor = product.variants.filter((v) => v.active && !v.isDefault && v.color);
+    const inicial = conColor.find((v) => v.color === colorDeUrl) ?? conColor.find((v) => v.stock > 0) ?? conColor[0];
+    if (inicial?.color) setSelectedColor(inicial.color);
+  }, [product, colorDeUrl, selectedColor]);
 
   // Auto-seleccionar talla única al seleccionar color
   useEffect(() => {

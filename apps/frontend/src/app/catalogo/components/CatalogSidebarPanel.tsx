@@ -5,7 +5,6 @@ import { SORT_OPTIONS } from '../sortOptions';
 import CatalogCheckboxOption from './CatalogCheckboxOption';
 import CatalogAttributeSelect from './CatalogAttributeSelect';
 import CatalogPriceRange from './CatalogPriceRange';
-import { etiquetaFormato } from '../useCatalogFilters';
 import { valoresDe } from '../catalogQuery';
 
 export type ActivePanel = 'categories' | 'brands' | 'attributes' | 'price' | 'sort' | null;
@@ -29,23 +28,12 @@ export interface PanelProps {
   selectedSize: string;
   selectedColor: string;
   selectedWeight: string;
-  selectedShape: string;
-  /** Valores de género realmente cargados. Vacío mientras nadie los use. */
-  genders: string[];
-  selectedGender: string;
-  /** Formatos y niveles realmente cargados, en su orden natural. */
-  shapes: string[];
-  levels: string[];
-  selectedLevel: string;
   minPrice: number | null;
   maxPrice: number | null;
-  onLevelChange: (value: string | null) => void;
   onPriceChange: (min: number | null, max: number | null) => void;
   onSizeChange: (value: string | null) => void;
   onColorChange: (value: string | null) => void;
   onWeightChange: (value: string | null) => void;
-  onShapeChange: (value: string | null) => void;
-  onGenderChange: (value: string | null) => void;
 }
 
 const toOptions = (values: string[]) => values.map((value) => ({ value, label: value }));
@@ -126,14 +114,13 @@ function BrandsSection({ brands, selectedBrand, onBrandChange }: PanelProps) {
 }
 
 function AttributesSection(props: PanelProps) {
-  const { selectedShape, onShapeChange, sizes, selectedSize, onSizeChange,
-    colors, selectedColor, onColorChange, weights, selectedWeight, onWeightChange,
-    genders, selectedGender, onGenderChange, shapes, levels, selectedLevel, onLevelChange } = props;
+  const { sizes, selectedSize, onSizeChange,
+    colors, selectedColor, onColorChange, weights, selectedWeight, onWeightChange } = props;
 
   // Cada atributo se ofrece solo si algún producto lo tiene cargado: las
-  // opciones salen de los datos. Un filtro fijo (Hombre/Mujer, Principiante…)
+  // opciones salen de los datos. Un filtro fijo de valores
   // devolvería cero resultados hasta que se cargue.
-  const hayAlguno = shapes.length > 0 || levels.length > 0 || genders.length > 0 || sizes.length > 0 || colors.length > 0 || weights.length > 0;
+  const hayAlguno = sizes.length > 0 || colors.length > 0 || weights.length > 0;
 
   if (!hayAlguno) {
     return (
@@ -145,15 +132,6 @@ function AttributesSection(props: PanelProps) {
 
   return (
     <div className="space-y-4">
-      {genders.length > 0 && (
-        <OpcionesMultiples label="Género" seleccion={selectedGender} opciones={toOptions(genders)} onToggle={onGenderChange} />
-      )}
-      {shapes.length > 0 && (
-        <OpcionesMultiples label="Formato" seleccion={selectedShape} opciones={shapes.map((s) => ({ value: s, label: etiquetaFormato(s) }))} onToggle={onShapeChange} />
-      )}
-      {levels.length > 0 && (
-        <OpcionesMultiples label="Nivel" seleccion={selectedLevel} opciones={toOptions(levels)} onToggle={onLevelChange} />
-      )}
       {sizes.length > 0 && (
         <OpcionesMultiples label="Talle" seleccion={selectedSize} opciones={toOptions(sizes)} onToggle={onSizeChange} />
       )}
@@ -178,7 +156,7 @@ function SortSection({ currentSort, onSortChange }: PanelProps) {
             className={
               'w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ' +
               (currentSort === opt.value
-                ? 'bg-[#B7D31A]/5 text-brand-fg'
+                ? 'bg-accent/5 text-brand-fg'
                 : 'text-fg-soft hover:bg-fg/[0.04] hover:text-fg')
             }
           >

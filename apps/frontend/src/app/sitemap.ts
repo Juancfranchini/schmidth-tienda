@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getSiteUrl } from '@/lib/siteUrl';
+import { MARCA } from '@/config/marca';
 
 /** Se regenera cada hora: el catálogo cambia seguido pero no a cada minuto. */
 export const revalidate = 3600;
@@ -7,7 +8,7 @@ export const revalidate = 3600;
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
 
 /** Páginas que existen siempre, con su peso relativo. */
-const FIJAS: { ruta: string; prioridad: number }[] = [
+const TODAS: { ruta: string; prioridad: number }[] = [
   { ruta: '', prioridad: 1 },
   { ruta: '/catalogo', prioridad: 0.9 },
   { ruta: '/contacto', prioridad: 0.5 },
@@ -19,6 +20,10 @@ const FIJAS: { ruta: string; prioridad: number }[] = [
   { ruta: '/terminos', prioridad: 0.2 },
   { ruta: '/privacidad', prioridad: 0.2 },
 ];
+
+// Sin las páginas apagadas en la configuración de marca (responden 404).
+const OCULTAS: readonly string[] = MARCA.tienda.rutasOcultas;
+const FIJAS = TODAS.filter((p) => !OCULTAS.includes(p.ruta));
 
 async function traer<T>(ruta: string): Promise<T[]> {
   try {

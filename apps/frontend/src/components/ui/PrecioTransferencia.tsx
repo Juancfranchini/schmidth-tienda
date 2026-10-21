@@ -25,7 +25,7 @@ export default function PrecioTransferencia({ product, variante = 'tarjeta' }: P
 
   if (variante === 'ficha') {
     return (
-      <div className="rounded-xl border border-[#B7D31A]/30 bg-[#B7D31A]/5 px-4 py-3">
+      <div className="rounded-xl border border-accent/30 bg-accent/5 px-4 py-3">
         <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-fg-muted">
           <Landmark size={13} /> Precio por transferencia
         </p>

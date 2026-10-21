@@ -44,10 +44,10 @@ export default function NewsletterSection({ title, text }: Props) {
   return (
     <section className="border-t border-line bg-[#080D11] light:bg-[#F1F3EE]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
-        <div className="bg-gradient-to-br from-panel via-[#0F1417] light:via-[#EFF2EC] to-night border border-[#B7D31A]/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10">
+        <div className="bg-gradient-to-br from-panel via-[#0F1417] light:via-[#EFF2EC] to-night border border-accent/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-10">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-6">
             <div className="flex-shrink-0">
-              <div className="w-14 h-14 rounded-full bg-[#B7D31A]/10 border border-[#B7D31A]/20 flex items-center justify-center">
+              <div className="w-14 h-14 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
                 <Mail size={24} className="text-brand-fg" />
               </div>
             </div>
@@ -57,7 +57,7 @@ export default function NewsletterSection({ title, text }: Props) {
             </div>
             <div className="w-full md:w-auto md:flex-1 max-w-md">
               {status === 'success' ? (
-                <div className="flex items-center gap-3 text-brand-fg bg-[#B7D31A]/5 border border-[#B7D31A]/20 rounded-xl px-4 py-3">
+                <div className="flex items-center gap-3 text-brand-fg bg-accent/5 border border-accent/20 rounded-xl px-4 py-3">
                   <Check size={20} />
                   <span className="text-sm font-semibold">{message}</span>
                 </div>
@@ -72,9 +72,9 @@ export default function NewsletterSection({ title, text }: Props) {
                     placeholder="Escribí tu email"
                     required
                     disabled={status === 'loading'}
-                    className="flex-1 min-w-0 bg-[#11181D] light:bg-[#EAEEE8] border border-[#B7D31A]/30 rounded-xl px-3 sm:px-4 py-3 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A] focus:ring-1 focus:ring-[#B7D31A]/20 transition-all disabled:opacity-50"
+                    className="flex-1 min-w-0 bg-[#11181D] light:bg-[#EAEEE8] border border-accent/30 rounded-xl px-3 sm:px-4 py-3 text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/20 transition-all disabled:opacity-50"
                   />
-                  <button type="submit" disabled={status === 'loading'} className="px-5 py-3 bg-[#B7D31A] text-[#050606] font-semibold text-sm uppercase tracking-wider rounded-xl hover:bg-[#CAE52E] transition-colors disabled:opacity-50 whitespace-nowrap w-full sm:w-auto justify-center">
+                  <button type="submit" disabled={status === 'loading'} className="px-5 py-3 bg-accent text-on-accent font-semibold text-sm uppercase tracking-wider rounded-xl hover:bg-accent-hover transition-colors disabled:opacity-50 whitespace-nowrap w-full sm:w-auto justify-center">
                     {status === 'loading' ? 'ENVIANDO...' : 'SUSCRIBIRME'}
                   </button>
                 </form>

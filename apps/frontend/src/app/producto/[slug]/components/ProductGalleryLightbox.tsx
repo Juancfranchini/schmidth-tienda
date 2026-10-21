@@ -72,7 +72,7 @@ export default function ProductGalleryLightbox({ thumbnails, productName, lightb
               key={i}
               onClick={(e) => { e.stopPropagation(); onSelectIndex(i); }}
               className={'w-14 h-14 rounded-lg overflow-hidden border-2 transition-all ' +
-                (lightboxIndex === i ? 'border-[#B7D31A]' : 'border-white/20 hover:border-white/50')}
+                (lightboxIndex === i ? 'border-accent' : 'border-white/20 hover:border-white/50')}
             >
               <img src={getImageUrl(img, 240)} alt="" className="w-full h-full object-contain p-0.5" />
             </button>

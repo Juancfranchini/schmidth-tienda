@@ -8,7 +8,7 @@ import { valoresDe } from './catalogQuery';
 /**
  * ViewCategory a Meta al entrar a una categoría del catálogo, con su nombre en
  * `content_category` y los productos que se ven en `content_ids` (los mismos
- * IDs del feed). Reemplaza a "Vio accesorios" / "Vio Indumentaria", que
+ * IDs del feed). Reemplaza a eventos con un nombre por categoría, que
  * mandaba el pixel de Tiendanube sin productos ni categoría utilizables.
  *
  * Una vez por categoría elegida: paginar u ordenar dentro de la misma no es

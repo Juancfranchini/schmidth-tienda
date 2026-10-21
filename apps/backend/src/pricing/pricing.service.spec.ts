@@ -393,8 +393,13 @@ describe('PricingService — el envío sale de la tarifa configurada, no del nav
     expect(await service.calculateShipping(1000, 'retiro_local')).toBe(0);
   });
 
-  it('Envío Flex cobra según la zona de la localidad, sin tarifarios configurados', async () => {
+  it('Envío Flex sin configurar está apagado: no se puede elegir', async () => {
     const service = new PricingService(fakePrismaConShippingConfig(undefined));
+    await expect(service.calculateShipping(1000, 'flex', 'San Miguel')).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('Envío Flex activado sin precios guardados cobra el tarifario por defecto según la zona', async () => {
+    const service = new PricingService(fakePrismaConShippingConfig({ flex: { activo: true } }));
     expect(await service.calculateShipping(1000, 'flex', 'San Miguel')).toBe(4500);
     expect(await service.calculateShipping(1000, 'flex', 'Morón')).toBe(7000);
     expect(await service.calculateShipping(1000, 'flex', 'CABA')).toBe(9000);
@@ -402,7 +407,7 @@ describe('PricingService — el envío sale de la tarifa configurada, no del nav
 
   it('Envío Flex no tiene envío gratis: el kiosco cobra cada envío', async () => {
     const service = new PricingService(
-      fakePrismaConShippingConfig({ flatRate: 4500, freeShippingThreshold: 100000 }),
+      fakePrismaConShippingConfig({ flatRate: 4500, freeShippingThreshold: 100000, flex: { activo: true } }),
     );
     expect(await service.calculateShipping(500000, 'flex', 'Tigre')).toBe(7000);
   });

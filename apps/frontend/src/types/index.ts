@@ -25,6 +25,8 @@ export interface ProductVariant {
   sku: string;
   size: string;
   color?: string | null;
+  /** Color de la muestra en la tienda (hex). */
+  colorHex?: string | null;
   dimensions?: string | null;
   dimensionLength?: number | null;
   dimensionWidth?: number | null;
@@ -52,11 +54,8 @@ export interface Product {
   dimensionUnit?: string | null;
   weight?: number | null;
   weightUnit?: string | null;
-  shape?: string | null;
-  /** Hombre | Mujer | Unisex. Puede no estar cargado. */
-  gender?: string | null;
-  /** Principiante | Intermedio | Avanzado. Solo en paletas, puede no estar cargado. */
-  level?: string | null;
+  /** Material principal, por ejemplo "Eco cuero". */
+  material?: string | null;
   id: string;
   name: string;
   slug: string;

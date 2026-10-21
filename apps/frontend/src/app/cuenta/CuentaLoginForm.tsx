@@ -4,7 +4,7 @@ import { SubmitHandler, UseFormReturn } from 'react-hook-form';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { LoginFormData } from './authFormSchemas';
 
-const inputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-chip rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-[#B7D31A]/60 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
+const inputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-chip rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent/60 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
 const errorInputClass = 'w-full pl-10 pr-4 py-2.5 bg-field border border-red-500/50 rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-red-500 transition-colors [-webkit-box-shadow:0_0_0_30px_rgb(var(--c-field))_inset] [-webkit-text-fill-color:rgb(var(--c-fg))]';
 
 interface Props {
@@ -30,7 +30,7 @@ export default function CuentaLoginForm({ form, onSubmit, showPassword, onToggle
         </div>
         {errors.password && <p className="text-red-500 light:text-red-600 text-xs mt-1">{String(errors.password.message)}</p>}
       </div>
-      <button type="submit" disabled={isSubmitting} className="w-full bg-[#B7D31A] text-[#050606] py-3.5 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-[#c8e81f] transition-colors disabled:opacity-70">{isSubmitting ? 'Ingresando...' : 'Iniciar sesión'}</button>
+      <button type="submit" disabled={isSubmitting} className="w-full bg-accent text-on-accent py-3.5 rounded-xl font-black text-sm uppercase tracking-wider hover:bg-accent-hover transition-colors disabled:opacity-70">{isSubmitting ? 'Ingresando...' : 'Iniciar sesión'}</button>
 
       <button type="button" className="w-full text-center text-xs text-fg-muted hover:text-brand-fg transition-colors">
         ¿Olvidaste tu contraseña?
