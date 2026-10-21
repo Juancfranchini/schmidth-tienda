@@ -11,15 +11,41 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | 4. Textos, mails, páginas legales + branding completo | ✅ Terminada (2026-10-21); textos legales a revisar por un profesional |
 | 5. Revisión final y pendientes del cliente | ✅ Terminada (2026-10-21): ver "Pendientes que dependen de vos" |
 | Backoffice, fase 1 de 5 (menú, Inicio, link de pago, Clientes) | ✅ Terminada (2026-10-21) |
+| Backoffice, fase 2 de 5 (pedidos, remitos, acciones masivas, devoluciones) | ✅ Terminada (2026-10-21) |
 
 ## Rediseño del backoffice
 
 Plan acordado (5 fases, cada una se puede usar sola):
 1. ✅ Menú nuevo, Inicio con "para hacer hoy", link de pago fuera del punto de venta, Clientes de vuelta.
-2. Pedidos rediseñados (vista por estado, línea de tiempo, imprimir, acciones masivas) y pantalla de devoluciones/arrepentimientos.
+2. ✅ Pedidos rediseñados (vista por estado, línea de tiempo, imprimir, acciones masivas) y pantalla de devoluciones/arrepentimientos.
 3. Editor de producto unificado (hoy son tres: modal, página completa y "Contenido de fichas") y vista de stock.
 4. "Tienda online" en una pantalla con vista previa, configuración reordenada y módulos activables desde el panel (hoy es `marca.json`).
 5. Buscador global, registro de actividad (la tabla `AuditLog` ya existe) y usuarios con permisos.
+
+### Fase 2: qué se hizo (2026-10-21)
+
+- **Tabla nueva `SolicitudPosventa`** (aprobada): arrepentimientos, cambios y fallas con código, estado (pendiente, en curso, resuelta, rechazada), datos de la clienta, número de pedido escrito y vínculo al pedido si coincide. Migración `20261021120000_add_solicitud_posventa`: solo agrega (tabla, 2 enums, índices); no toca columnas existentes.
+- **Botón de arrepentimiento de la tienda**: ahora primero guarda la solicitud y después intenta los mails. Antes, sin Resend configurado devolvía error 503 y el pedido de la clienta se perdía; ahora siempre recibe su código y, si el mail falla, la tienda le pide que lo guarde.
+- **API** `GET/POST /api/posventa`, `PATCH /api/posventa/:id` (solo admin, con validación de DTOs). `GET /orders` incluye las solicitudes de cada pedido.
+- **Backoffice → Ventas → Devoluciones** (`/devoluciones`, nuevo): pestañas por estado con cuentas, días desde que entró (en rojo si lleva más de 5 abierta), detalle con contacto (mail y WhatsApp), pedido vinculado, cambio de estado y notas internas; "Nueva solicitud" para lo que llega por WhatsApp, Instagram o el local. El Inicio suma la tarea "devoluciones o arrepentimientos abiertos".
+- **Pedidos**:
+  - **Historial** en el detalle: creado, cobros, reintegros, devoluciones/cambios registrados, solicitudes (con link) y cancelación.
+  - **Imprimir remito** (uno desde el detalle, varios desde la selección): `/imprimir?ids=…`, una hoja por pedido con casilleros para armar el paquete.
+  - **Selección múltiple** con barra de acciones: marcar enviados, marcar entregados, imprimir remitos y exportar CSV (abre bien en Excel). En lote solo avanzan pedidos ya cobrados; marcar pagado sigue siendo de a uno. Si alguno falla, se informa cuál y por qué, y el resto se aplica igual.
+  - `?q=número` abre la lista ya filtrada (lo usa Devoluciones).
+
+### Fase 2: qué se corrió (resultado real)
+
+| App | Compilación | Tests | Lint | Build |
+|---|---|---|---|---|
+| backend | ✅ | ✅ 60 suites, 438 tests (+5 de posventa) | 0 errores | ✅ |
+| frontend | ✅ | ✅ 4 tests | 0 errores | ✅ |
+| backoffice | ✅ | sin tests | 0 errores | ✅ |
+
+Probado en el navegador con la base local: arrepentimiento desde la API pública (con y sin pedido que coincida), Devoluciones (lista, cambiar estado y notas, alta manual con validación, vínculo con número en minúsculas), Pedidos (selección, marcar 2 como enviados en lote, historial con la solicitud), hoja de remitos de 3 pedidos e Inicio con la tarea nueva.
+
+- Límite conocido: el pedido no guarda fecha de envío ni de entrega (no existen esas columnas), así que el historial muestra "Hoy: enviado/entregado" sin fecha. Agregarlas es una migración chica; queda para cuando lo decidas.
+- En local los mails no salen (no hay clave de Resend): el arrepentimiento responde `avisoEnviado: false`, como corresponde.
 
 ### Fase 1: qué se hizo (2026-10-21)
 

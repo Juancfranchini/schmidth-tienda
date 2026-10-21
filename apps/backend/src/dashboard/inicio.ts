@@ -17,12 +17,18 @@ export interface ConteosDelDia {
   carritosParaContactar: number;
   stockBajo: number;
   linksSinPagar: number;
+  solicitudesAbiertas: number;
 }
 
 /** "Para hacer hoy": solo lo que tiene algo pendiente, en orden de urgencia. */
 export function tareasDelDia(c: ConteosDelDia): Tarea[] {
   const plural = (n: number, uno: string, varios: string) => (n === 1 ? uno : varios);
   const todas: Tarea[] = [
+    {
+      clave: 'devoluciones', cantidad: c.solicitudesAbiertas, href: '/devoluciones',
+      titulo: plural(c.solicitudesAbiertas, 'devolución o arrepentimiento abierto', 'devoluciones o arrepentimientos abiertos'),
+      detalle: 'Pedidos de clientas sin cerrar. El arrepentimiento tiene plazo legal.',
+    },
     {
       clave: 'paraPreparar', cantidad: c.paraPreparar, href: '/pedidos?etapa=enviar',
       titulo: plural(c.paraPreparar, 'pedido para preparar', 'pedidos para preparar'),

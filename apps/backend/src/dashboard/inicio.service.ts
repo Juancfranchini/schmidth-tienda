@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { MARCA } from '../config/marca';
 import { comparar, pasosPuestaEnMarcha, tareasDelDia } from './inicio';
+import { PosventaService } from '../posventa/posventa.service';
 
 const DIA = 24 * 60 * 60 * 1000;
 const STOCK_BAJO = 2;
@@ -10,12 +11,15 @@ const SECCIONES_LEGALES = ['terminos', 'privacidad', 'envíos', 'politica_devolu
 /** Datos de la pantalla de Inicio del backoffice: qué hacer hoy, cómo viene la venta y qué falta configurar. */
 @Injectable()
 export class InicioService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly posventa: PosventaService,
+  ) {}
 
   async hoy() {
     const ahora = Date.now();
     const haceSiete = new Date(ahora - 7 * DIA);
-    const [porCobrar, paraPreparar, carritosParaContactar, stockBajo, linksSinPagar, actual, anterior] = await Promise.all([
+    const [porCobrar, paraPreparar, carritosParaContactar, stockBajo, linksSinPagar, solicitudesAbiertas, actual, anterior] = await Promise.all([
       this.prisma.order.count({ where: { status: 'PENDING', isTest: false } }),
       this.prisma.order.count({ where: { status: 'PAID', isTest: false } }),
       this.prisma.abandonedCart.count({ where: { isTest: false, contactedAt: null, recoveredAt: null, updatedAt: { gte: haceSiete } } }),
@@ -23,11 +27,12 @@ export class InicioService {
         where: { active: true, isDefault: false, stock: { lte: STOCK_BAJO }, product: { active: true, isMadeToOrder: false } },
       }),
       this.prisma.salesCheckoutLink.count({ where: { status: { in: ['OPEN', 'CHECKOUT'] }, expiresAt: { gt: new Date(ahora) } } }),
+      this.posventa.abiertas(),
       this.periodo(new Date(ahora - 30 * DIA), new Date(ahora)),
       this.periodo(new Date(ahora - 60 * DIA), new Date(ahora - 30 * DIA)),
     ]);
     return {
-      tareas: tareasDelDia({ porCobrar, paraPreparar, carritosParaContactar, stockBajo, linksSinPagar }),
+      tareas: tareasDelDia({ porCobrar, paraPreparar, carritosParaContactar, stockBajo, linksSinPagar, solicitudesAbiertas }),
       ultimos30: comparar(actual, anterior),
     };
   }

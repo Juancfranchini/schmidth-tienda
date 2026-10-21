@@ -1,22 +1,20 @@
-import { Controller, Post, Body, Logger, ServiceUnavailableException } from '@nestjs/common';
+import { Controller, Post, Body, Logger } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
-import { randomBytes } from 'crypto';
+import { TipoSolicitud } from '@prisma/client';
 import { EmailService } from '../email/email.service';
+import { PosventaService } from '../posventa/posventa.service';
 import { ArrepentimientoDto, ContactDto } from './dto/contact.dto';
-
-/** Código que identifica una solicitud de arrepentimiento (se le manda a la clienta). */
-export function codigoDeArrepentimiento(ahora = new Date()): string {
-  const fecha = ahora.toISOString().slice(0, 10).replace(/-/g, '');
-  return 'ARR-' + fecha + '-' + randomBytes(3).toString('hex').toUpperCase();
-}
 
 @ApiTags('Contact')
 @Controller('contact')
 export class ContactController {
   private readonly logger = new Logger(ContactController.name);
 
-  constructor(private readonly emailService: EmailService) {}
+  constructor(
+    private readonly emailService: EmailService,
+    private readonly posventa: PosventaService,
+  ) {}
 
   @Post()
   @Throttle({ default: { limit: 5, ttl: 60000 } })
@@ -31,20 +29,26 @@ export class ContactController {
   }
 
   /**
-   * Botón de arrepentimiento. Responde el código solo si los dos mails (a la
-   * tienda y a la clienta) salieron; si no, 503 para que la tienda muestre
-   * cómo hacerlo por otra vía en vez de dar por recibido algo que se perdió.
+   * Botón de arrepentimiento. Primero se guarda la solicitud (queda en
+   * Devoluciones del panel con su código), después se intentan los mails a la
+   * tienda y a la clienta. Si los mails fallan el pedido no se pierde: se
+   * responde igual el código y `avisoEnviado: false` para que la tienda le
+   * pida a la clienta que lo guarde.
    */
   @Post('arrepentimiento')
   @Throttle({ default: { limit: 3, ttl: 60000 } })
   async arrepentimiento(@Body() body: ArrepentimientoDto) {
-    const codigo = codigoDeArrepentimiento();
+    const solicitud = await this.posventa.crear(
+      { tipo: TipoSolicitud.ARREPENTIMIENTO, nombre: body.nombre, email: body.email, telefono: body.telefono, pedidoNumero: body.pedido, motivo: body.motivo },
+      'tienda',
+    );
+    let avisoEnviado = true;
     try {
-      await this.emailService.sendArrepentimiento({ ...body, codigo });
+      await this.emailService.sendArrepentimiento({ ...body, codigo: solicitud.codigo });
     } catch (error) {
-      this.logger.error('Arrepentimiento ' + codigo + ' sin enviar: ' + String(error));
-      throw new ServiceUnavailableException('No pudimos registrar tu pedido. Escribinos por mail o WhatsApp.');
+      avisoEnviado = false;
+      this.logger.error('Arrepentimiento ' + solicitud.codigo + ' guardado, pero sin mails: ' + String(error));
     }
-    return { codigo };
+    return { codigo: solicitud.codigo, avisoEnviado };
   }
 }

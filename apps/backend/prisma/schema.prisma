@@ -226,6 +226,7 @@ model Order {
   inventoryMovements InventoryMovement[]
   cashMovements      CashMovement[]
   returns            SaleReturn[]
+  solicitudes        SolicitudPosventa[]
   salesLink          SalesCheckoutLink?
   savedCart          SavedCart?
 
@@ -847,4 +848,46 @@ model CrmNote {
   createdAt  DateTime   @default(now())
 
   @@index([contactId, createdAt])
+}
+
+/// Pedido de posventa de una clienta: arrepentimiento (botón de la tienda), cambio
+/// o falla. Es el seguimiento de la solicitud; la devolución en sí (stock,
+/// reintegro) se registra en el pedido (SaleReturn, cancelación).
+model SolicitudPosventa {
+  id           String           @id @default(cuid())
+  /// Código que se le da a la clienta (ARR-AAAAMMDD-XXXXXX o SOL-…).
+  codigo       String           @unique
+  tipo         TipoSolicitud
+  estado       EstadoSolicitud  @default(PENDIENTE)
+  /// tienda (botón de arrepentimiento) o panel (cargada a mano).
+  origen       String           @default("tienda")
+  nombre       String
+  email        String
+  telefono     String?
+  /// El número que escribió la clienta; orderId se completa si coincide con un pedido.
+  pedidoNumero String
+  orderId      String?
+  motivo       String?
+  /// Notas internas de la tienda.
+  notas        String?
+  resueltaAt   DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  order        Order?           @relation(fields: [orderId], references: [id])
+
+  @@index([estado, createdAt])
+  @@index([orderId])
+}
+
+enum TipoSolicitud {
+  ARREPENTIMIENTO
+  CAMBIO
+  FALLA
+}
+
+enum EstadoSolicitud {
+  PENDIENTE
+  EN_CURSO
+  RESUELTA
+  RECHAZADA
 }

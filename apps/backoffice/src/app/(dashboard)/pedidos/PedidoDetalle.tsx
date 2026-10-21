@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Gift, Mail, MessageCircle, Package } from 'lucide-react';
+import { Gift, Mail, MessageCircle, Package, Printer } from 'lucide-react';
 import { Modal } from '@/components/ui/Modal';
 import { formatPrice } from '@/lib/utils';
 import { OrderAftercare } from './OrderAftercare';
+import { LineaDeTiempo } from './LineaDeTiempo';
 import { InsigniaEstado } from './PedidosLista';
 import type { Pedido } from './tipos';
 import {
@@ -162,6 +163,10 @@ function Venta({ pedido }: { pedido: Pedido }) {
       <p>{fechaCorta(pedido.createdAt)} · {CANALES[pedido.channel || 'ONLINE'] || pedido.channel}</p>
       {(pedido.branch?.name || pedido.seller?.name) && <p>{[pedido.branch?.name, pedido.seller?.name].filter(Boolean).join(' · ')}</p>}
       {pedido.isTest && <p className="text-xs font-semibold text-amber-700">Compra de prueba: no suma en estadísticas ni va a Meta.</p>}
+      <a href={'/imprimir?ids=' + pedido.id} target="_blank" rel="noopener noreferrer"
+        className="mt-2 flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50">
+        <Printer className="h-4 w-4" /> Imprimir remito
+      </a>
     </section>
   );
 }
@@ -182,6 +187,7 @@ export function PedidoDetalle({ pedido, guardando, onGuardarEstado, onCambio, on
           <Cliente pedido={pedido} />
           <Entrega pedido={pedido} guardando={guardando} onGuardar={onGuardarEstado} />
           <Venta pedido={pedido} />
+          <LineaDeTiempo pedido={pedido} />
         </div>
         <div className="lg:col-span-2"><OrderAftercare order={pedido} onChanged={onCambio} /></div>
       </div>

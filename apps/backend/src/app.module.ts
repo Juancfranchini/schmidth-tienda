@@ -31,6 +31,7 @@ import { PaymentsModule } from './payments/payments.module';
 import { EmailModule } from './email/email.module';
 import { ShippingModule } from './shipping/shipping.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PosventaModule } from './posventa/posventa.module';
 import { TrackModule } from './track/track.module';
 import { MarketingModule } from './marketing/marketing.module';
 import { CatalogFeedModule } from './catalog-feed/catalog-feed.module';
@@ -72,6 +73,7 @@ import { CashModule } from './cash/cash.module';
     EmailModule,
     ShippingModule,
     DashboardModule,
+    PosventaModule,
     TrackModule,
     MarketingModule,
     CatalogFeedModule,

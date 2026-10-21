@@ -66,17 +66,25 @@ interface Acciones {
   onAbrir: (p: Pedido) => void;
   onAplicar: AplicarEstado;
   ocupadoId: string | null;
+  elegidos: Set<string>;
+  onElegir: (ids: string[], marcar: boolean) => void;
 }
+
+const CHECK = 'h-4 w-4 cursor-pointer rounded border-gray-300 accent-[#1A1A1A]';
 
 const TH = 'px-3 py-3 text-left text-xs font-semibold text-gray-500';
 
-export function PedidosTabla({ pedidos, onAbrir, onAplicar, ocupadoId }: { pedidos: Pedido[] } & Acciones) {
+export function PedidosTabla({ pedidos, onAbrir, onAplicar, ocupadoId, elegidos, onElegir }: { pedidos: Pedido[] } & Acciones) {
+  const todos = pedidos.length > 0 && pedidos.every((p) => elegidos.has(p.id));
   return (
     <div className="hidden overflow-hidden rounded-xl border border-gray-200 bg-white md:block">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[900px]">
           <thead className="bg-gray-50">
             <tr>
+              <th className={TH + ' w-8'}>
+                <input type="checkbox" className={CHECK} checked={todos} aria-label="Elegir todos los de esta página" onChange={() => onElegir(pedidos.map((p) => p.id), !todos)} />
+              </th>
               <th className={TH}>Venta</th><th className={TH}>Fecha</th><th className={TH}>Cliente</th><th className={TH}>Total</th>
               <th className={TH}>Productos</th><th className={TH}>Pago</th><th className={TH}>Envío</th><th className={TH}>Cambiar estado</th><th className={TH}><span className="sr-only">Abrir</span></th>
             </tr>
@@ -84,6 +92,9 @@ export function PedidosTabla({ pedidos, onAbrir, onAplicar, ocupadoId }: { pedid
           <tbody>
             {pedidos.map((p) => (
               <tr key={p.id} onClick={() => onAbrir(p)} className="cursor-pointer border-t border-gray-100 align-top transition-colors hover:bg-gray-50">
+                <td className="px-3 py-3" onClick={(e) => e.stopPropagation()}>
+                  <input type="checkbox" className={CHECK} checked={elegidos.has(p.id)} aria-label={'Elegir el pedido ' + p.number} onChange={() => onElegir([p.id], !elegidos.has(p.id))} />
+                </td>
                 <td className="px-3 py-3 text-sm font-semibold text-blue-600">#{p.number}<Marcas pedido={p} /></td>
                 <td className="whitespace-nowrap px-3 py-3 text-sm text-gray-700">{fechaCorta(p.createdAt)}</td>
                 <td className="px-3 py-3">
@@ -109,12 +120,14 @@ export function PedidosTabla({ pedidos, onAbrir, onAplicar, ocupadoId }: { pedid
   );
 }
 
-export function PedidosTarjetas({ pedidos, onAbrir, onAplicar, ocupadoId }: { pedidos: Pedido[] } & Acciones) {
+export function PedidosTarjetas({ pedidos, onAbrir, onAplicar, ocupadoId, elegidos, onElegir }: { pedidos: Pedido[] } & Acciones) {
   return (
     <div className="space-y-3 md:hidden">
       {pedidos.map((p) => (
         <div key={p.id} className="space-y-3 rounded-xl border border-gray-200 bg-white p-4">
-          <button type="button" onClick={() => onAbrir(p)} className="flex w-full items-start justify-between gap-2 text-left">
+          <div className="flex items-start gap-3">
+          <input type="checkbox" className={CHECK + ' mt-0.5'} checked={elegidos.has(p.id)} aria-label={'Elegir el pedido ' + p.number} onChange={() => onElegir([p.id], !elegidos.has(p.id))} />
+          <button type="button" onClick={() => onAbrir(p)} className="flex min-w-0 flex-1 items-start justify-between gap-2 text-left">
             <div className="min-w-0">
               <p className="text-sm font-semibold text-blue-600">#{p.number}<Marcas pedido={p} /></p>
               <p className="mt-0.5 truncate text-sm font-medium text-gray-900">{nombreCliente(p)}</p>
@@ -122,6 +135,7 @@ export function PedidosTarjetas({ pedidos, onAbrir, onAplicar, ocupadoId }: { pe
             </div>
             <p className="shrink-0 text-sm font-bold text-gray-900">{formatPrice(p.total)}</p>
           </button>
+          </div>
           <div className="grid grid-cols-2 gap-3 border-t border-gray-100 pt-3">
             <Pago pedido={p} />
             <Entrega pedido={p} />

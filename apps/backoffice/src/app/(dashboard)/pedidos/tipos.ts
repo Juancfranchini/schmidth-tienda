@@ -28,6 +28,11 @@ export interface Pedido {
   couponCode?: string | null;
   createdAt: string;
   paidAt?: string | null;
+  cancelledAt?: string | null;
+  cancellationReason?: string | null;
+  returns?: { id: string; type: string; reason: string; refundAmount: number; createdAt: string }[];
+  /** Arrepentimientos, cambios y fallas que pidió la clienta (Devoluciones). */
+  solicitudes?: { id: string; codigo: string; tipo: string; estado: string; createdAt: string }[];
   address: string;
   notes?: string | null;
   trackingNumber?: string | null;

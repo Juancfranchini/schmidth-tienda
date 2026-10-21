@@ -32,6 +32,7 @@ function Campo({ label, error, children }: { label: string; error?: string; chil
 /** Formulario del botón de arrepentimiento. Si sale bien, muestra el código de la solicitud. */
 export default function FormularioArrepentimiento() {
   const [codigo, setCodigo] = useState<string | null>(null);
+  const [sinMail, setSinMail] = useState(false);
   const [error, setError] = useState('');
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Datos>({ resolver: zodResolver(schema) });
 
@@ -43,12 +44,13 @@ export default function FormularioArrepentimiento() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...datos, telefono: datos.telefono || undefined, motivo: datos.motivo || undefined }),
       });
-      const data = (await res.json().catch(() => ({}))) as { codigo?: string; message?: string | string[] };
+      const data = (await res.json().catch(() => ({}))) as { codigo?: string; avisoEnviado?: boolean; message?: string | string[] };
       if (!res.ok || !data.codigo) {
         setError((Array.isArray(data.message) ? data.message.join(' · ') : data.message) || 'No pudimos registrar tu pedido.');
         return;
       }
       setCodigo(data.codigo);
+      setSinMail(data.avisoEnviado === false);
     } catch {
       setError('No pudimos conectarnos.');
     }
@@ -59,7 +61,11 @@ export default function FormularioArrepentimiento() {
       <div className="border border-line bg-panel p-8 text-center">
         <p className="rotulo text-bordo">Recibimos tu pedido</p>
         <p className="mt-4 font-display text-3xl text-fg">{codigo}</p>
-        <p className="mt-4 text-fg-soft">Es el código de tu solicitud. También te lo mandamos por mail. Te escribimos para coordinar la devolución.</p>
+        <p className="mt-4 text-fg-soft">
+          {sinMail
+            ? 'Es el código de tu solicitud: guardalo. No pudimos mandarte el mail, pero el pedido quedó registrado y te escribimos para coordinar la devolución.'
+            : 'Es el código de tu solicitud. También te lo mandamos por mail. Te escribimos para coordinar la devolución.'}
+        </p>
       </div>
     );
   }

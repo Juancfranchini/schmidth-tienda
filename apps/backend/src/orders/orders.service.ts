@@ -49,6 +49,7 @@ export class OrdersService {
         branch: { select: { id: true, name: true } },
         payments: { orderBy: { receivedAt: 'asc' } },
         returns: { include: { items: true } },
+        solicitudes: { select: { id: true, codigo: true, tipo: true, estado: true, createdAt: true } },
       },
       orderBy: { createdAt: 'desc' },
     });

@@ -2,7 +2,7 @@ import { comparar, pasosPuestaEnMarcha, tareasDelDia, variacion } from './inicio
 
 describe('Inicio del backoffice', () => {
   it('"para hacer hoy" muestra solo lo que tiene pendientes, con el plural correcto', () => {
-    const tareas = tareasDelDia({ porCobrar: 1, paraPreparar: 3, carritosParaContactar: 0, stockBajo: 0, linksSinPagar: 0 });
+    const tareas = tareasDelDia({ porCobrar: 1, paraPreparar: 3, carritosParaContactar: 0, stockBajo: 0, linksSinPagar: 0, solicitudesAbiertas: 0 });
     expect(tareas.map((t) => t.clave)).toEqual(['paraPreparar', 'porCobrar']);
     expect(tareas[0].titulo).toBe('pedidos para preparar');
     expect(tareas[1].titulo).toBe('pedido por cobrar');
@@ -10,7 +10,7 @@ describe('Inicio del backoffice', () => {
   });
 
   it('sin pendientes no hay tareas', () => {
-    expect(tareasDelDia({ porCobrar: 0, paraPreparar: 0, carritosParaContactar: 0, stockBajo: 0, linksSinPagar: 0 })).toEqual([]);
+    expect(tareasDelDia({ porCobrar: 0, paraPreparar: 0, carritosParaContactar: 0, stockBajo: 0, linksSinPagar: 0, solicitudesAbiertas: 0 })).toEqual([]);
   });
 
   it('la variación no se inventa cuando el período anterior fue cero', () => {

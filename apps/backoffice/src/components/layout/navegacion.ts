@@ -1,6 +1,6 @@
 import {
   Activity, Award, Link2, Banknote, BarChart3, BadgeCheck, CreditCard, FileCheck, FileEdit, FileText, HelpCircle, Image, Info, Instagram,
-  LayoutDashboard, Mail, Megaphone, MessageSquare, MessagesSquare, Package, Palette, Percent, PlaySquare, Receipt, RefreshCw, Ruler,
+  LayoutDashboard, Mail, Megaphone, MessageSquare, MessagesSquare, Package, Palette, Percent, PlaySquare, Receipt, RefreshCw, RotateCcw, Ruler,
   Settings, Shapes, Shield, ShoppingBag, ShoppingCart, Sparkles, Star, Store, Tag, Tags, Truck, UserCheck, Users, Wallet,
 } from 'lucide-react';
 import { MARCA } from '@/config/marca';
@@ -32,6 +32,7 @@ const GRUPOS_COMPLETOS: GrupoMenu[] = [
     items: [
       { label: 'Pedidos', href: '/pedidos', icon: ShoppingBag },
       { label: 'Link de pago', href: '/link-de-pago', icon: Link2 },
+      { label: 'Devoluciones', href: '/devoluciones', icon: RotateCcw },
       { label: 'Carritos abandonados', href: '/carritos-abandonados', icon: ShoppingCart },
       { label: 'Clientes', href: '/clientes', icon: Users },
       { label: 'Punto de Venta', href: '/punto-de-venta', icon: Store },

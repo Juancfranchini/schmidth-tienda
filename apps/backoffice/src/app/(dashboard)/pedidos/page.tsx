@@ -11,6 +11,8 @@ import { coincideBusqueda, etapaDe, ETAPAS } from './formato';
 import { PedidosTabla, PedidosTarjetas } from './PedidosLista';
 import { PedidoDetalle } from './PedidoDetalle';
 import type { AplicarEstado } from './EstadoRapido';
+import { AccionesMasivas } from './AccionesMasivas';
+import { useAccionesEnLote } from './useAccionesEnLote';
 
 /** El servidor explica por qué rechazó el cambio (link inválido, estado inexistente...): se le muestra a la tienda. */
 function motivoDelError(err: unknown): string {
@@ -95,12 +97,15 @@ export default function PedidosPage() {
     }
   }, [toast]);
 
+  const lote = useAccionesEnLote(pedidos, cargar);
+
   useEffect(() => { cargar(); }, [cargar]);
-  // Los accesos del Inicio llegan con ?etapa=cobrar|enviar|…: se abre la lista ya filtrada.
+  // Los accesos del Inicio llegan con ?etapa=cobrar|enviar|…, y Devoluciones con ?q=número: se abre la lista ya filtrada.
   useEffect(() => {
-    const pedida = new URLSearchParams(window.location.search).get('etapa');
-    const valida = ETAPAS.find((e) => e.valor === pedida);
+    const params = new URLSearchParams(window.location.search);
+    const valida = ETAPAS.find((e) => e.valor === params.get('etapa'));
     if (valida) setEtapa(valida.valor);
+    if (params.get('q')) setBusqueda(params.get('q') as string);
   }, []);
   useEffect(() => { setPagina(1); }, [etapa, busqueda, esCelular]);
 
@@ -146,12 +151,14 @@ export default function PedidosPage() {
         <div className="rounded-xl border border-gray-200 bg-white py-20 text-center"><p className="text-sm text-gray-400">No hay pedidos con estos filtros</p></div>
       ) : (
         <>
-          <PedidosTabla pedidos={visibles} onAbrir={(p) => setAbiertoId(p.id)} onAplicar={aplicarEstado} ocupadoId={ocupadoId} />
-          <PedidosTarjetas pedidos={visibles} onAbrir={(p) => setAbiertoId(p.id)} onAplicar={aplicarEstado} ocupadoId={ocupadoId} />
+          <PedidosTabla pedidos={visibles} onAbrir={(p) => setAbiertoId(p.id)} onAplicar={aplicarEstado} ocupadoId={ocupadoId} elegidos={lote.elegidos} onElegir={lote.elegir} />
+          <PedidosTarjetas pedidos={visibles} onAbrir={(p) => setAbiertoId(p.id)} onAplicar={aplicarEstado} ocupadoId={ocupadoId} elegidos={lote.elegidos} onElegir={lote.elegir} />
         </>
       )}
 
       <Paginas total={totalPaginas} actual={pagina} onPagina={setPagina} />
+
+      <AccionesMasivas seleccion={lote.seleccion} ocupado={lote.enLote} onAplicar={lote.aplicarEnLote} onLimpiar={lote.limpiar} />
 
       <PedidoDetalle pedido={abierto} guardando={ocupadoId === abierto?.id} onGuardarEstado={(estado, seguimiento) => abierto && aplicarEstado(abierto, estado, seguimiento)} onCambio={cargar} onCerrar={() => setAbiertoId(null)} />
     </div>
