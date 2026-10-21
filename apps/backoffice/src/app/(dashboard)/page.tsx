@@ -3,41 +3,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { formatPrice, formatDate } from '@/lib/utils';
 import { OrderStatusBadge } from '@/components/ui/Badge';
-import { TrendingUp, ShoppingBag, BarChart2, Package, Star, Megaphone, Truck, TrendingDown, Wallet } from 'lucide-react';
+import { Package, Star, Megaphone, TrendingDown } from 'lucide-react';
 import { PageLoader } from '@/components/ui/LoadingSpinner';
 import api from '@/lib/api';
+import Encabezado from './_inicio/Encabezado';
+import PuestaEnMarcha from './_inicio/PuestaEnMarcha';
+import ParaHacerHoy from './_inicio/ParaHacerHoy';
+import Resumen30 from './_inicio/Resumen30';
+import type { Hoy, PasoPuestaEnMarcha } from './_inicio/tipos';
 import { esRutaOculta } from '@/components/layout/navegacion';
 
-// Con el módulo de gastos apagado (packages/marca/marca.json) no se muestran sus números.
+// Con un módulo apagado (packages/marca/marca.json) no se muestran sus números.
 const CON_GASTOS = !esRutaOculta('/gastos');
-
-function KpiGrid({ kpis }: { kpis: any }) {
-  const kpiCards = [
-    { label: 'Ventas (30 dias)', value: formatPrice(kpis.ventas30), icon: TrendingUp, color: 'bg-green-50 text-green-600', border: 'border-green-200' },
-    ...(CON_GASTOS ? [
-      { label: 'Gastos (30 dias)', value: formatPrice(kpis.gastos30), icon: TrendingDown, color: 'bg-red-50 text-red-600', border: 'border-red-200' },
-      { label: 'Balance neto', value: formatPrice(kpis.ganancia), icon: Wallet, color: 'bg-blue-50 text-blue-600', border: 'border-blue-200' },
-    ] : []),
-    { label: 'Total Pedidos', value: String(kpis.totalPedidos), icon: ShoppingBag, color: 'bg-purple-50 text-purple-600', border: 'border-purple-200' },
-    { label: 'Ticket Promedio', value: formatPrice(kpis.ticketPromedio), icon: BarChart2, color: 'bg-orange-50 text-orange-600', border: 'border-orange-200' },
-  ];
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
-      {kpiCards.map((stat) => {
-        const Icon = stat.icon;
-        return (
-          <div key={stat.label} className={'bg-white rounded-xl border ' + stat.border + ' p-5 flex items-start justify-between shadow-sm'}>
-            <div>
-              <p className="text-sm text-gray-500 font-medium">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-2">{stat.value}</p>
-            </div>
-            <div className={'p-3 rounded-xl ' + stat.color}><Icon className="w-5 h-5" /></div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+const CON_RESENAS = !esRutaOculta('/reviews');
 
 function ExpensesCard({ expensesStats }: { expensesStats: any }) {
   return (
@@ -63,26 +41,6 @@ function ExpensesCard({ expensesStats }: { expensesStats: any }) {
       ) : (
         <p className="text-gray-400 text-sm text-center py-10">No hay gastos registrados en los ultimos 30 dias</p>
       )}
-    </div>
-  );
-}
-
-const STATUS_LABELS: Record<string, string> = {
-  PENDING: 'Pendientes', PAID: 'Pagados', SHIPPED: 'Enviados', DELIVERED: 'Entregados', CANCELLED: 'Cancelados',
-};
-
-function OrdersByStatusCard({ ordersByStatus }: { ordersByStatus: Record<string, number> }) {
-  return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-      <h2 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2"><Truck className="w-4 h-4 text-gray-500" />Pedidos por estado</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        {Object.entries(ordersByStatus).map(([status, count]) => (
-          <div key={status} className="bg-gray-50 rounded-lg p-3 text-center">
-            <p className="text-2xl font-bold text-gray-900">{count}</p>
-            <p className="text-xs text-gray-500">{STATUS_LABELS[status] || status}</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 }
@@ -151,14 +109,14 @@ function SummaryStatsRow({ productsStats, reviewsStats, marketingStats }: { prod
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      {CON_RESENAS && <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <h2 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2"><Star className="w-4 h-4 text-gray-500" />Reviews</h2>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between"><span className="text-gray-500">Total</span><span className="font-semibold">{reviewsStats.total}</span></div>
           <div className="flex justify-between"><span className="text-gray-500">Pendientes</span><span className="font-semibold text-amber-600">{reviewsStats.pending}</span></div>
           <div className="flex justify-between"><span className="text-gray-500">Promedio</span><span className="font-semibold">{reviewsStats.avgRating} / 5</span></div>
         </div>
-      </div>
+      </div>}
 
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <h2 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2"><Megaphone className="w-4 h-4 text-gray-500" />Marketing</h2>
@@ -174,26 +132,26 @@ function SummaryStatsRow({ productsStats, reviewsStats, marketingStats }: { prod
 
 export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
-  const [kpis, setKpis] = useState({ ventas30: 0, totalPedidos: 0, ticketPromedio: 0, ganancia: 0, gastos30: 0 });
+  const [hoy, setHoy] = useState<Hoy | null>(null);
+  const [pasos, setPasos] = useState<PasoPuestaEnMarcha[]>([]);
   const [expensesStats, setExpensesStats] = useState({ total30: 0, totalAllTime: 0, byCategory: [] as any[] });
   const [recentOrders, setRecentOrders] = useState<any[]>([]);
   const [topProducts, setTopProducts] = useState<any[]>([]);
   const [productsStats, setProductsStats] = useState({ total: 0, active: 0, outOfStock: 0, lowStock: 0, madeToOrder: 0 });
-  const [ordersByStatus, setOrdersByStatus] = useState({ PENDING: 0, PAID: 0, SHIPPED: 0, DELIVERED: 0, CANCELLED: 0 });
   const [reviewsStats, setReviewsStats] = useState({ total: 0, pending: 0, avgRating: 0 });
   const [marketingStats, setMarketingStats] = useState({ newsletterSubscribers: 0, activePromotions: 0, activeCoupons: 0 });
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await api.get('/dashboard/stats');
+      const [res, resHoy, resPasos] = await Promise.all([api.get('/dashboard/stats'), api.get('/dashboard/hoy'), api.get('/dashboard/puesta-en-marcha')]);
       const data = res.data;
-      setKpis(data.kpis || {});
+      setHoy(resHoy.data);
+      setPasos(Array.isArray(resPasos.data) ? resPasos.data : []);
       setExpensesStats(data.expensesStats || { total30: 0, totalAllTime: 0, byCategory: [] });
       setRecentOrders(data.recentOrders || []);
       setTopProducts(data.topProducts || []);
       setProductsStats(data.productsStats || {});
-      setOrdersByStatus(data.ordersByStatus || {});
       setReviewsStats(data.reviewsStats || {});
       setMarketingStats(data.marketingStats || {});
     } catch (error) {
@@ -209,14 +167,11 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-0.5">Resumen de actividad del negocio</p>
-      </div>
-
-      <KpiGrid kpis={kpis} />
+      <Encabezado />
+      <PuestaEnMarcha pasos={pasos} />
+      {hoy && <ParaHacerHoy tareas={hoy.tareas} />}
+      {hoy && <Resumen30 datos={hoy.ultimos30} />}
       {CON_GASTOS && <ExpensesCard expensesStats={expensesStats} />}
-      <OrdersByStatusCard ordersByStatus={ordersByStatus} />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <RecentOrdersCard orders={recentOrders} />

@@ -147,6 +147,10 @@ export function useProductosPage() {
 
   const openCreate = () => { setEditItem(null); setModalOpen(true); };
   const openEdit = (p: Product) => { setEditItem(p); setModalOpen(true); };
+  // Acceso "Nuevo producto" del Inicio (/productos?nuevo=1): abre el formulario vacío.
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('nuevo') === '1') { setEditItem(null); setModalOpen(true); }
+  }, []);
 
   const handleSave = async (data: ProductFormData) => {
     setSaving(true);

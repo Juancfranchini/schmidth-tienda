@@ -74,7 +74,6 @@ export const MARCA = {
       "/configuracion-pdv",
       "/gastos",
       "/configuracion/talles",
-      "/clientes",
       "/reviews",
       "/configuracion/reviews-info",
       "/testimonios",

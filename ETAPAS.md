@@ -10,6 +10,42 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | ✅ Terminada (2026-10-21), probada en local con datos |
 | 4. Textos, mails, páginas legales + branding completo | ✅ Terminada (2026-10-21); textos legales a revisar por un profesional |
 | 5. Revisión final y pendientes del cliente | ✅ Terminada (2026-10-21): ver "Pendientes que dependen de vos" |
+| Backoffice, fase 1 de 5 (menú, Inicio, link de pago, Clientes) | ✅ Terminada (2026-10-21) |
+
+## Rediseño del backoffice
+
+Plan acordado (5 fases, cada una se puede usar sola):
+1. ✅ Menú nuevo, Inicio con "para hacer hoy", link de pago fuera del punto de venta, Clientes de vuelta.
+2. Pedidos rediseñados (vista por estado, línea de tiempo, imprimir, acciones masivas) y pantalla de devoluciones/arrepentimientos.
+3. Editor de producto unificado (hoy son tres: modal, página completa y "Contenido de fichas") y vista de stock.
+4. "Tienda online" en una pantalla con vista previa, configuración reordenada y módulos activables desde el panel (hoy es `marca.json`).
+5. Buscador global, registro de actividad (la tabla `AuditLog` ya existe) y usuarios con permisos.
+
+### Fase 1: qué se hizo (2026-10-21)
+
+- **Menú** agrupado por tarea: Ventas, Productos, Marketing, Análisis, Tienda online, Páginas y Configuración (antes: 7 grupos mezclados, "Diseño de la tienda" con 12 ítems, estadísticas dentro de "Administración"). `apps/backoffice/src/components/layout/navegacion.ts`.
+- **Inicio** (`app/(dashboard)/page.tsx` + `_inicio/`):
+  - Accesos rápidos: crear link de pago, nuevo producto, ver tienda.
+  - **Puesta en marcha**: 8 pasos (Mercado Pago, mails, Cloudinary, fotos reales, datos de la marca, dominio, textos legales, Meta), cada uno con el lugar donde se resuelve; se pliega y desaparece cuando está todo listo. `GET /api/dashboard/puesta-en-marcha` solo devuelve sí/no, nunca claves.
+  - **Para hacer hoy**: pedidos para preparar, por cobrar, carritos para recuperar (7 días, sin contactar), links de pago sin pagar y variantes con stock bajo (≤ 2), con acceso directo a cada lista. `GET /api/dashboard/hoy`.
+  - **Últimos 30 días** contra los 30 anteriores: ventas, pedidos y ticket promedio.
+  - Se sacaron los KPIs viejos y "pedidos por estado"; la tarjeta de reseñas se oculta con el módulo apagado.
+- **Link de pago** (`/link-de-pago`, nuevo): buscar productos, elegir color y cantidad, datos opcionales de la clienta, crear el link y mandarlo por WhatsApp con el número ya cargado; lista de links recientes con su estado (sin pagar, pagando, pagado, vencido). Usa la API existente del punto de venta (`/pos/catalog`, `/pos/links`), así funciona aunque el punto de venta esté oculto. **Antes no había forma de crear un link de pago con el punto de venta oculto.**
+- **Clientes (CRM)** visible de nuevo (se sacó `/clientes` de `backoffice.rutasOcultas`).
+- Pedidos y productos aceptan `?etapa=…` y `?nuevo=1` para los accesos del Inicio.
+- Tienda, página del link (`/venta/[token]`): muestra el color de cada cartera y el botón con el estilo de la marca (antes, texto oscuro sobre bordó).
+
+### Fase 1: qué se corrió (resultado real)
+
+| App | Compilación | Tests | Lint | Build |
+|---|---|---|---|---|
+| backend | ✅ | ✅ 59 suites, 433 tests (+5 del Inicio) | 0 errores | — |
+| frontend | ✅ | ✅ 4 tests | 0 errores | ✅ |
+| backoffice | ✅ | sin tests | 0 errores | ✅ |
+
+Probado en el navegador con la base local: login, Inicio (puesta en marcha y "para hacer hoy"), crear un link con dos carteras y datos de la clienta, enlace de WhatsApp con el número normalizado, el link abierto en la tienda, y Clientes.
+
+- Nota: `GET /pos/links` lista solo los links del usuario que los creó (así venía del punto de venta). Con un solo admin no cambia nada; con varios usuarios conviene revisarlo en la fase 5.
 
 ## Etapa 5: revisión final
 

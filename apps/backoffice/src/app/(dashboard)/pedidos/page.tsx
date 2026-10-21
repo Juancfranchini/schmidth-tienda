@@ -96,6 +96,12 @@ export default function PedidosPage() {
   }, [toast]);
 
   useEffect(() => { cargar(); }, [cargar]);
+  // Los accesos del Inicio llegan con ?etapa=cobrar|enviar|…: se abre la lista ya filtrada.
+  useEffect(() => {
+    const pedida = new URLSearchParams(window.location.search).get('etapa');
+    const valida = ETAPAS.find((e) => e.valor === pedida);
+    if (valida) setEtapa(valida.valor);
+  }, []);
   useEffect(() => { setPagina(1); }, [etapa, busqueda, esCelular]);
 
   const cuentas = useEtapas(pedidos);

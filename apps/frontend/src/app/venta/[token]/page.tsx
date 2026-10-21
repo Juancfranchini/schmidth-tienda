@@ -60,8 +60,8 @@ export default function SalesLinkPage() {
     <main className="min-h-screen bg-page px-5 py-16 text-fg">
       <section className="mx-auto max-w-2xl overflow-hidden rounded-3xl border border-fg/10 bg-card">
         <div className="border-b border-fg/10 p-7">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent-hover light:text-brand-fg">{MARCA.nombre}</p>
-          <h1 className="mt-2 text-3xl font-black">Tu compra está lista</h1>
+          <p className="rotulo text-bordo">{MARCA.nombre}</p>
+          <h1 className="mt-2 text-4xl">Tu compra está lista</h1>
           <p className="mt-2 text-sm text-fg-muted">
             Revisá los productos y completá tus datos en nuestro checkout seguro.
           </p>
@@ -74,18 +74,20 @@ export default function SalesLinkPage() {
             >
               <div>
                 <p className="font-semibold">{item.product.name}</p>
-                <p className="text-sm text-fg-muted">{item.quantity} unidad/es</p>
+                <p className="text-sm text-fg-muted">
+                  {[item.product.variants?.find((v) => v.id === item.variantId)?.color, item.quantity === 1 ? '1 unidad' : item.quantity + ' unidades'].filter(Boolean).join(' · ')}
+                </p>
               </div>
-              <p className="font-bold text-accent-hover light:text-brand-fg">{formatPrice(item.price * item.quantity)}</p>
+              <p className="text-fg">{formatPrice(item.price * item.quantity)}</p>
             </div>
           ))}
-          <div className="flex items-center justify-between border-t border-fg/10 pt-5 text-xl font-black">
+          <div className="flex items-center justify-between border-t border-fg/10 pt-5 text-xl">
             <span>Subtotal</span>
             <span>{formatPrice(total)}</span>
           </div>
           <button
             onClick={continueToCheckout}
-            className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-accent-hover px-5 py-4 font-black text-[#0f172a] hover:bg-accent-hover"
+            className="rotulo mt-3 flex w-full items-center justify-center gap-2 bg-accent px-5 py-4 text-on-accent transition-colors hover:bg-accent-hover"
           >
             Completar compra <ArrowRight className="h-5 w-5" />
           </button>

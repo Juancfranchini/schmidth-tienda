@@ -1,5 +1,5 @@
 import {
-  Activity, Award, Banknote, BarChart3, BadgeCheck, CreditCard, FileCheck, FileEdit, FileText, HelpCircle, Image, Info, Instagram,
+  Activity, Award, Link2, Banknote, BarChart3, BadgeCheck, CreditCard, FileCheck, FileEdit, FileText, HelpCircle, Image, Info, Instagram,
   LayoutDashboard, Mail, Megaphone, MessageSquare, MessagesSquare, Package, Palette, Percent, PlaySquare, Receipt, RefreshCw, Ruler,
   Settings, Shapes, Shield, ShoppingBag, ShoppingCart, Sparkles, Star, Store, Tag, Tags, Truck, UserCheck, Users, Wallet,
 } from 'lucide-react';
@@ -18,14 +18,12 @@ export interface GrupoMenu {
 }
 
 /**
- * Menú del backoffice, agrupado por tarea: lo del día a día arriba (ventas,
- * catálogo) y la configuración que se toca poco abajo. Para sumar una
- * pantalla, agregarla al grupo que corresponda; las direcciones no cambian.
- *
- * Antes "Landing Page" tenía 19 ítems mezclando el diseño de la portada, los
- * textos legales y configuraciones de cobro y envío (cuotas, tarifa), y
- * Branding, Canales de contacto, Newsletter e Info de reviews no figuraban
- * en ningún lado: solo se llegaba escribiendo la dirección.
+ * Menú del backoffice, agrupado por tarea, de lo diario a lo que se toca poco:
+ * vender (Ventas), el catálogo (Productos), atraer (Marketing), medir
+ * (Análisis), la vidriera (Tienda online y Páginas) y la configuración. Para
+ * sumar una pantalla, agregarla al grupo que corresponda; las direcciones no
+ * cambian. Los módulos apagados en packages/marca/marca.json
+ * (backoffice.rutasOcultas) se filtran abajo.
  */
 const GRUPOS_COMPLETOS: GrupoMenu[] = [
   { items: [{ label: 'Inicio', href: '/', icon: LayoutDashboard }] },
@@ -33,6 +31,7 @@ const GRUPOS_COMPLETOS: GrupoMenu[] = [
     title: 'Ventas',
     items: [
       { label: 'Pedidos', href: '/pedidos', icon: ShoppingBag },
+      { label: 'Link de pago', href: '/link-de-pago', icon: Link2 },
       { label: 'Carritos abandonados', href: '/carritos-abandonados', icon: ShoppingCart },
       { label: 'Clientes', href: '/clientes', icon: Users },
       { label: 'Punto de Venta', href: '/punto-de-venta', icon: Store },
@@ -40,69 +39,69 @@ const GRUPOS_COMPLETOS: GrupoMenu[] = [
     ],
   },
   {
-    title: 'Catálogo',
+    title: 'Productos',
     items: [
       { label: 'Productos', href: '/productos', icon: Package },
-      { label: 'Contenido de fichas', href: '/productos-contenido', icon: FileEdit },
       { label: 'Categorías', href: '/categorias', icon: Tags },
+      { label: 'Contenido de fichas', href: '/productos-contenido', icon: FileEdit },
       { label: 'Marcas', href: '/marcas', icon: Award },
       { label: 'Formatos de paleta', href: '/configuracion/formatos-paleta', icon: Shapes },
       { label: 'Guía de talles', href: '/configuracion/talles', icon: Ruler },
-      { label: 'Reviews', href: '/reviews', icon: Star },
-      { label: 'Info de reviews', href: '/configuracion/reviews-info', icon: BadgeCheck },
+      { label: 'Reseñas', href: '/reviews', icon: Star },
+      { label: 'Info de reseñas', href: '/configuracion/reviews-info', icon: BadgeCheck },
     ],
   },
   {
     title: 'Marketing',
     items: [
-      { label: 'Métricas (Meta)', href: '/marketing', icon: Activity },
-      { label: 'Promociones', href: '/promociones', icon: Percent },
       { label: 'Cupones', href: '/cupones', icon: Tag },
+      { label: 'Promociones', href: '/promociones', icon: Percent },
       { label: 'Newsletter', href: '/newsletter', icon: Mail },
     ],
   },
   {
-    title: 'Cobros y envíos',
+    title: 'Análisis',
     items: [
-      { label: 'Medios de pago', href: '/configuracion/medios-pago', icon: CreditCard },
-      { label: 'Cuotas', href: '/configuracion/cuotas', icon: CreditCard },
-      { label: 'Tarifa de envío', href: '/configuracion/tarifa-envio', icon: Banknote },
-      { label: 'Envíos (texto)', href: '/configuracion/envios', icon: Truck },
+      { label: 'Estadísticas de ventas', href: '/estadisticas-ventas', icon: BarChart3 },
+      { label: 'Métricas de Meta', href: '/marketing', icon: Activity },
     ],
   },
   {
-    title: 'Diseño de la tienda',
+    title: 'Tienda online',
     items: [
-      { label: 'Branding (logo)', href: '/configuracion/branding', icon: Palette },
-      { label: 'Hero (portada)', href: '/hero', icon: PlaySquare },
-      { label: 'Beneficios', href: '/beneficios', icon: Sparkles },
+      { label: 'Portada (hero)', href: '/hero', icon: PlaySquare },
       { label: 'Banners', href: '/banners', icon: Image },
-      { label: 'Sobre nosotros', href: '/configuracion/about', icon: Info },
-      { label: 'Testimonios', href: '/testimonios', icon: MessageSquare },
+      { label: 'Beneficios', href: '/beneficios', icon: Sparkles },
       { label: 'Instagram', href: '/configuracion/instagram', icon: Instagram },
-      { label: 'Mensaje final y newsletter', href: '/configuracion/mensaje-final', icon: Megaphone },
+      { label: 'Sobre nosotros', href: '/configuracion/about', icon: Info },
+      { label: 'Mensaje final', href: '/configuracion/mensaje-final', icon: Megaphone },
       { label: 'Confianza en fichas', href: '/configuracion/confianza-productos', icon: Shield },
+      { label: 'Testimonios', href: '/testimonios', icon: MessageSquare },
+      { label: 'Logo y favicon', href: '/configuracion/branding', icon: Palette },
+    ],
+  },
+  {
+    title: 'Páginas',
+    items: [
       { label: 'Preguntas frecuentes', href: '/faq', icon: HelpCircle },
       { label: 'Contacto', href: '/contacto', icon: FileText },
       { label: 'Canales de contacto', href: '/configuracion/canales-contacto', icon: MessagesSquare },
-    ],
-  },
-  {
-    title: 'Páginas legales',
-    items: [
+      { label: 'Envíos', href: '/configuracion/envios', icon: Truck },
       { label: 'Cambios y devoluciones', href: '/configuracion/paginas', icon: RefreshCw },
       { label: 'Privacidad', href: '/configuracion/privacidad', icon: UserCheck },
       { label: 'Términos y condiciones', href: '/configuracion/terminos', icon: FileCheck },
     ],
   },
   {
-    title: 'Administración',
+    title: 'Configuración',
     items: [
-      { label: 'Estadísticas de ventas', href: '/estadisticas-ventas', icon: BarChart3 },
+      { label: 'General', href: '/configuracion', icon: Settings },
+      { label: 'Medios de pago', href: '/configuracion/medios-pago', icon: CreditCard },
+      { label: 'Cuotas', href: '/configuracion/cuotas', icon: CreditCard },
+      { label: 'Tarifas de envío', href: '/configuracion/tarifa-envio', icon: Banknote },
       { label: 'Gastos', href: '/gastos', icon: Receipt },
       { label: 'Equipo PDV', href: '/equipo-pdv', icon: Shield },
       { label: 'Configuración PDV', href: '/configuracion-pdv', icon: Settings },
-      { label: 'Configuración general', href: '/configuracion', icon: Settings },
     ],
   },
 ];
