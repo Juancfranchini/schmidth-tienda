@@ -5,6 +5,7 @@ import { SORT_OPTIONS } from '../sortOptions';
 import CatalogCheckboxOption from './CatalogCheckboxOption';
 import CatalogAttributeSelect from './CatalogAttributeSelect';
 import CatalogPriceRange from './CatalogPriceRange';
+import CatalogColorOptions from './CatalogColorOptions';
 import { valoresDe } from '../catalogQuery';
 
 export type ActivePanel = 'categories' | 'brands' | 'attributes' | 'price' | 'sort' | null;
@@ -24,6 +25,8 @@ export interface PanelProps {
   hasFilters: boolean;
   sizes: string[];
   colors: string[];
+  /** Tono de cada color, para la muestra. */
+  colorHex?: Record<string, string>;
   weights: string[];
   selectedSize: string;
   selectedColor: string;
@@ -48,8 +51,8 @@ function OpcionesMultiples({ label, seleccion, opciones, onToggle }: {
   const elegidos = valoresDe(seleccion);
   return (
     <div>
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-fg">{label}</p>
-      <div className="space-y-2">
+      <p className="rotulo mb-3 !text-[10px] text-fg-muted">{label}</p>
+      <div className="space-y-3">
         {opciones.map((o) => (
           <CatalogCheckboxOption key={o.value} label={o.label} checked={elegidos.includes(o.value)} onChange={() => onToggle(o.value)} />
         ))}
@@ -82,7 +85,7 @@ export default function CatalogSidebarPanel(props: PanelProps & { activePanel: A
 function CategoriesSection({ categories, selectedCategory, onCategoryChange }: PanelProps) {
   return (
     <div>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {categories.map((cat) => (
           <CatalogCheckboxOption
             key={cat.id}
@@ -99,7 +102,7 @@ function CategoriesSection({ categories, selectedCategory, onCategoryChange }: P
 function BrandsSection({ brands, selectedBrand, onBrandChange }: PanelProps) {
   return (
     <div>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {brands.map((brand) => (
           <CatalogCheckboxOption
             key={brand.id}
@@ -125,7 +128,7 @@ function AttributesSection(props: PanelProps) {
   if (!hayAlguno) {
     return (
       <div>
-        <p className="text-xs text-fg-muted">No hay atributos para filtrar en esta selección.</p>
+        <p className="font-display text-sm italic text-fg-muted">No hay opciones para esta selección.</p>
       </div>
     );
   }
@@ -136,7 +139,7 @@ function AttributesSection(props: PanelProps) {
         <OpcionesMultiples label="Talle" seleccion={selectedSize} opciones={toOptions(sizes)} onToggle={onSizeChange} />
       )}
       {colors.length > 0 && (
-        <OpcionesMultiples label="Color" seleccion={selectedColor} opciones={toOptions(colors)} onToggle={onColorChange} />
+        <CatalogColorOptions colores={colors} hex={props.colorHex ?? {}} elegidos={valoresDe(selectedColor)} onToggle={onColorChange} />
       )}
       {weights.length > 0 && (
         <CatalogAttributeSelect label="Peso" value={selectedWeight} options={toOptions(weights)} onChange={onWeightChange} />
@@ -147,23 +150,18 @@ function AttributesSection(props: PanelProps) {
 
 function SortSection({ currentSort, onSortChange }: PanelProps) {
   return (
-    <div>
-      <div className="space-y-1">
-        {SORT_OPTIONS.map((opt) => (
-          <button
-            key={opt.value}
-            onClick={() => onSortChange(opt.value)}
-            className={
-              'w-full rounded-lg px-3 py-2 text-left text-sm transition-colors ' +
-              (currentSort === opt.value
-                ? 'bg-accent/5 text-brand-fg'
-                : 'text-fg-soft hover:bg-fg/[0.04] hover:text-fg')
-            }
-          >
-            {opt.label}
+    <div className="space-y-3" role="radiogroup" aria-label="Ordenar por">
+      {SORT_OPTIONS.map((opt) => {
+        const activo = currentSort === opt.value;
+        return (
+          <button key={opt.value} type="button" role="radio" aria-checked={activo} onClick={() => onSortChange(opt.value)} className="group flex w-full items-center gap-3 text-left">
+            <span className={'flex h-3.5 w-3.5 flex-none items-center justify-center rounded-full border transition-colors duration-300 ' + (activo ? 'border-bordo' : 'border-fg/35 group-hover:border-fg')}>
+              <span className={'h-1.5 w-1.5 rounded-full bg-bordo transition-transform duration-300 ' + (activo ? 'scale-100' : 'scale-0')} />
+            </span>
+            <span className={'text-sm transition-colors ' + (activo ? 'text-fg' : 'text-fg-soft group-hover:text-fg')}>{opt.label}</span>
           </button>
-        ))}
-      </div>
+        );
+      })}
     </div>
   );
 }

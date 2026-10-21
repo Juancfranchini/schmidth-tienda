@@ -1,55 +1,43 @@
-import { ChevronDown } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-
 interface Props {
-  icon: LucideIcon;
   label: string;
-  /** Filtro aplicado hoy. Se muestra debajo de la etiqueta cuando existe. */
+  /** Filtro aplicado hoy. Se muestra debajo del nombre, en cursiva, cuando existe. */
   value?: string;
-  active?: boolean;
   /** Presente solo en los controles que despliegan contenido debajo. */
   expanded?: boolean;
-  /** Para controles de dos estados, como Ofertas. */
+  /** Para controles de dos estados, como Ofertas: se dibuja un interruptor. */
   pressed?: boolean;
   onClick: () => void;
 }
 
 /**
- * Control de la barra lateral del catálogo.
- *
- * Antes la barra era solo íconos: había que abrir cada panel para descubrir qué
- * hacía, y algunos no se entendían de ningún modo —una diana para "Ofertas"—.
- * Acá cada control lleva su nombre y, si hay un filtro puesto, lo muestra
- * debajo. La etiqueta resuelve el "qué hace esto"; el valor, el "qué tengo
- * aplicado", que antes obligaba a abrir los cuatro paneles para averiguarlo.
+ * Control de la barra de filtros: el nombre en rótulo espaciado y, si hay un
+ * filtro puesto, su valor debajo en cursiva bordó, para verlo sin abrir la
+ * sección. A la derecha, un "+" fino que se vuelve "−" al abrir, o un
+ * interruptor para los sí/no.
  */
-export default function CatalogSidebarButton({ icon: Icon, label, value, active, expanded, onClick, pressed }: Props) {
+export default function CatalogSidebarButton({ label, value, expanded, onClick, pressed }: Props) {
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-pressed={pressed}
       aria-expanded={expanded}
-      className={
-        'flex w-full items-start gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ' +
-        (active
-          ? 'border border-accent/30 bg-accent/10 text-brand-fg'
-          : 'border border-transparent text-fg-muted hover:bg-panel hover:text-fg')
-      }
+      className="group flex w-full items-center justify-between gap-4 py-4 text-left"
     >
-      <Icon size={17} className="mt-0.5 flex-shrink-0" />
-      <span className="flex min-w-0 flex-1 flex-col">
-        <span className="text-xs font-semibold leading-tight">{label}</span>
-        {value && (
-          <span className="truncate text-[10px] leading-tight text-fg-soft" title={value}>
-            {value}
-          </span>
-        )}
+      <span className="min-w-0">
+        <span className="rotulo block text-fg transition-colors group-hover:text-bordo">{label}</span>
+        {value && <span className="mt-1 block truncate font-display text-[0.95rem] italic text-bordo" title={value}>{value}</span>}
       </span>
       {expanded !== undefined && (
-        <ChevronDown
-          size={14}
-          className={'mt-0.5 flex-shrink-0 transition-transform duration-200 ' + (expanded ? 'rotate-180' : '')}
-        />
+        <span aria-hidden className="relative h-3 w-3 flex-shrink-0 text-fg-muted transition-colors group-hover:text-fg">
+          <span className="absolute left-0 top-1/2 h-px w-3 bg-current" />
+          <span className={'absolute left-1/2 top-0 h-3 w-px bg-current transition-transform duration-500 ' + (expanded ? 'scale-y-0' : 'scale-y-100')} />
+        </span>
+      )}
+      {pressed !== undefined && (
+        <span aria-hidden className={'relative h-4 w-7 flex-shrink-0 rounded-full border transition-colors duration-300 ' + (pressed ? 'border-bordo bg-bordo' : 'border-fg/30')}>
+          <span className={'absolute top-1/2 h-2.5 w-2.5 -translate-y-1/2 rounded-full transition-all duration-300 ' + (pressed ? 'left-[0.9rem] bg-page' : 'left-0.5 bg-fg/40')} />
+        </span>
       )}
     </button>
   );

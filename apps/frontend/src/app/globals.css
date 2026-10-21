@@ -135,6 +135,14 @@ h4, .h4 { font-weight: 500; }
   .revelar-foto.visible .asentar { transform: none; }
 }
 
+/* Velo que aparece de a poco (fondo de los paneles). */
+@keyframes fundido { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade-in { animation: fundido .4s ease-out both; }
+
+/* Panel lateral (filtros en el celular) que entra desde la izquierda. */
+@keyframes panel-entra { from { transform: translateX(-100%); } to { transform: none; } }
+.panel-entra { animation: panel-entra .5s var(--suave) both; }
+
 /* Botón con barrido: el fondo entra de izquierda a derecha al pasar. */
 .barrido { position: relative; isolation: isolate; overflow: hidden; }
 .barrido::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--barrido, rgb(var(--c-bordo))); transform: scaleX(0); transform-origin: right; transition: transform .6s var(--suave); }
@@ -145,7 +153,7 @@ h4, .h4 { font-weight: 500; }
 .subrayado:hover { background-size: 0% 1px; background-position: right bottom; }
 
 @media (prefers-reduced-motion: reduce) {
-  .cinta, .aparecer, .palabra > span, .cortina, .cortina .asentar, .trazar, .trazar-y { animation: none; }
+  .cinta, .aparecer, .panel-entra, .animate-fade-in, .palabra > span, .cortina, .cortina .asentar, .trazar, .trazar-y { animation: none; }
   .revelar, .revelar-foto, .revelar-foto .asentar { transition: none; opacity: 1; transform: none; clip-path: none; }
 }
 

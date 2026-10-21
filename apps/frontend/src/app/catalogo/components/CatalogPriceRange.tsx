@@ -8,7 +8,7 @@ interface Props {
   onChange: (min: number | null, max: number | null) => void;
 }
 
-const input = 'w-full rounded-lg border border-chip bg-field px-3 py-2 text-sm text-fg placeholder-fg-muted focus:border-accent/60 focus:outline-none';
+const input = 'w-full border-0 border-b border-fg/30 bg-transparent px-0 py-1.5 text-sm text-fg placeholder-fg-muted transition-colors focus:border-bordo focus:outline-none focus:ring-0';
 
 const aNumero = (texto: string): number | null => {
   const limpio = texto.replace(/\D/g, '');
@@ -39,23 +39,23 @@ export default function CatalogPriceRange({ minPrice, maxPrice, onChange }: Prop
   const hayFiltro = minPrice != null || maxPrice != null;
 
   return (
-    <form onSubmit={aplicar} className="space-y-2">
-      <div className="grid grid-cols-2 gap-2">
-        <label className="text-[11px] text-fg-muted">
+    <form onSubmit={aplicar} className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <label className="rotulo !text-[10px] text-fg-muted">
           Desde
           <input value={desde} onChange={(e) => setDesde(e.target.value)} inputMode="numeric" placeholder="$ mín." className={input + ' mt-1'} aria-label="Precio mínimo" />
         </label>
-        <label className="text-[11px] text-fg-muted">
+        <label className="rotulo !text-[10px] text-fg-muted">
           Hasta
           <input value={hasta} onChange={(e) => setHasta(e.target.value)} inputMode="numeric" placeholder="$ máx." className={input + ' mt-1'} aria-label="Precio máximo" />
         </label>
       </div>
       <div className="flex gap-2">
-        <button type="submit" className="flex-1 rounded-lg bg-accent py-2 text-xs font-bold uppercase tracking-wide text-on-accent transition-colors hover:bg-accent-hover">
+        <button type="submit" className="barrido rotulo flex-1 bg-ink py-2.5 !text-[10px] text-on-accent">
           Aplicar
         </button>
         {hayFiltro && (
-          <button type="button" onClick={() => onChange(null, null)} className="rounded-lg border border-fg/10 px-3 py-2 text-xs text-fg-soft transition-colors hover:text-fg">
+          <button type="button" onClick={() => onChange(null, null)} className="subrayado rotulo px-1 !text-[10px] text-fg-soft hover:text-fg">
             Quitar
           </button>
         )}

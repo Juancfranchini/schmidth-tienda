@@ -10,26 +10,26 @@ interface Props {
   onClearAll: () => void;
 }
 
+/** Filtros aplicados, como etiquetas finas. Todo el chip quita el filtro (la X sola era difícil de tocar en el celular). */
 export default function CatalogChips({ chips, onClearAll }: Props) {
   if (chips.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap gap-2 mb-4">
+    <div className="mb-6 flex flex-wrap items-center gap-2">
       {chips.map((chip) => (
-        // Todo el chip quita el filtro: la X sola era un blanco de 11 px, difícil de tocar en el celular.
         <button
           key={chip.label}
           type="button"
           onClick={chip.onRemove}
           aria-label={'Quitar filtro ' + chip.label}
-          className="flex items-center gap-1.5 bg-accent/10 border border-accent/20 text-brand-fg text-xs font-semibold px-3 py-1 rounded-full hover:bg-accent/20 transition-colors"
+          className="group flex items-center gap-2 border border-fg/20 px-3 py-1.5 text-xs text-fg transition-colors duration-300 hover:border-bordo hover:text-bordo"
         >
-          {chip.label}
-          <X size={11} aria-hidden="true" />
+          <span className="font-display italic">{chip.label}</span>
+          <X size={11} strokeWidth={1.5} aria-hidden="true" className="transition-transform duration-300 group-hover:rotate-90" />
         </button>
       ))}
-      <button onClick={onClearAll} className="text-xs text-fg-muted hover:text-fg transition-colors px-2">
-        Limpiar todos
+      <button type="button" onClick={onClearAll} className="subrayado rotulo ml-2 !text-[10px] text-fg-muted hover:text-fg">
+        Limpiar todo
       </button>
     </div>
   );

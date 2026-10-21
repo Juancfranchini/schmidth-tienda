@@ -8,23 +8,20 @@ interface Props {
   onSubmit: (e: React.FormEvent) => void;
 }
 
+/** Buscador del catálogo: una línea fina con la lupa, se envía con Enter o con la flecha. */
 export default function CatalogSearch({ value, onChange, onSubmit }: Props) {
   return (
-    <form onSubmit={onSubmit} className="flex items-center gap-2">
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-fg-muted" />
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          aria-label="Buscar productos"
-          placeholder="Escribí el producto que buscás"
-          className="w-56 pl-10 pr-4 py-2 bg-night border border-accent/50 rounded-lg text-sm text-fg placeholder-fg-muted focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent/20 transition-all"
-        />
-      </div>
-      <button type="submit" className="px-4 py-2 bg-accent text-on-accent rounded-lg text-xs font-semibold uppercase tracking-wide btn-primary-glow">
-        Buscar
-      </button>
+    <form onSubmit={onSubmit} className="group flex w-full items-center gap-3 border-b border-fg/30 pb-2 transition-colors focus-within:border-bordo sm:w-72">
+      <Search className="h-4 w-4 flex-shrink-0 text-fg-muted" strokeWidth={1.5} aria-hidden />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label="Buscar productos"
+        placeholder="Buscar una cartera"
+        className="min-w-0 flex-1 bg-transparent text-sm text-fg placeholder-fg-muted focus:outline-none"
+      />
+      <button type="submit" aria-label="Buscar" className="text-fg-muted transition-all duration-300 hover:translate-x-0.5 hover:text-bordo">→</button>
     </form>
   );
 }

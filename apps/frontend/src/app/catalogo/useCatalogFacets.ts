@@ -58,7 +58,12 @@ export function useCatalogFacets({ selectedCategory, selectedBrand, isOffer, sea
     ...(p.variants?.filter((v) => p.hasWeight && v.active && v.weight != null).map((v) => `${v.weight} ${v.weightUnit || ''}`.trim()) || []),
   ]))];
 
+  // Tono de cada color (de las variantes) para dibujar la muestra en el filtro.
+  const colorHex: Record<string, string> = {};
+  for (const p of products) for (const v of p.variants || []) if (v.color && v.colorHex && !colorHex[v.color]) colorHex[v.color] = v.colorHex;
+
   return {
+    colorHex,
     sizes: valoresUnicos(products, 'size', 'hasSize'),
     colors: valoresUnicos(products, 'color', 'hasColor'),
     weights,

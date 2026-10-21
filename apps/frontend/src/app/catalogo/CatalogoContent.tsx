@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Filter } from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { Product } from '@/types';
 import { useCartStore } from '@/store/cartStore';
 import { useCatalogPage } from './useCatalogPage';
@@ -55,20 +55,20 @@ export default function CatalogoContent({ result }: Props) {
         onSearchSubmit={handleSearch}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-        <div className="flex gap-6">
+      <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:py-12">
+        <div className="flex gap-12 xl:gap-16">
           <aside className="hidden lg:block">
             <CatalogSidebar {...sidebarProps} />
           </aside>
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between mb-4 gap-3">
-              <button onClick={() => setSidebarOpen(true)}
-                className="lg:hidden flex items-center gap-2 bg-panel border border-line rounded-lg px-4 py-2 text-sm font-medium text-fg hover:border-fg-muted transition-colors">
-                <Filter size={15} />Filtros
-                {hasFilters && <span className="w-5 h-5 bg-accent text-on-accent rounded-full text-[10px] font-bold flex items-center justify-center">{activeChips.length}</span>}
+            <div className="mb-6 flex items-center justify-between gap-3 lg:hidden">
+              <button type="button" onClick={() => setSidebarOpen(true)}
+                className="rotulo flex items-center gap-3 border border-fg/30 px-5 py-3 text-fg transition-colors hover:border-fg">
+                <SlidersHorizontal size={14} strokeWidth={1.25} />Filtrar
+                {hasFilters && <span className="font-display text-sm normal-case italic tracking-normal text-bordo">({activeChips.length})</span>}
               </button>
-              <p className="text-sm text-fg-soft hidden sm:block">{totalCount} productos</p>
+              <p className="font-display text-sm italic text-fg-soft">{totalCount === 1 ? '1 modelo' : totalCount + ' modelos'}</p>
             </div>
 
             <CatalogChips chips={activeChips} onClearAll={clearFilters} />

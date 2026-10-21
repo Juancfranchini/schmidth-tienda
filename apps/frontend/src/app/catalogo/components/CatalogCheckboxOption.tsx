@@ -6,15 +6,16 @@ interface Props {
   onChange: () => void;
 }
 
+/** Opción de filtro: casilla chica de trazo fino que se rellena en bordó. */
 export default function CatalogCheckboxOption({ label, checked, onChange }: Props) {
   return (
-    <label className="flex items-center gap-2.5 cursor-pointer group">
-      <div className={'w-4 h-4 rounded border flex-none flex items-center justify-center transition-colors ' +
-        (checked ? 'bg-accent border-accent' : 'border-fg-muted group-hover:border-fg')}>
-        {checked && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="rgb(var(--c-ink))" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+    <label className="group flex cursor-pointer items-center gap-3">
+      <span className={'flex h-3.5 w-3.5 flex-none items-center justify-center border transition-colors duration-300 ' +
+        (checked ? 'border-bordo bg-bordo' : 'border-fg/35 group-hover:border-fg')}>
+        {checked && <svg width="8" height="6" viewBox="0 0 10 8" fill="none" aria-hidden><path d="M1 4l2.5 2.5L9 1" stroke="rgb(var(--c-page))" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>}
         <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
-      </div>
-      <span className={'text-sm ' + (checked ? 'text-fg font-semibold' : 'text-fg-soft group-hover:text-fg') + ' transition-colors truncate'}>{label}</span>
+      </span>
+      <span className={'truncate text-sm transition-colors ' + (checked ? 'text-fg' : 'text-fg-soft group-hover:text-fg')}>{label}</span>
     </label>
   );
 }

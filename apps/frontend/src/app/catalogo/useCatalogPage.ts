@@ -20,7 +20,7 @@ export function useCatalogPage(result: CatalogResult) {
   const { products, totalPages, totalCount, error } = result;
   // Mientras el servidor arma el listado nuevo, el anterior ya no corresponde a los filtros elegidos.
   const loading = isPending;
-  const { sizes, colors, weights } = useCatalogFacets({ selectedCategory, selectedBrand, isOffer, searchQuery });
+  const { sizes, colors, colorHex, weights } = useCatalogFacets({ selectedCategory, selectedBrand, isOffer, searchQuery });
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(searchQuery);
@@ -39,7 +39,7 @@ export function useCatalogPage(result: CatalogResult) {
     onBrandChange: (slug: string | null) => setParam('marca', slug ? alternarValor(selectedBrand, slug) : null),
     onOfferChange: (v: boolean) => setParam('oferta', v ? 'true' : null),
     onClear: clearFilters, hasFilters,
-    sizes, colors, weights,
+    sizes, colors, colorHex, weights,
     selectedSize, selectedColor, selectedWeight, minPrice, maxPrice,
     onPriceChange: (min: number | null, max: number | null) =>
       setParams({ desde: min != null ? String(min) : null, hasta: max != null ? String(max) : null }),
