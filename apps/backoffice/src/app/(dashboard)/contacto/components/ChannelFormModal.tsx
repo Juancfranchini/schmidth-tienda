@@ -1,7 +1,7 @@
 import { Modal } from '@/components/ui/Modal';
 import ImageUpload from '@/components/ui/ImageUpload';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 export default function ChannelFormModal({ isOpen, isEdit, channelForm, setChannelForm, onClose, onSave }: {
   isOpen: boolean; isEdit: boolean; channelForm: any; setChannelForm: (f: any) => void; onClose: () => void; onSave: () => void;
@@ -36,7 +36,7 @@ export default function ChannelFormModal({ isOpen, isEdit, channelForm, setChann
         </div>
         <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
           <button onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600">Cancelar</button>
-          <button onClick={onSave} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold">Guardar</button>
+          <button onClick={onSave} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold">Guardar</button>
         </div>
       </div>
     </Modal>

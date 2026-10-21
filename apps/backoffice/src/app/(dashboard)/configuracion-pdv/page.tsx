@@ -79,7 +79,7 @@ function BranchForm({ onSaved }: { onSaved: (message: string) => Promise<void> }
         placeholder="Dirección"
         className="w-full rounded-lg border px-3 py-2"
       />
-      <button className="rounded-lg bg-[#0f172a] px-4 py-2 text-sm font-semibold text-white">
+      <button className="rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-semibold text-white">
         Crear sucursal
       </button>
     </form>
@@ -126,7 +126,7 @@ function RegisterForm({
         placeholder="Código"
         className="w-full rounded-lg border px-3 py-2"
       />
-      <button className="rounded-lg bg-[#0f172a] px-4 py-2 text-sm font-semibold text-white">
+      <button className="rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-semibold text-white">
         Crear caja
       </button>
     </form>

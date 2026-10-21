@@ -30,7 +30,7 @@ export default function ProductForm({ mode, productId }: Props) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-2 border-[#C8FF00] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#B3855C] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }

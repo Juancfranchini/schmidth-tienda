@@ -31,7 +31,7 @@ export default function ContentCards({ products, onEdit, onDelete }: {
             </div>
 
             <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
-              <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(p)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>

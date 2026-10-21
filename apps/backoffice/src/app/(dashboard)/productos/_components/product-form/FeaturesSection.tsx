@@ -17,7 +17,7 @@ export default function FeaturesSection({ register, featuresArray }: { register:
           </div>
         ))}
       </div>
-      <button type="button" onClick={() => featuresArray.append({ icon: '', title: '', subtitle: '' })} className="flex items-center gap-1.5 text-sm text-[#0f172a] hover:text-gray-600 font-medium mt-1">
+      <button type="button" onClick={() => featuresArray.append({ icon: '', title: '', subtitle: '' })} className="flex items-center gap-1.5 text-sm text-[#1A1A1A] hover:text-gray-600 font-medium mt-1">
         <Plus className="w-4 h-4" /> Agregar característica
       </button>
     </SectionCard>

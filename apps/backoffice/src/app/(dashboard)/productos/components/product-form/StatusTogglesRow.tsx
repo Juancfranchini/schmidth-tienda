@@ -32,7 +32,7 @@ export default function StatusTogglesRow({ active, isNew, isOffer, featured, set
         <label className={labelClass}>Destacado</label>
         <div className="flex items-center gap-2 mt-1">
           <Toggle checked={featured} onChange={() => setValue('featured', !featured, { shouldDirty: true })} />
-          <Star className={'w-5 h-5 ' + (featured ? 'text-[#C8FF00] fill-[#C8FF00]' : 'text-gray-300')} />
+          <Star className={'w-5 h-5 ' + (featured ? 'text-[#B3855C] fill-[#B3855C]' : 'text-gray-300')} />
         </div>
       </div>
     </div>

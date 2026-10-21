@@ -258,7 +258,7 @@ function FiltersForm({
         />
         <button
           disabled={loading}
-          className="mt-2 w-full rounded-lg bg-[#0f172a] py-2 text-xs font-bold text-white"
+          className="mt-2 w-full rounded-lg bg-[#1A1A1A] py-2 text-xs font-bold text-white"
         >
           {loading ? 'Cargando…' : 'Aplicar'}
         </button>

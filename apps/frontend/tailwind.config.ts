@@ -32,13 +32,14 @@ const config: Config = {
         ink: tema('ink'),
         camel: tema('camel'),
         bordo: tema('bordo'),
+        rosado: tema('rosado'),
       },
       // Esquinas casi rectas en toda la tienda (estilo editorial). `rounded-full` no cambia:
       // las muestras de color y los íconos redondos siguen siendo círculos.
       borderRadius: { sm: '1px', DEFAULT: '2px', md: '2px', lg: '2px', xl: '3px', '2xl': '3px', '3xl': '4px' },
       fontFamily: {
-        sans: ['var(--font-sans)', 'Jost', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['var(--font-display)', 'Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['var(--font-sans)', 'Montserrat', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
       },
     },
   },

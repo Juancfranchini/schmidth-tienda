@@ -29,13 +29,13 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const inputClass = 'w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 function CtaColumn({ register, errors }: { register: any; errors: any }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
       <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2">
-        <Megaphone size={16} className="text-[#C8FF00]" />Columna CTA
+        <Megaphone size={16} className="text-[#B3855C]" />Columna CTA
       </h2>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Título *</label>
@@ -78,7 +78,7 @@ function NewsletterColumn({ register, errors }: { register: any; errors: any }) 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
       <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2">
-        <Mail size={16} className="text-[#C8FF00]" />Columna Newsletter
+        <Mail size={16} className="text-[#B3855C]" />Columna Newsletter
       </h2>
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Título *</label>
@@ -176,7 +176,7 @@ export default function CtaNewsletterConfigPage() {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Megaphone className="w-5 h-5 text-[#C8FF00]" />CTA & Newsletter
+            <Megaphone className="w-5 h-5 text-[#B3855C]" />CTA & Newsletter
           </h1>
           <p className="text-gray-500 text-sm mt-0.5">Sección final del inicio con CTA y formulario de newsletter</p>
         </div>
@@ -190,10 +190,10 @@ export default function CtaNewsletterConfigPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <input type="checkbox" id="fmActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+            <input type="checkbox" id="fmActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
             <label htmlFor="fmActive" className="text-sm text-gray-700 font-medium">Sección activa</label>
           </div>
-          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         

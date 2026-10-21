@@ -33,7 +33,7 @@ export default function PromotionsTable({ promotions, onToggleActive, onEdit, on
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-1">
-                    <button onClick={() => onEdit(p)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                    <button onClick={() => onEdit(p)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                     <button onClick={() => onDelete(p)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                   </div>
                 </td>

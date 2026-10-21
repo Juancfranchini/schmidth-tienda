@@ -44,7 +44,7 @@ export function ProductBrowser({ products, onSearch, onAdd }: Props) {
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            className="w-full rounded-lg border border-gray-200 py-2.5 pl-9 pr-3 text-sm focus:border-[#C8FF00] focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/20"
+            className="w-full rounded-lg border border-gray-200 py-2.5 pl-9 pr-3 text-sm focus:border-[#B3855C] focus:outline-none focus:ring-2 focus:ring-[#B3855C]/20"
             placeholder="Producto, SKU o código…"
           />
         </label>
@@ -85,7 +85,7 @@ function ProductRow({ product, onAdd }: { product: PosProduct; onAdd: Props['onA
               key={variant.id}
               disabled={!product.isMadeToOrder && variant.stock < 1}
               onClick={() => onAdd(product, variant)}
-              className="rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium hover:border-[#C8FF00] disabled:opacity-40"
+              className="rounded-lg border border-gray-200 bg-white px-2.5 py-1.5 text-xs font-medium hover:border-[#B3855C] disabled:opacity-40"
             >
               <Plus className="mr-1 inline h-3 w-3" />
               {[variant.size, variant.color].filter(Boolean).join(' / ') || variant.sku} (
@@ -98,7 +98,7 @@ function ProductRow({ product, onAdd }: { product: PosProduct; onAdd: Props['onA
           type="button"
           disabled={!product.isMadeToOrder && product.stock < 1}
           onClick={() => onAdd(product)}
-          className="mt-2 flex items-center gap-1 rounded-lg bg-[#0f172a] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#1e293b] disabled:opacity-40"
+          className="mt-2 flex items-center gap-1 rounded-lg bg-[#1A1A1A] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#2A2A2A] disabled:opacity-40"
         >
           <Plus className="h-3 w-3" /> Agregar
         </button>

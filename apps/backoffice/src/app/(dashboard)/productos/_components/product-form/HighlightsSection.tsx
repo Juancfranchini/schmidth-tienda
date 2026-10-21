@@ -44,7 +44,7 @@ export default function HighlightsSection({ highlightsWatch, newHighlight, setNe
           className="input-field flex-1 text-sm"
           placeholder="Escribí un destacado y presioná Enter o +"
         />
-        <button type="button" onClick={addHighlight} className="px-4 py-2 bg-[#0f172a] text-white rounded-lg text-sm font-medium hover:bg-[#1e293b] transition-colors">
+        <button type="button" onClick={addHighlight} className="px-4 py-2 bg-[#1A1A1A] text-white rounded-lg text-sm font-medium hover:bg-[#2A2A2A] transition-colors">
           <Plus className="w-4 h-4" />
         </button>
       </div>

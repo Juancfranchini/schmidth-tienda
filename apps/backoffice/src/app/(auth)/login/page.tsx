@@ -28,7 +28,7 @@ function LoginFormFields({ onSubmit, apiError, loading }: { onSubmit: (data: Log
           type="email"
           autoComplete="email"
           placeholder={MARCA.email.admin}
-          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] transition-all"
+          className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] transition-all"
         />
         {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>}
       </div>
@@ -41,7 +41,7 @@ function LoginFormFields({ onSubmit, apiError, loading }: { onSubmit: (data: Log
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
             placeholder="••••••••"
-            className="w-full px-4 py-2.5 pr-10 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] transition-all"
+            className="w-full px-4 py-2.5 pr-10 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] transition-all"
           />
           <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" tabIndex={-1}>
             {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -59,7 +59,7 @@ function LoginFormFields({ onSubmit, apiError, loading }: { onSubmit: (data: Log
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3 rounded-lg bg-[#C8FF00] text-[#0f172a] font-bold text-sm hover:bg-[#b8ef00] transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+        className="w-full py-3 rounded-lg bg-[#B3855C] text-[#1A1A1A] font-bold text-sm hover:bg-[#9E7149] transition-colors flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed mt-2"
       >
         {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <LayoutDashboard className="w-4 h-4" />}
         {loading ? 'Ingresando...' : 'Entrar al panel'}
@@ -102,19 +102,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1A1A1A] via-[#2A2A2A] to-[#1A1A1A] p-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Barra acento */}
-          <div className="h-1 bg-[#C8FF00]" />
+          <div className="h-1 bg-[#B3855C]" />
 
           <div className="p-8">
             {/* Logo */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0f172a] mb-4">
-                <span className="text-[#C8FF00] font-black text-xl">HP</span>
-              </div>
-              <h1 className="text-2xl font-black text-gray-900 tracking-tight">{MARCA.nombreLogo}</h1>
+              <img src={MARCA.logo.isotipo} alt="" className="mx-auto mb-4 h-16 w-16" />
+              <h1 className="font-serif text-3xl tracking-[0.06em] text-gray-900">{MARCA.nombreLogo}</h1>
               <p className="text-gray-400 text-sm mt-1 font-medium uppercase tracking-widest">BackOffice</p>
             </div>
 

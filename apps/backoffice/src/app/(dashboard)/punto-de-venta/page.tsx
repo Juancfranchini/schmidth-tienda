@@ -95,7 +95,7 @@ function PosHeader() {
         </Link>
         <Link
           href="/estadisticas-ventas"
-          className="rounded-lg bg-[#0f172a] px-3 py-2 text-sm font-semibold text-white"
+          className="rounded-lg bg-[#1A1A1A] px-3 py-2 text-sm font-semibold text-white"
         >
           Estadísticas
         </Link>
@@ -203,7 +203,7 @@ function SaleDetails({
         errors={form.formState.errors}
       />
       <PaymentFields register={form.register} cashOpen={!!pos.session} />
-      <div className="rounded-xl bg-[#0f172a] p-4 text-white">
+      <div className="rounded-xl bg-[#1A1A1A] p-4 text-white">
         <div className="flex justify-between text-sm text-slate-300">
           <span>Subtotal</span>
           <span>{formatPrice(pos.subtotal)}</span>
@@ -214,12 +214,12 @@ function SaleDetails({
         </div>
         <div className="mt-3 flex justify-between border-t border-white/10 pt-3 text-xl font-black">
           <span>Total</span>
-          <span className="text-[#C8FF00]">{formatPrice(total)}</span>
+          <span className="text-[#B3855C]">{formatPrice(total)}</span>
         </div>
       </div>
       <button
         disabled={pos.busy || !pos.cart.length}
-        className="w-full rounded-xl bg-[#C8FF00] px-5 py-3.5 font-black text-[#0f172a] disabled:opacity-50"
+        className="w-full rounded-xl bg-[#B3855C] px-5 py-3.5 font-black text-[#1A1A1A] disabled:opacity-50"
       >
         {pos.busy ? 'Procesando…' : 'Registrar venta'}
       </button>
@@ -263,7 +263,7 @@ function CartActions({
           type="button"
           onClick={() => pos.createLink(values)}
           disabled={!pos.cart.length || pos.busy}
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2.5 text-sm font-semibold text-white"
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#1A1A1A] px-4 py-2.5 text-sm font-semibold text-white"
         >
           <Send className="h-4 w-4" /> Generar enlace de checkout
         </button>

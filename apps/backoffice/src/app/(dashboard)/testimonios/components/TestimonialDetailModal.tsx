@@ -9,10 +9,10 @@ export default function TestimonialDetailModal({ item, onClose }: { item: Testim
       <div className="space-y-4">
         <div className="flex items-center gap-3">
           {item.photo ? (
-            <img src={item.photo} alt={item.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#C8FF00]/30" />
+            <img src={item.photo} alt={item.name} className="w-12 h-12 rounded-full object-cover border-2 border-[#B3855C]/30" />
           ) : (
-            <div className="w-12 h-12 rounded-full bg-[#C8FF00]/10 border-2 border-[#C8FF00]/30 flex items-center justify-center">
-              <span className="text-[#C8FF00] font-bold text-sm">{item.name.slice(0, 2).toUpperCase()}</span>
+            <div className="w-12 h-12 rounded-full bg-[#B3855C]/10 border-2 border-[#B3855C]/30 flex items-center justify-center">
+              <span className="text-[#B3855C] font-bold text-sm">{item.name.slice(0, 2).toUpperCase()}</span>
             </div>
           )}
           <div>

@@ -15,7 +15,7 @@ export default function VariantPropertiesSection({ register, hasSize, hasColor, 
             ['hasWeight', 'Peso', hasWeight],
           ] as const).map(([name, label]) => (
             <label key={name} className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
-              <input type="checkbox" {...register(name)} className="w-4 h-4 rounded accent-[#C8FF00]" />
+              <input type="checkbox" {...register(name)} className="w-4 h-4 rounded accent-[#B3855C]" />
               {label}
             </label>
           ))}

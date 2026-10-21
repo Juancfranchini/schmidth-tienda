@@ -97,8 +97,8 @@ export default function ProductDetailModal({ product, onClose }: Props) {
             <div>
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Destacado</p>
               <div className="flex items-center gap-1 mt-1">
-                <Star className={'w-4 h-4 ' + (product.featured ? 'text-[#C8FF00] fill-[#C8FF00]' : 'text-gray-300')} />
-                <span className={'text-xs font-medium ' + (product.featured ? 'text-[#C8FF00]' : 'text-gray-400')}>{product.featured ? 'Destacado' : 'No destacado'}</span>
+                <Star className={'w-4 h-4 ' + (product.featured ? 'text-[#B3855C] fill-[#B3855C]' : 'text-gray-300')} />
+                <span className={'text-xs font-medium ' + (product.featured ? 'text-[#B3855C]' : 'text-gray-400')}>{product.featured ? 'Destacado' : 'No destacado'}</span>
               </div>
             </div>
             {product.description && (

@@ -58,12 +58,12 @@ export default function ImageGalleryInput({ images, onChange }: Props) {
               value={url}
               onChange={(e) => { const newImages = [...slots]; newImages[i] = e.target.value; onChange(newImages.filter(Boolean)); }}
               placeholder={'URL ' + (i + 1)}
-              className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+              className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
             />
             <button
               type="button"
               onClick={() => handleUpload(i)}
-              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 shrink-0"
+              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 shrink-0"
             >
               <Upload className="w-3 h-3" />Subir
             </button>

@@ -68,7 +68,7 @@ export default function BotonBolsaRegalo() {
           <p className="text-gray-500">Se cobra una por producto como máximo. Con 0 va sin cargo. El precio se suma al total del pedido y aparece en Mercado Pago y en el mail al cliente.</p>
           <div className="flex justify-end gap-2">
             <button type="button" onClick={() => setAbierto(false)} className="rounded-lg border px-3 py-2 font-medium text-gray-700">Cancelar</button>
-            <button type="submit" disabled={form.formState.isSubmitting} className="rounded-lg bg-[#C8FF00] px-3 py-2 font-semibold text-[#0f172a] disabled:opacity-50">Guardar</button>
+            <button type="submit" disabled={form.formState.isSubmitting} className="rounded-lg bg-[#B3855C] px-3 py-2 font-semibold text-[#1A1A1A] disabled:opacity-50">Guardar</button>
           </div>
         </form>
       </Modal>

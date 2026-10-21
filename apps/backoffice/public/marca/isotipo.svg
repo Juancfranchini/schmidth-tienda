@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="S">
+  <!-- Isotipo provisorio del branding: "S" en serif sobre blanco roto, con la línea corta debajo. Reemplazar por el vector definitivo. -->
+  <rect width="64" height="64" fill="#F7F5EF"/>
+  <text x="32" y="42" text-anchor="middle" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="40" fill="#1A1A1A">S</text>
+  <rect x="24" y="50" width="16" height="1.5" fill="#1A1A1A"/>
+</svg>

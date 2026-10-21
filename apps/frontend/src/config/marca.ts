@@ -7,7 +7,17 @@ export const MARCA = {
   "slug": "schmidt",
   "rubro": "Carteras de eco cuero",
   "descripcion": "Carteras de eco cuero hechas en Argentina. Modelos en stock y a pedido, en el color que elijas.",
-  "eslogan": "Tu estilo, en cada detalle.",
+  "eslogan": "Carteras que te acompañan todos los días.",
+  "bajada": "Carteras · Accesorios · Mujeres reales",
+  "valores": [
+    "Elegancia",
+    "Funcionalidad",
+    "Diseño atemporal"
+  ],
+  "frases": {
+    "ritmo": "Diseñadas para tu ritmo",
+    "companera": "Más que una cartera, es tu compañera de todos los días."
+  },
   "keywords": [
     "carteras",
     "carteras de eco cuero",
@@ -30,6 +40,12 @@ export const MARCA = {
     "admin": "admin@schmidt.example",
     "pendiente": "Mails reales a definir. El remitente necesita el dominio verificado en Resend."
   },
+  "legal": {
+    "razonSocial": "",
+    "cuit": "",
+    "domicilio": "",
+    "pendiente": "Completar para los términos y condiciones y la política de privacidad."
+  },
   "whatsapp": "",
   "redes": {
     "instagram": "",
@@ -38,16 +54,18 @@ export const MARCA = {
     "tiktok": ""
   },
   "colores": {
-    "negro": "#161413",
-    "camel": "#A87449",
-    "bordo": "#6E1E2B",
-    "blancoRoto": "#F4F0EA",
-    "piedra": "#E6DFD4",
-    "grisRosado": "#BFAFAE"
+    "negro": "#1A1A1A",
+    "camel": "#B3855C",
+    "bordo": "#6B2A37",
+    "rosado": "#D9C8C8",
+    "blancoRoto": "#F7F5EF",
+    "piedra": "#E9E3D8",
+    "grisRosado": "#D9C8C8"
   },
   "logo": {
     "archivo": "/marca/logo.svg",
-    "mail": "/email/logo.png"
+    "mail": "/email/logo.png",
+    "isotipo": "/marca/isotipo.svg"
   },
   "backoffice": {
     "rutasOcultas": [
@@ -81,5 +99,70 @@ export const MARCA = {
     "Instagram y otras redes",
     "Mails de contacto y remitente",
     "Razón social y CUIT para las páginas legales"
-  ]
+  ],
+  "textos": {
+    "horario": "Lunes a viernes de 9 a 18 hs",
+    "devoluciones": {
+      "aRevisar": true,
+      "chip": "Cambios y devoluciones",
+      "title": "Cambios y devoluciones",
+      "description": "Queremos que tu cartera te encante. Si no es así, te contamos cómo cambiarla o devolverla.",
+      "benefits": [
+        {
+          "icon": "RefreshCw",
+          "title": "10 días para arrepentirte",
+          "desc": "Podés cancelar la compra dentro de los 10 días corridos desde que recibís el pedido."
+        },
+        {
+          "icon": "Package",
+          "title": "Cambios",
+          "desc": "Podés cambiar tu cartera por otro modelo o color, sin uso y con sus etiquetas."
+        },
+        {
+          "icon": "Shield",
+          "title": "Fallas de fabricación",
+          "desc": "Si tu cartera tiene una falla, la reparamos, la cambiamos o te devolvemos el dinero."
+        },
+        {
+          "icon": "Check",
+          "title": "Sin vueltas",
+          "desc": "Escribinos y te guiamos en cada paso."
+        }
+      ],
+      "conditionsOk": [
+        "La cartera tiene que estar sin uso, en el mismo estado en que la recibiste y con sus etiquetas.",
+        "Arrepentimiento: tenés 10 días corridos desde que recibís el pedido para cancelar la compra (botón de arrepentimiento, al pie de la página). Los costos de la devolución corren por nuestra cuenta.",
+        "Cambios por otro modelo o color: escribinos dentro de los 30 días corridos desde que recibiste el pedido. El envío del cambio corre por tu cuenta, salvo falla de fabricación.",
+        "Si la cartera tiene una falla de fabricación, nos hacemos cargo de todos los envíos."
+      ],
+      "conditionsNo": [
+        "Carteras usadas, dañadas o sin sus etiquetas.",
+        "Carteras confeccionadas a pedido en un color elegido por vos: no tienen derecho de arrepentimiento (art. 1116 del Código Civil y Comercial), salvo falla de fabricación."
+      ],
+      "steps": [
+        {
+          "title": "Escribinos",
+          "desc": "Por WhatsApp o mail, con tu número de pedido."
+        },
+        {
+          "title": "Te indicamos el envío",
+          "desc": "Te decimos cómo y a dónde mandar la cartera."
+        },
+        {
+          "title": "Revisamos la cartera",
+          "desc": "Cuando la recibimos, controlamos su estado."
+        },
+        {
+          "title": "Cambio o reintegro",
+          "desc": "Hacemos el cambio o te devolvemos el dinero por el mismo medio de pago."
+        }
+      ],
+      "helpTitle": "¿Necesitás ayuda?",
+      "helpDescription": "Escribinos y te ayudamos con tu cambio o devolución."
+    }
+  },
+  "tipografias": {
+    "logo": "Playfair Display",
+    "textos": "Montserrat"
+  }
 } as const;

@@ -16,10 +16,10 @@ interface Props {
  */
 export default function HomeHero({ slide, destacado }: Props) {
   const titulo = slide?.title || MARCA.eslogan;
-  const bajada = slide?.description || 'Carteras de eco cuero que te acompañan todos los días.';
+  const bajada = slide?.description || MARCA.frases.ritmo + '.';
   const cta = slide?.ctaPrimary || 'Ver colección';
   const ctaUrl = slide?.ctaPrimaryUrl || '/catalogo';
-  const rotulo = slide?.subtitle || 'Colección ' + new Date().getFullYear();
+  const rotulo = slide?.subtitle || MARCA.bajada;
 
   if (slide?.image) {
     return (
@@ -56,8 +56,9 @@ function Texto({ rotulo, titulo, bajada, cta, ctaUrl, claro = false }: {
   return (
     <div className="max-w-xl">
       <p className={'rotulo mb-5 ' + (claro ? 'text-on-accent/80' : 'text-bordo')}>{rotulo}</p>
-      <h1 className="font-display text-[3.25rem] leading-[0.95] sm:text-7xl lg:text-[5.5rem]">{titulo}</h1>
-      <p className={'mt-6 max-w-md text-base leading-relaxed sm:text-lg ' + (claro ? 'text-on-accent/85' : 'text-fg-soft')}>{bajada}</p>
+      <h1 className="font-display text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-7xl">{titulo}</h1>
+      <span className={'guion mt-7 ' + (claro ? 'text-on-accent/70' : 'text-fg')} aria-hidden />
+      <p className={'mt-7 max-w-md text-base leading-relaxed ' + (claro ? 'text-on-accent/85' : 'text-fg-soft')}>{bajada}</p>
       <Link
         href={ctaUrl}
         className={'rotulo mt-8 inline-block border px-8 py-4 transition-colors ' + (claro

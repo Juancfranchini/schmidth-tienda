@@ -47,7 +47,7 @@ export default function RelacionadosTab({ products, selectedId, setValue, contro
           const isChecked = relatedIds.includes(p.id);
           const imgSrc = getImageUrl(p.images?.[0]);
           return (
-            <label key={p.id} className={'flex items-center gap-3 p-2 rounded-lg border cursor-pointer text-sm transition-all ' + (isChecked ? 'border-[#C8FF00] bg-[#C8FF00]/5' : 'border-gray-200 hover:bg-gray-50')}>
+            <label key={p.id} className={'flex items-center gap-3 p-2 rounded-lg border cursor-pointer text-sm transition-all ' + (isChecked ? 'border-[#B3855C] bg-[#B3855C]/5' : 'border-gray-200 hover:bg-gray-50')}>
               <input type="checkbox" checked={isChecked} onChange={() => toggleProduct(p.id)} className="sr-only" />
               {imgSrc ? <img src={imgSrc} alt={p.name} className="w-10 h-10 rounded-lg object-cover border border-gray-200 flex-shrink-0" />
                 : <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0"><ImageIcon className="w-4 h-4 text-gray-400" /></div>}

@@ -11,7 +11,7 @@ function SectionToggleRow({ section, active, onToggle }: { section: SectionItem;
           type="checkbox"
           checked={active}
           onChange={(e) => onToggle(e.target.checked)}
-          className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#C8FF00]"
+          className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#B3855C]"
         />
         <div className="flex-1">
           <p className="text-sm font-medium text-gray-800">{section.label}</p>
@@ -65,7 +65,7 @@ export default function HomeSectionsTab() {
           disabled={saving}
           className={'flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ' +
             (!saving
-              ? 'bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00]'
+              ? 'bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149]'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed')}
         >
           <Save className="w-4 h-4" />

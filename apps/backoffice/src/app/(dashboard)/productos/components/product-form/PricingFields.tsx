@@ -16,7 +16,7 @@ export default function PricingFields({ register, errors, hasSalePrice, onToggle
             type="checkbox"
             checked={hasSalePrice}
             onChange={(e) => onToggleSalePrice(e.target.checked)}
-            className="w-4 h-4 rounded accent-[#C8FF00] cursor-pointer"
+            className="w-4 h-4 rounded accent-[#B3855C] cursor-pointer"
             id="hasSalePrice"
           />
           <label htmlFor="hasSalePrice" className="text-xs font-medium text-gray-500 cursor-pointer select-none">Activar precio promocional</label>

@@ -7,7 +7,7 @@ import Toggle from '../testimonios/components/Toggle';
 import ImageUpload, { getImageUrl } from '@/components/ui/ImageUpload';
 import { useHero, HeroSlide } from './useHero';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 function SlidesTable({ slides, onToggleActive, onEdit, onDelete }: { slides: HeroSlide[]; onToggleActive: (s: HeroSlide) => void; onEdit: (s: HeroSlide) => void; onDelete: (s: HeroSlide) => void }) {
@@ -48,7 +48,7 @@ function SlidesTable({ slides, onToggleActive, onEdit, onDelete }: { slides: Her
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-1">
-                      <button onClick={() => onEdit(s)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => onEdit(s)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                       <button onClick={() => onDelete(s)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>
@@ -111,7 +111,7 @@ function SlideCard({ slide, onToggleActive, onEdit, onDelete }: { slide: HeroSli
       <div className="flex items-center justify-between pt-2 border-t border-gray-100">
         <span className={'text-xs font-medium ' + (slide.active ? 'text-green-600' : 'text-gray-400')}>{slide.active ? 'Activo' : 'Inactivo'}</span>
         <div className="flex gap-2">
-          <button onClick={() => onEdit(slide)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+          <button onClick={() => onEdit(slide)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
           <button onClick={() => onDelete(slide)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
         </div>
       </div>
@@ -185,7 +185,7 @@ function SlideFormModal({ isOpen, editItem, isMobile, imageDesktop, imageMobile,
           </div>
           <div className="sm:col-span-2 flex justify-end gap-3 pt-2 border-t border-gray-100">
             <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Cancelar</button>
-            <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+            <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
               {saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}
             </button>
           </div>
@@ -226,11 +226,11 @@ export default function HeroPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar slides..."
-                className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+                className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
               />
             </div>
           </div>
-          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors whitespace-nowrap shrink-0">
+          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors whitespace-nowrap shrink-0">
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Nuevo slide</span>
             <span className="sm:hidden">Nuevo</span>
@@ -253,7 +253,7 @@ export default function HeroPage() {
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               {Array.from({ length: totalPages }).map((_, i) => (
-                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
               ))}
             </div>
           )}

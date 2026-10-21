@@ -14,7 +14,7 @@ export default function ChannelsSection({ channels, active, onToggleActive, onAd
         <div className="flex items-center gap-3">
           <Toggle checked={active} onChange={onToggleActive} />
           <button type="button" onClick={onAdd}
-            className="flex items-center gap-1 text-xs font-semibold px-3 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00] whitespace-nowrap">
+            className="flex items-center gap-1 text-xs font-semibold px-3 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149] whitespace-nowrap">
             <Plus size={12} />Agregar Canal
           </button>
         </div>
@@ -25,8 +25,8 @@ export default function ChannelsSection({ channels, active, onToggleActive, onAd
             {channels.map((channel) => (
               <div key={channel.id} className="p-4 bg-gray-50 rounded-lg space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-[#0f172a] flex items-center justify-center overflow-hidden">
-                    {channel.logo ? <img src={channel.logo} alt={channel.title} className="w-full h-full object-cover" /> : <MessageCircle size={20} className="text-[#C8FF00]" />}
+                  <div className="w-12 h-12 rounded-lg bg-[#1A1A1A] flex items-center justify-center overflow-hidden">
+                    {channel.logo ? <img src={channel.logo} alt={channel.title} className="w-full h-full object-cover" /> : <MessageCircle size={20} className="text-[#B3855C]" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-800 truncate">{channel.title || 'Sin titulo'}</p>
@@ -34,7 +34,7 @@ export default function ChannelsSection({ channels, active, onToggleActive, onAd
                   </div>
                 </div>
                 <div className="flex justify-end gap-1">
-                  <button type="button" onClick={() => onEdit(channel)} className="p-1.5 text-[#C8FF00] hover:bg-[#C8FF00]/10 rounded-lg"><Edit2 size={14} /></button>
+                  <button type="button" onClick={() => onEdit(channel)} className="p-1.5 text-[#B3855C] hover:bg-[#B3855C]/10 rounded-lg"><Edit2 size={14} /></button>
                   <button type="button" onClick={() => onDelete(channel)} className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 size={14} /></button>
                 </div>
               </div>

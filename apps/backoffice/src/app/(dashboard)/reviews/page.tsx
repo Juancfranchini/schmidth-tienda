@@ -33,7 +33,7 @@ export default function ReviewsPage() {
           <div className="flex-1 min-w-0">
             <ReviewsSearchBar value={search} onChange={setSearch} onAdvancedSearch={() => setAdvancedOpen(true)} hasAdvancedFilters={advancedFilters !== null} onClearFilters={() => { setAdvancedFilters(null); setAdvancedOpen(false); }} />
           </div>
-          <button onClick={() => setShowInfoModal(true)} className="flex items-center gap-1.5 px-3 py-2 border border-[#C8FF00]/50 text-gray-600 rounded-lg font-semibold text-sm hover:bg-[#C8FF00]/10 hover:border-[#C8FF00] hover:text-[#C8FF00] transition-colors whitespace-nowrap shrink-0">
+          <button onClick={() => setShowInfoModal(true)} className="flex items-center gap-1.5 px-3 py-2 border border-[#B3855C]/50 text-gray-600 rounded-lg font-semibold text-sm hover:bg-[#B3855C]/10 hover:border-[#B3855C] hover:text-[#B3855C] transition-colors whitespace-nowrap shrink-0">
             <HelpCircle className="w-4 h-4" />
             <span className="hidden sm:inline">Info</span>
             <span className="sm:hidden">i</span>
@@ -53,7 +53,7 @@ export default function ReviewsPage() {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
-            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
           ))}
         </div>
       )}

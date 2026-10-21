@@ -13,7 +13,7 @@ export interface Seguimiento {
 /** Devuelve true si el servidor aceptó el cambio. */
 export type AplicarEstado = (pedido: Pedido, estado: string, seguimiento?: Seguimiento) => Promise<boolean>;
 
-const CAMPO = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40';
+const CAMPO = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40';
 
 /**
  * Estados a los que se puede pasar desde la lista. Una vez cobrado no se
@@ -97,7 +97,7 @@ export function EstadoRapido({ pedido, ocupado, onAplicar }: Props) {
         value={pedido.status}
         disabled={ocupado}
         onChange={(e) => elegir(e.target.value)}
-        className="w-full min-w-[140px] max-w-[170px] rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 disabled:opacity-50"
+        className="w-full min-w-[140px] max-w-[170px] rounded-lg border border-gray-200 bg-white px-2 py-1 text-xs text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 disabled:opacity-50"
       >
         {opcionesPara(pedido).map((o) => <option key={o.valor} value={o.valor}>{o.texto}</option>)}
       </select>
@@ -123,7 +123,7 @@ export function EstadoRapido({ pedido, ocupado, onAplicar }: Props) {
             {error && <p className="text-xs text-red-600">{error}</p>}
             <div className="flex justify-end gap-2 border-t border-gray-100 pt-3">
               <button type="button" onClick={() => setDestino(null)} className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
-              <button type="button" disabled={ocupado} onClick={confirmar} className="rounded-lg bg-[#C8FF00] px-4 py-2 text-sm font-semibold text-[#0f172a] hover:bg-[#b8ef00] disabled:opacity-50">
+              <button type="button" disabled={ocupado} onClick={confirmar} className="rounded-lg bg-[#B3855C] px-4 py-2 text-sm font-semibold text-[#1A1A1A] hover:bg-[#9E7149] disabled:opacity-50">
                 {ocupado ? 'Guardando…' : 'Confirmar'}
               </button>
             </div>

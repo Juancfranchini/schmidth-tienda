@@ -9,7 +9,7 @@ const ORDENES: { valor: Orden; texto: string }[] = [
   { valor: 'nombre', texto: 'Nombre (A-Z)' },
 ];
 
-const CAMPO = 'rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40';
+const CAMPO = 'rounded-lg border border-gray-200 bg-white px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40';
 
 interface Props {
   filtros: Filtros;

@@ -1,4 +1,4 @@
-// Tailwind CSS configuration with custom colors for the BackOffice
+// Tailwind del BackOffice: colores del branding de Schmidt (negro y camel).
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -6,9 +6,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        sidebar: '#0f172a',
-        'sidebar-hover': '#1e293b',
-        accent: '#C8FF00',
+        sidebar: '#1A1A1A',
+        'sidebar-hover': '#2A2A2A',
+        accent: '#B3855C',
       },
     },
   },

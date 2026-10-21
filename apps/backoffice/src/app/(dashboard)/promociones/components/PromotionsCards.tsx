@@ -25,7 +25,7 @@ export default function PromotionsCards({ promotions, onToggleActive, onEdit, on
               <span className={'text-xs font-medium ' + (p.active ? 'text-green-600' : 'text-gray-400')}>{p.active ? 'Activo' : 'Inactivo'}</span>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(p)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>

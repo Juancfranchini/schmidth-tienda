@@ -47,7 +47,7 @@ export default function EditorToolbar({ editor, showLinkInput, setShowLinkInput,
   };
 
   const btn = 'p-1.5 rounded hover:bg-gray-200 text-gray-600 transition-colors';
-  const btnActive = 'p-1.5 rounded bg-[#C8FF00]/20 text-[#0f172a]';
+  const btnActive = 'p-1.5 rounded bg-[#B3855C]/20 text-[#1A1A1A]';
   const sep = <span className="w-px h-5 bg-gray-300 mx-1" />;
 
   return (

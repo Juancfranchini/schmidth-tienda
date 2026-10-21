@@ -2,7 +2,7 @@ export function SectionCard({ icon, title, children }: { icon: React.ReactNode; 
   return (
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-        <span className="text-[#C8FF00] bg-[#0f172a] w-8 h-8 rounded-lg flex items-center justify-center">
+        <span className="text-[#B3855C] bg-[#1A1A1A] w-8 h-8 rounded-lg flex items-center justify-center">
           {icon}
         </span>
         <h3 className="font-semibold text-gray-900">{title}</h3>

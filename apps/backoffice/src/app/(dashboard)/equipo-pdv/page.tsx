@@ -109,7 +109,7 @@ function TeamUserCard({ user, onSaved }: { user: TeamUser; onSaved: () => Promis
       </div>
       <button
         onClick={save}
-        className="mt-4 flex items-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-sm font-semibold text-white"
+        className="mt-4 flex items-center gap-2 rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-semibold text-white"
       >
         <Save className="h-4 w-4" /> {saved ? 'Guardado' : 'Guardar acceso'}
       </button>

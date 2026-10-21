@@ -27,7 +27,7 @@ function ImagePreviewBox({ uploading, previewUrl, onClear }: { uploading: boolea
   if (uploading) {
     return (
       <div className="flex flex-col items-center gap-2 text-gray-500">
-        <Loader2 className="w-8 h-8 animate-spin text-[#C8FF00]" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#B3855C]" />
         <span className="text-xs">Subiendo...</span>
       </div>
     );
@@ -109,7 +109,7 @@ export default function ImageUpload({ value, onChange, placeholder = 'URL de ima
         onDragLeave={handleDragLeave}
         className={'relative rounded-xl border-2 border-dashed flex items-center justify-center overflow-hidden cursor-pointer transition-all ' +
           (dragOver
-            ? 'border-[#C8FF00] bg-[#C8FF00]/10'
+            ? 'border-[#B3855C] bg-[#B3855C]/10'
             : previewUrl
               ? 'border-gray-200 bg-gray-100'
               : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100')}
@@ -124,13 +124,13 @@ export default function ImageUpload({ value, onChange, placeholder = 'URL de ima
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+          className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
         />
         <button
           type="button"
           onClick={handleClick}
           disabled={uploading}
-          className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50"
+          className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50"
         >
           <Upload className="w-3 h-3" />{uploading ? '...' : 'Subir'}
         </button>

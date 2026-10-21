@@ -16,7 +16,7 @@ export function CartPanel({ items, subtotal, onQuantity }: Props) {
           <ShoppingCart className="h-5 w-5 text-gray-500" />
           <h2 className="font-bold text-gray-900">Carrito</h2>
         </div>
-        <span className="rounded-full bg-[#C8FF00] px-2.5 py-1 text-xs font-bold text-[#0f172a]">
+        <span className="rounded-full bg-[#B3855C] px-2.5 py-1 text-xs font-bold text-[#1A1A1A]">
           {items.reduce((sum, item) => sum + item.quantity, 0)}
         </span>
       </div>

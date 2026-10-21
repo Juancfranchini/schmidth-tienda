@@ -27,7 +27,7 @@ export default function ContactoPage() {
   return (
     <div className="space-y-6 w-full">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-5 h-5 text-[#C8FF00]" />Pagina de Contacto</h1>
+        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-5 h-5 text-[#B3855C]" />Pagina de Contacto</h1>
         <p className="text-gray-500 text-sm mt-0.5">Configura todas las secciones de la pagina /contacto</p>
       </div>
 
@@ -56,7 +56,7 @@ export default function ContactoPage() {
         <NewsletterSection register={register} active={watch('newsletterActive')} onToggle={() => setValue('newsletterActive', !watch('newsletterActive'), { shouldDirty: true })} />
 
         <div className="flex justify-end">
-          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors whitespace-nowrap">
+          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors whitespace-nowrap">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>

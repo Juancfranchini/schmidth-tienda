@@ -2,7 +2,7 @@ import { useFieldArray, UseFormRegister } from 'react-hook-form';
 import Toggle from '../../testimonios/components/Toggle';
 import { Plus, Trash2 } from 'lucide-react';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 interface Props {
@@ -32,7 +32,7 @@ export default function HighlightsTab({ register, control, showHighlights, onTog
         <div className="flex items-center justify-between mb-2">
           <label className={labelClass}>Checklist</label>
           <button type="button" onClick={() => highlightsArray.append({ text: '' })}
-            className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00]"><Plus size={12} />Agregar</button>
+            className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149]"><Plus size={12} />Agregar</button>
         </div>
         {highlightsArray.fields.map((field, i) => (
           <div key={field.id} className="flex gap-2 mb-2">

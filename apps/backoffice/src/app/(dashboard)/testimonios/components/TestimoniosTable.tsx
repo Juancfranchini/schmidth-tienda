@@ -6,7 +6,7 @@ import { Testimonial, formatDate } from '../useTestimonios';
 function SortHeader({ label, field, sortField, onSort }: { label: string; field: string; sortField: string; onSort: (f: string) => void }) {
   return (
     <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-      {label}<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === field ? 'text-[#C8FF00]' : 'text-gray-400')} onClick={() => onSort(field)} />
+      {label}<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === field ? 'text-[#B3855C]' : 'text-gray-400')} onClick={() => onSort(field)} />
     </th>
   );
 }
@@ -25,8 +25,8 @@ export default function TestimoniosTable({ testimonials, sortField, onSort, onTo
             <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Nombre</th>
             <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Comentario</th>
             <SortHeader label="Puntuacion" field="rating" sortField={sortField} onSort={onSort} />
-            <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Creado<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === 'createdAt' ? 'text-[#C8FF00]' : 'text-gray-400')} onClick={() => onSort('createdAt')} /></th>
-            <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Modificado<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === 'updatedAt' ? 'text-[#C8FF00]' : 'text-gray-400')} onClick={() => onSort('updatedAt')} /></th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Creado<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === 'createdAt' ? 'text-[#B3855C]' : 'text-gray-400')} onClick={() => onSort('createdAt')} /></th>
+            <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Modificado<ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === 'updatedAt' ? 'text-[#B3855C]' : 'text-gray-400')} onClick={() => onSort('updatedAt')} /></th>
             <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Estado</th>
             <th className="text-center px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Opciones</th>
           </tr>
@@ -39,8 +39,8 @@ export default function TestimoniosTable({ testimonials, sortField, onSort, onTo
                 {t.photo ? (
                   <img src={t.photo} alt={t.name} className="w-9 h-9 rounded-full object-cover" />
                 ) : (
-                  <div className="w-9 h-9 rounded-full bg-[#C8FF00]/10 border border-[#C8FF00]/20 flex items-center justify-center">
-                    <span className="text-[#C8FF00] font-bold text-xs">{t.name.slice(0, 2).toUpperCase()}</span>
+                  <div className="w-9 h-9 rounded-full bg-[#B3855C]/10 border border-[#B3855C]/20 flex items-center justify-center">
+                    <span className="text-[#B3855C] font-bold text-xs">{t.name.slice(0, 2).toUpperCase()}</span>
                   </div>
                 )}
               </td>
@@ -57,7 +57,7 @@ export default function TestimoniosTable({ testimonials, sortField, onSort, onTo
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center justify-center gap-1">
-                  <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                  <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                   <button onClick={() => onDelete(t)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                   <button onClick={() => onDetail(t)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Ver detalle"><ArrowRight className="w-4 h-4" /></button>
                 </div>

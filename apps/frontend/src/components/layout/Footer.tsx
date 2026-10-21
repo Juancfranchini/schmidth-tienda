@@ -85,7 +85,8 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-6 lg:px-8 lg:py-20">
         <div className="mb-12 flex flex-col items-center gap-3 text-center">
           <Link href="/" className="text-fg" aria-label={MARCA.nombre + ' — Inicio'}><BrandLogo size="lg" /></Link>
-          <p className="max-w-md font-display text-xl italic text-fg-soft">{MARCA.eslogan}</p>
+          <p className="rotulo text-fg-soft">{MARCA.bajada}</p>
+          <span className="guion text-fg" aria-hidden />
         </div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
           <Columna title="Colección"><Lista links={coleccion} /></Columna>

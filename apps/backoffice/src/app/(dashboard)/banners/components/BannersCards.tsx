@@ -58,7 +58,7 @@ export default function BannersCards({ banners, onToggleActive, onEdit, onDelete
             <div className="flex items-center justify-between pt-2 border-t border-gray-100">
               <span className={'text-xs font-medium ' + (b.active ? 'text-green-600' : 'text-gray-400')}>{b.active ? 'Activo' : 'Inactivo'}</span>
               <div className="flex gap-2">
-                <button onClick={() => onEdit(b)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                <button onClick={() => onEdit(b)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
                 <button onClick={() => onDelete(b)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>

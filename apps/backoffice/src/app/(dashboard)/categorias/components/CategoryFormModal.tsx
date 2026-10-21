@@ -4,7 +4,7 @@ import { getImageUrl } from '@/components/ui/ImageUpload';
 import Toggle from '../../testimonios/components/Toggle';
 import { Category } from '../useCategorias';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 export default function CategoryFormModal({ isOpen, editItem, imageUrl, isActive, uploading, register, errors, setValue, saving, onClose, onUpload, onSubmit }: {
@@ -28,11 +28,11 @@ export default function CategoryFormModal({ isOpen, editItem, imageUrl, isActive
             <div className="flex gap-2 w-full">
               <input
                 {...register('image')}
-                className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+                className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
                 placeholder="URL de imagen"
               />
               <button type="button" onClick={onUpload} disabled={uploading}
-                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 shrink-0">
+                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 shrink-0">
                 <Upload className="w-3 h-3" />{uploading ? '...' : 'Subir'}
               </button>
             </div>
@@ -63,7 +63,7 @@ export default function CategoryFormModal({ isOpen, editItem, imageUrl, isActive
 
         <div className="flex justify-end gap-3 px-4 md:px-6 py-3 md:py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl flex-shrink-0">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             {saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}
           </button>
         </div>

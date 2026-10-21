@@ -115,7 +115,7 @@ function TopProductsCard({ products }: { products: any[] }) {
         <div className="space-y-3">
           {products.map((p) => (
             <div key={p.rank} className="flex items-center gap-3">
-              <span className={'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ' + (p.rank === 1 ? 'bg-[#C8FF00] text-[#0f172a]' : 'bg-gray-100 text-gray-500')}>{p.rank}</span>
+              <span className={'w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ' + (p.rank === 1 ? 'bg-[#B3855C] text-[#1A1A1A]' : 'bg-gray-100 text-gray-500')}>{p.rank}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-800 truncate">{p.name}</p>
                 <p className="text-xs text-gray-400">{p.units} unidades</p>

@@ -17,7 +17,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 function LogoField({ label, register, name, placeholder, previewUrl, previewHeight = 'h-8', hint }: {
@@ -26,7 +26,7 @@ function LogoField({ label, register, name, placeholder, previewUrl, previewHeig
   return (
     <div>
       <label className={labelClass}>
-        <span className="flex items-center gap-2"><Image className="w-4 h-4 text-[#C8FF00]" />{label}</span>
+        <span className="flex items-center gap-2"><Image className="w-4 h-4 text-[#B3855C]" />{label}</span>
       </label>
       <input {...register(name)} className={inputClass} placeholder={placeholder} />
       {previewUrl && (
@@ -103,7 +103,7 @@ export default function BrandingPage() {
           <LogoField label="Logo Mobile" register={register} name="logoMobile" placeholder="https://... (opcional, version reducida para moviles)" previewUrl={logoMobile} />
         </div>
 
-        <button type="submit" disabled={saving} className="flex items-center gap-2 px-6 py-3 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+        <button type="submit" disabled={saving} className="flex items-center gap-2 px-6 py-3 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
           <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
         </button>
       </form>

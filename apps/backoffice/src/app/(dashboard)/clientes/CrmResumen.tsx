@@ -35,7 +35,7 @@ export function CrmResumen({ resumen, etapa, onEtapa }: { resumen: Resumen; etap
             const activa = etapa === e;
             return (
               <button key={e} type="button" title={info.ayuda} onClick={() => onEtapa(activa ? '' : e)}
-                className={'rounded-lg border p-2.5 text-left transition-colors ' + (activa ? 'border-[#0f172a] bg-[#0f172a]/5' : 'border-gray-200 hover:bg-gray-50')}>
+                className={'rounded-lg border p-2.5 text-left transition-colors ' + (activa ? 'border-[#1A1A1A] bg-[#1A1A1A]/5' : 'border-gray-200 hover:bg-gray-50')}>
                 <span className="flex items-center gap-1.5 text-xs text-gray-600"><span className={'h-2 w-2 rounded-full ' + info.punto} />{info.texto}</span>
                 <span className="mt-1 block text-lg font-bold text-gray-900">{resumen.porEtapa[e]}</span>
                 <span className="mt-1 block h-1 overflow-hidden rounded bg-gray-100"><span className={'block h-full ' + info.punto} style={{ width: (resumen.porEtapa[e] / maximo) * 100 + '%' }} /></span>

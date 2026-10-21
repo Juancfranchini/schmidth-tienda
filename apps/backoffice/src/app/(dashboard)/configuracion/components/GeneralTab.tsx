@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { Store, Image, MapPin, Check, Upload } from 'lucide-react';
 import { FORMATOS_ACEPTADOS, mensajeDeSubida, subirImagen } from '@/lib/subirImagen';
 
-const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] text-gray-900';
+const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] text-gray-900';
 
 const LOGO_MAP = [
   { key: 'logoUrl', label: 'Logo del sitio (Header)', desc: 'Se muestra arriba a la izquierda en todas las páginas', position: 'Header - Escritorio y tablet', size: 'Recomendado: 200x60px' },
@@ -77,8 +77,8 @@ function LogoCard({ logo, generalForm, uploading, uploaded, onUploadClick }: {
           disabled={uploading}
           className={'flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all ' +
             (uploaded
-              ? 'bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] border border-[#C8FF00]'
-              : 'border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50')
+              ? 'bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] border border-[#B3855C]'
+              : 'border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50')
           }
         >
           {uploading ? '...' : uploaded ? <><Check className="w-4 h-4" />Subido</> : <><Upload className="w-4 h-4" />Subir</>}
@@ -87,7 +87,7 @@ function LogoCard({ logo, generalForm, uploading, uploaded, onUploadClick }: {
       <div className="flex items-start justify-between mt-2">
         <div>
           <p className="text-xs text-gray-400">{logo.desc}</p>
-          <p className="text-xs text-[#C8FF00] flex items-center gap-1 mt-1"><MapPin className="w-3 h-3" />{logo.position}</p>
+          <p className="text-xs text-[#B3855C] flex items-center gap-1 mt-1"><MapPin className="w-3 h-3" />{logo.position}</p>
           <p className="text-xs text-gray-400 mt-1">{logo.size}</p>
         </div>
         {fullUrl && (
@@ -152,7 +152,7 @@ export default function GeneralTab({ generalForm, onSave, saving }: GeneralTabPr
 
       <div className="flex justify-end">
         <button onClick={generalForm.handleSubmit(onSave)} disabled={!generalForm.formState.isDirty || saving}
-          className={'flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ' + (generalForm.formState.isDirty ? 'bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00]' : 'bg-gray-200 text-gray-400 cursor-not-allowed')}>
+          className={'flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ' + (generalForm.formState.isDirty ? 'bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149]' : 'bg-gray-200 text-gray-400 cursor-not-allowed')}>
           <Store className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
         </button>
       </div>

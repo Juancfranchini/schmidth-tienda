@@ -5,7 +5,7 @@ import { Save } from 'lucide-react';
 import RichTextEditor from '@/components/ui/RichTextEditor';
 import { MARCA } from '@/config/marca';
 
-const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] text-gray-900';
+const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] text-gray-900';
 
 interface TemplateModalProps {
   template: any;
@@ -50,7 +50,7 @@ export default function TemplateModal({ template, onClose, onSave }: TemplateMod
         </div>
         <div className="p-6 border-t border-gray-100 flex justify-end gap-2">
           <button onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Cancelar</button>
-          <button onClick={handleSubmit} disabled={saving || !name || !subject || !content} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50">
+          <button onClick={handleSubmit} disabled={saving || !name || !subject || !content} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar plantilla'}
           </button>
         </div>

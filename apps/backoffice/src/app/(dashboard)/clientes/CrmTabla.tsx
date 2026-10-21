@@ -9,7 +9,7 @@ export function InsigniaEtapa({ etapa }: { etapa: Etapa }) {
 
 export function Avatar({ nombre, grande }: { nombre: string; grande?: boolean }) {
   return (
-    <span className={'flex flex-shrink-0 items-center justify-center rounded-full bg-[#0f172a] font-bold text-[#C8FF00] ' + (grande ? 'h-12 w-12 text-base' : 'h-9 w-9 text-xs')}>
+    <span className={'flex flex-shrink-0 items-center justify-center rounded-full bg-[#1A1A1A] font-bold text-[#B3855C] ' + (grande ? 'h-12 w-12 text-base' : 'h-9 w-9 text-xs')}>
       {iniciales(nombre)}
     </span>
   );

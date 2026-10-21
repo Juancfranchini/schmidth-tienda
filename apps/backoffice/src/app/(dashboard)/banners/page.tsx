@@ -39,11 +39,11 @@ export default function BannersPage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Buscar banners..."
-                className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+                className="w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
               />
             </div>
           </div>
-          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors whitespace-nowrap shrink-0">
+          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors whitespace-nowrap shrink-0">
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">Nuevo banner</span>
             <span className="sm:hidden">Nuevo</span>
@@ -61,7 +61,7 @@ export default function BannersPage() {
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               {Array.from({ length: totalPages }).map((_, i) => (
-                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
               ))}
             </div>
           )}

@@ -34,8 +34,8 @@ export function CrmNotas({ notas, onAgregar, onBorrar }: Props) {
       <p className="text-xs text-gray-500">Solo las ve el equipo.</p>
       <form onSubmit={enviar} className="mt-3 space-y-2">
         <textarea value={texto} onChange={(e) => setTexto(e.target.value)} maxLength={2000} rows={2} placeholder="Ej: Prefiere retirar en el local, juega los sábados"
-          className="w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40" />
-        <button type="submit" disabled={enviando || !texto.trim()} className="rounded-lg bg-[#0f172a] px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40">Agregar nota</button>
+          className="w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40" />
+        <button type="submit" disabled={enviando || !texto.trim()} className="rounded-lg bg-[#1A1A1A] px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40">Agregar nota</button>
       </form>
       <ul className="mt-3 space-y-2">
         {notas.map((n) => (

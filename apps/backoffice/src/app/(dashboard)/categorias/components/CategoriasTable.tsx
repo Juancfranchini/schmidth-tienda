@@ -39,7 +39,7 @@ export default function CategoriasTable({ categories, showCategoriesSection, loa
                   <td className="px-4 py-3 text-center"><Toggle checked={cat.active} onChange={() => onToggleActive(cat)} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-1">
-                      <button onClick={() => onEdit(cat)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => onEdit(cat)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
                       <button onClick={() => onDelete(cat)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>
@@ -56,7 +56,7 @@ export default function CategoriasTable({ categories, showCategoriesSection, loa
             checked={showCategoriesSection}
             onChange={(e) => onToggleSection(e.target.checked)}
             disabled={loadingSection}
-            className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#C8FF00]"
+            className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#B3855C]"
           />
           <span className="text-sm font-medium text-gray-700">
             {showCategoriesSection ? 'No mostrar seccion en Landing Page' : 'Mostrar seccion'}

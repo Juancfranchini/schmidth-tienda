@@ -21,48 +21,23 @@ export default function PoliticaDevoluciónPage() {
   }, []);
 
   const hero = {
-    chip: data.chip || 'DEVOLUCIONES Y CAMBIOS',
-    title: data.title || 'Politica de Devolución',
-    description: data.description || 'En ' + MARCA.nombre + ' queremos que estés 100% conforme con tu compra.',
+    chip: data.chip || MARCA.textos.devoluciones.chip,
+    title: data.title || MARCA.textos.devoluciones.title,
+    description: data.description || MARCA.textos.devoluciones.description,
   };
 
-  const benefits = data.benefits?.length > 0 ? data.benefits : [
-    { icon: 'RefreshCw', title: '30 DIAS', desc: 'Tenes hasta 30 días corridos desde que recibis tu pedido.' },
-    { icon: 'Package', title: 'PRODUCTO SIN USO', desc: 'El producto debe estar sin uso, con etiquetas y en su embalaje original.' },
-    { icon: 'Shield', title: 'CAMBIO O REINTEGRO', desc: 'Podes elegir entre cambio por otro producto o reintegro del dinero.' },
-    { icon: 'Check', title: 'COMPRA SEGURA', desc: 'Proceso simple, rapido y 100% seguro.' },
-  ];
+  const benefits = data.benefits?.length > 0 ? data.benefits : MARCA.textos.devoluciones.benefits;
 
-  const conditionsOk = data.conditionsOk?.length > 0 ? data.conditionsOk : [
-    'El producto debe estar sin uso y en perfectas condiciones.',
-    'Debe incluir su embalaje original, etiquetas, manuales y accesorios.',
-    'La solicitud debe realizarse dentro de los 30 días corridos desde la recepcion.',
-    'El producto no debe presentar signos de uso, desgaste o dano.',
-    'En caso de devolución por falla o error nuestro, nos hacemos cargo del envío.',
-    'En caso de devolución por arrepentimiento, el costo del envío corre por cuenta del cliente.',
-  ];
+  const conditionsOk = data.conditionsOk?.length > 0 ? data.conditionsOk : MARCA.textos.devoluciones.conditionsOk;
 
-  const conditionsNo = data.conditionsNo?.length > 0 ? data.conditionsNo : [
-    'Productos usados o con signos de desgaste.',
-    'Productos que no incluyan su embalaje original, etiquetas o accesorios.',
-    'Productos en oferta o con descuento especial (salvo fallas de fabrica).',
-    'Productos personalizados o a pedido.',
-    'Productos que hayan sido alterados o modificados.',
-    'Pelotas, grips, overgrips u otros accesorios que hayan sido abiertos.',
-  ];
+  const conditionsNo = data.conditionsNo?.length > 0 ? data.conditionsNo : MARCA.textos.devoluciones.conditionsNo;
 
-  const steps = data.steps?.length > 0 ? data.steps : [
-    { title: 'CONTACTANOS', desc: 'Escribinos por WhatsApp, email o completa el formulario de contacto.' },
-    { title: 'PREPARA EL PRODUCTO', desc: 'Te indicaremos como y a donde enviar el producto.' },
-    { title: 'ENVIALO', desc: 'Despacha el producto segun las instrucciones que te dimos.' },
-    { title: 'REVISION', desc: 'Una vez recibido, revisaremos el estado del producto.' },
-    { title: 'CAMBIO O REINTEGRO', desc: 'Procesamos el cambio o el reintegro segun tu eleccion.' },
-  ];
+  const steps = data.steps?.length > 0 ? data.steps : MARCA.textos.devoluciones.steps;
 
   const help = {
-    title: data.helpTitle || 'Necesitas ayuda?',
-    description: data.helpDescription || 'Nuestro equipo esta listo para ayudarte con tu devolución.',
-    schedule: data.helpSchedule || 'Lunes a Viernes de 9 a 18 hs. | Sabados de 9 a 13 hs.',
+    title: data.helpTitle || MARCA.textos.devoluciones.helpTitle,
+    description: data.helpDescription || MARCA.textos.devoluciones.helpDescription,
+    schedule: data.helpSchedule || MARCA.textos.horario,
     whatsapp: data.helpWhatsapp || MARCA.whatsapp,
     email: data.helpEmail || MARCA.email.contacto,
   };

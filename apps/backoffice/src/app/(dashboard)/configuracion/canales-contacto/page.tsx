@@ -15,7 +15,7 @@ const ICON_OPTIONS = [
 ];
 
 const ICON_MAP: Record<string, any> = { MessageCircle, Mail, Clock, MapPin };
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 function ChannelCard({ channel, onEdit, onDelete }: { channel: any; onEdit: () => void; onDelete: () => void }) {
   const IconComp = ICON_MAP[channel.icon] || MessageCircle;
@@ -23,8 +23,8 @@ function ChannelCard({ channel, onEdit, onDelete }: { channel: any; onEdit: () =
     <div className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#0f172a] flex items-center justify-center">
-            {createElement(IconComp, { size: 18, className: 'text-[#C8FF00]' })}
+          <div className="w-10 h-10 rounded-lg bg-[#1A1A1A] flex items-center justify-center">
+            {createElement(IconComp, { size: 18, className: 'text-[#B3855C]' })}
           </div>
           <div>
             <p className="text-gray-900 font-medium text-sm">{channel.title || 'Sin titulo'}</p>
@@ -33,9 +33,9 @@ function ChannelCard({ channel, onEdit, onDelete }: { channel: any; onEdit: () =
         </div>
       </div>
       {channel.detail && <p className="text-sm text-gray-600">{channel.detail}</p>}
-      {channel.href && <a href={channel.href} target="_blank" rel="noopener noreferrer" className="text-xs text-[#C8FF00] hover:underline break-all">{channel.href}</a>}
+      {channel.href && <a href={channel.href} target="_blank" rel="noopener noreferrer" className="text-xs text-[#B3855C] hover:underline break-all">{channel.href}</a>}
       <div className="border-t pt-2 flex justify-end gap-2">
-        <button onClick={onEdit} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10"><Edit2 className="w-4 h-4" /></button>
+        <button onClick={onEdit} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10"><Edit2 className="w-4 h-4" /></button>
         <button onClick={onDelete} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10"><Trash2 className="w-4 h-4" /></button>
       </div>
     </div>
@@ -73,7 +73,7 @@ function ChannelFormModal({ isOpen, editItem, form, onFormChange, onClose, onSub
         </div>
         <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
           <button onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600">Cancelar</button>
-          <button onClick={onSubmit} disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button>
+          <button onClick={onSubmit} disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold disabled:opacity-50">{saving ? 'Guardando...' : 'Guardar'}</button>
         </div>
       </div>
     </Modal>
@@ -128,7 +128,7 @@ export default function CanalesContactoPage() {
           <h1 className="text-2xl font-bold text-gray-900">Canales de Contacto</h1>
           <p className="text-gray-500 text-sm mt-0.5">{channels.length} canales</p>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] whitespace-nowrap shrink-0">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] whitespace-nowrap shrink-0">
           <Plus className="w-4 h-4" />Nuevo canal
         </button>
       </div>

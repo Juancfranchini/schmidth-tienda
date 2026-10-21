@@ -84,7 +84,7 @@ export default function ProductForm({ defaultValues, onSave, onCancel, saving, c
 
         <div className="sm:col-span-2 flex justify-end gap-3 pt-4 sm:pt-6 border-t border-gray-100">
           <button type="button" onClick={onCancel} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             {saving ? 'Guardando...' : 'Guardar'}
           </button>
         </div>

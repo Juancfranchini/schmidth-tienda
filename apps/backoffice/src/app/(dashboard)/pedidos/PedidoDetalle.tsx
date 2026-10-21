@@ -92,7 +92,7 @@ function CambiarEstado({ pedido, guardando, onGuardar }: {
   const [url, setUrl] = useState(pedido.trackingUrl || '');
   useEffect(() => { setEstado(pedido.status); setNumero(pedido.trackingNumber || ''); setUrl(pedido.trackingUrl || ''); }, [pedido]);
   const cambio = estado !== pedido.status || (estado === 'SHIPPED' && (numero !== (pedido.trackingNumber || '') || url !== (pedido.trackingUrl || '')));
-  const input = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40';
+  const input = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40';
 
   if (pedido.status === 'CANCELLED') return <p className="text-sm text-red-600">Pedido cancelado.</p>;
   return (
@@ -112,7 +112,7 @@ function CambiarEstado({ pedido, guardando, onGuardar }: {
         <p className="text-xs text-gray-500">Marcarlo pagado registra el cobro (si fue por transferencia), informa la venta a Meta y le avisa al cliente por mail.</p>
       )}
       <button type="button" disabled={!cambio || guardando} onClick={() => onGuardar(estado, estado === 'SHIPPED' ? { numero: numero.trim(), url: url.trim() } : undefined)}
-        className="w-full rounded-lg bg-[#0f172a] px-3 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400">
+        className="w-full rounded-lg bg-[#1A1A1A] px-3 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400">
         {guardando ? 'Guardando…' : 'Guardar'}
       </button>
     </div>

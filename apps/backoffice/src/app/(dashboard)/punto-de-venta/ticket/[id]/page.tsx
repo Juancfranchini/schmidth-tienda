@@ -60,7 +60,7 @@ function TicketDocument({ order, exchange }: { order: TicketOrder; exchange: boo
       </div>
       <button
         onClick={() => window.print()}
-        className="mx-auto mt-5 flex items-center gap-2 rounded-lg bg-[#0f172a] px-4 py-2 text-sm font-semibold text-white print:hidden"
+        className="mx-auto mt-5 flex items-center gap-2 rounded-lg bg-[#1A1A1A] px-4 py-2 text-sm font-semibold text-white print:hidden"
       >
         <Printer className="h-4 w-4" /> Imprimir
       </button>

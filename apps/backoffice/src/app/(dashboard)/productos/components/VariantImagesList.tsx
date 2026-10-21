@@ -20,7 +20,7 @@ export default function VariantImagesList({ images, inputClass, uploading, onUpd
             placeholder={'Imagen secundaria ' + (imgIdx + 1)}
           />
           <button type="button" onClick={() => onUpload(imgIdx)} disabled={uploading}
-            className="flex items-center gap-1 px-1.5 py-1 rounded-lg text-[10px] font-medium border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap">
+            className="flex items-center gap-1 px-1.5 py-1 rounded-lg text-[10px] font-medium border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap">
             {uploading ? '...' : <Upload className="w-3 h-3" />}
           </button>
           <button type="button" onClick={() => onRemove(imgIdx)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 transition-colors flex-shrink-0">

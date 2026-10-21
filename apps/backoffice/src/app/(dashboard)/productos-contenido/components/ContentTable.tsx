@@ -36,7 +36,7 @@ export default function ContentTable({ products, onEdit, onDelete, onDetail }: {
                   <td className="px-4 py-3 text-center">{p.highlights?.length ? <ListChecks className="w-4 h-4 text-amber-500 mx-auto" /> : '-'}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-1">
-                      <button onClick={() => onEdit(p)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => onEdit(p)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
                       <button onClick={() => onDelete(p)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                       <button onClick={() => onDetail(p)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50" title="Detalle"><ArrowRight className="w-4 h-4" /></button>
                     </div>

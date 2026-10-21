@@ -22,13 +22,13 @@ export default function SearchBar({ value, onChange, onAdvancedSearch, hasAdvanc
           placeholder="Buscar por nombre..."
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 bg-white border border-[#C8FF00]/50 rounded-l-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] transition-all"
+          className="w-full pl-10 pr-4 py-2 bg-white border border-[#B3855C]/50 rounded-l-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] transition-all"
         />
       </div>
       {hasAdvancedFilters ? (
         <button
           onClick={onClearFilters}
-          className="flex items-center gap-1 px-3 py-2 bg-[#C8FF00] text-[#0f172a] rounded-r-lg text-sm font-medium hover:bg-[#b8ef00] transition-colors border border-[#C8FF00] shrink-0"
+          className="flex items-center gap-1 px-3 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-r-lg text-sm font-medium hover:bg-[#9E7149] transition-colors border border-[#B3855C] shrink-0"
         >
           <ListRestart className="w-4 h-4" />
           Limpiar

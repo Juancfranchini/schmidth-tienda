@@ -93,7 +93,7 @@ export default function RichTextEditor({ content, onChange }: RichTextEditorProp
           id="html-editor"
           value={htmlCode}
           onChange={(e) => setHtmlCode(e.target.value)}
-          className="w-full min-h-[400px] p-4 font-mono text-sm bg-[#0f172a] text-[#C8FF00] focus:outline-none resize-y"
+          className="w-full min-h-[400px] p-4 font-mono text-sm bg-[#1A1A1A] text-[#B3855C] focus:outline-none resize-y"
           placeholder="Escribe tu HTML aquí..."
           spellCheck={false}
         />

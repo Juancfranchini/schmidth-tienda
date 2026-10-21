@@ -19,7 +19,7 @@ export default function CampanasTab({ campaigns, templates, recipients, campaign
     <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-gray-800 flex items-center gap-2"><Users className="w-4 h-4 text-gray-500" />Campañas</h2>
-        <button onClick={() => setCampaignModal(true)} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] rounded-lg font-semibold text-sm hover:bg-[#b8ef00]">
+        <button onClick={() => setCampaignModal(true)} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] rounded-lg font-semibold text-sm hover:bg-[#9E7149]">
           <Plus className="w-4 h-4" />Nueva campaña
         </button>
       </div>
@@ -38,7 +38,7 @@ export default function CampanasTab({ campaigns, templates, recipients, campaign
               </div>
               <div className="flex items-center gap-2">
                 {camp.status !== 'SENT' && (
-                  <button onClick={() => onSend(camp.id)} className="flex items-center gap-1 px-3 py-1.5 bg-[#0f172a] text-white hover:bg-[#1e293b] rounded-lg text-xs font-medium hover:bg-[#1e293b]">
+                  <button onClick={() => onSend(camp.id)} className="flex items-center gap-1 px-3 py-1.5 bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] rounded-lg text-xs font-medium hover:bg-[#2A2A2A]">
                     <Send className="w-3 h-3" />Enviar
                   </button>
                 )}

@@ -8,8 +8,23 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | 1. Proyecto limpio + configuración central de marca | ✅ Terminada (2026-10-20) |
 | 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20); seed y migraciones probados en la etapa 3 |
 | 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | ✅ Terminada (2026-10-21), probada en local con datos |
-| 4. Textos, mails y páginas legales | Pendiente |
+| 4. Textos, mails y páginas legales | 🟡 En curso (cortada por límite de uso) |
 | 5. Revisión final y pendientes del cliente | Pendiente |
+
+## Etapa 4: estado (en curso)
+
+**Hecho**
+- **Branding del tablero aplicado al 100%** (pedido en esta etapa): paleta #1A1A1A / #B3855C / #6B2A37 / #D9C8C8 / #F7F5EF, Playfair Display (logo y títulos) + Montserrat (textos), isotipo "S" con línea (, favicon de tienda y backoffice), bajada "Carteras · Accesorios · Mujeres reales", eslogan, valores y frases en , rótulos con guion corto, sección "Manifiesto" en rosado en la home. Backoffice: el lima pasó a camel y el azul noche al negro de la marca; se sacaron las iniciales "HP" del favicon y del login, y un  viejo.
+- Política de cambios y devoluciones centralizada en  (, marcada ) y leída por tienda y backoffice: 10 días corridos de arrepentimiento con gastos a cargo de la tienda (Ley 24.240 art. 34), excepción de carteras hechas a pedido (CCyC art. 1116). **A revisar por un profesional.**
+- : datos legales pendientes (, , ) y horario de atención.
+- Compilación () de las tres apps OK después de estos cambios. **No se corrieron** tests, lint ni builds completos de esta etapa, ni se revisó el branding en el navegador.
+
+**Falta**
+- Textos base de términos, privacidad y envíos (backend: defaults + seed, marcados a revisar) y aviso "a revisar" en los editores del backoffice.
+- **Botón de arrepentimiento** (obligatorio en Argentina, Res. 424/2020): página + link en el pie; DTO con validación para  (hoy recibe el body sin validar).
+- Mails: colores del branding y logo en texto (hoy apuntan a , que no existe).
+- Restos de pádel en placeholders y textos por defecto del backoffice y backend, y en .
+- Tests, lint, builds y revisión visual; commit final de la etapa.
 
 ## Etapa 3: qué se hizo
 

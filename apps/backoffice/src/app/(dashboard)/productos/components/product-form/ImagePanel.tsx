@@ -21,10 +21,10 @@ export default function ImagePanel({ mainImage, setMainImage, previewUrl, upload
           type="text"
           value={mainImage}
           onChange={(e) => setMainImage(e.target.value)}
-          className="flex-1 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+          className="flex-1 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
           placeholder="URL de imagen"
         />
-        <button type="button" onClick={onUpload} disabled={uploading} className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+        <button type="button" onClick={onUpload} disabled={uploading} className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50">
           <Upload className="w-3 h-3" />{uploading ? '...' : 'Subir'}
         </button>
       </div>

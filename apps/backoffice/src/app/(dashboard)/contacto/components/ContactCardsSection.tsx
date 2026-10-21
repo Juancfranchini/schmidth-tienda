@@ -12,7 +12,7 @@ export default function ContactCardsSection({ visible, fields, onAdd, onEdit, on
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 sm:p-6 border-b border-gray-100">
         <h3 className="text-sm font-semibold text-gray-800">Informacion de Contacto</h3>
         <button type="button" onClick={onAdd}
-          className="flex items-center justify-center gap-1 text-xs font-semibold px-3 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00] whitespace-nowrap">
+          className="flex items-center justify-center gap-1 text-xs font-semibold px-3 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149] whitespace-nowrap">
           <Plus size={12} />Agregar Card
         </button>
       </div>
@@ -33,7 +33,7 @@ export default function ContactCardsSection({ visible, fields, onAdd, onEdit, on
                   </div>
                 </div>
                 <div className="flex gap-1">
-                  <button type="button" onClick={() => onEdit(i)} className="p-1.5 text-[#C8FF00] hover:bg-[#C8FF00]/10 rounded-lg"><Edit2 size={14} /></button>
+                  <button type="button" onClick={() => onEdit(i)} className="p-1.5 text-[#B3855C] hover:bg-[#B3855C]/10 rounded-lg"><Edit2 size={14} /></button>
                   <button type="button" onClick={() => onRemove(i)} className="p-1.5 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 size={14} /></button>
                 </div>
               </div>

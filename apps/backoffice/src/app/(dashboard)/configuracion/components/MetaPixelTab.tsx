@@ -6,7 +6,7 @@ import { MetaPixelForm, useMetaPixel } from './useMetaPixel';
 import CuentasPruebaCard from './CuentasPruebaCard';
 import { MARCA } from '@/config/marca';
 
-const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] text-gray-900';
+const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] text-gray-900';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1.5';
 
 function CredentialsFields({ form, onChange, showToken, onToggleShowToken }: {
@@ -56,7 +56,7 @@ function EventsChecklist({ form, onChange, eventLabels }: {
               type="checkbox"
               checked={form.events[event.key]}
               onChange={(e) => onChange({ ...form, events: { ...form.events, [event.key]: e.target.checked } })}
-              className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#C8FF00]"
+              className="w-4 h-4 border border-gray-300 rounded-[1px] cursor-pointer accent-[#B3855C]"
             />
             <span className="text-sm text-gray-600">{event.label}</span>
           </label>
@@ -107,7 +107,7 @@ export default function MetaPixelTab() {
           disabled={!form.pixelId || saving}
           className={'flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm transition-all ' +
             (form.pixelId && !saving
-              ? 'bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00]'
+              ? 'bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149]'
               : 'bg-gray-200 text-gray-400 cursor-not-allowed')}
         >
           <Save className="w-4 h-4" />

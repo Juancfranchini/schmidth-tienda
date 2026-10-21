@@ -27,7 +27,7 @@ export default function VariantRow({ v, index, inputClass, hasSize, hasColor, ha
     <div className="bg-gray-50 rounded-xl p-3 sm:p-4 border border-gray-100">
       <div className="flex items-center justify-end gap-2 mb-2">
         {(v.images || []).length < 5 && (
-          <button type="button" onClick={() => onAddImage(index)} className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 transition-colors" title="Agregar imagen secundaria">
+          <button type="button" onClick={() => onAddImage(index)} className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-medium border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 transition-colors" title="Agregar imagen secundaria">
             <Plus className="w-3 h-3" />IMG
           </button>
         )}
@@ -53,7 +53,7 @@ export default function VariantRow({ v, index, inputClass, hasSize, hasColor, ha
           <div className="flex gap-1.5">
             <input type="text" value={v.imageUrl || ''} onChange={(e) => update('imageUrl', e.target.value)} className={inputClass + ' flex-1 min-w-0'} placeholder="URL imagen principal" />
             <button type="button" onClick={() => onUpload(index, 'imageUrl')} disabled={uploadingIndex === index}
-              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50">
               {uploadingIndex === index ? '...' : <><Upload className="w-3 h-3" />SUBIR</>}
             </button>
           </div>

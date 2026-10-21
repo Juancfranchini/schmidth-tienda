@@ -43,12 +43,12 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 function PreviewGrid({ items }: { items: { icon: string; title: string; subtitle?: string }[] | undefined }) {
   return (
     <div className="bg-[#050606] rounded-xl p-4">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-[#C8FF00] mb-2">Vista previa</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-[#B3855C] mb-2">Vista previa</p>
       <div className="grid grid-cols-2 md:grid-cols-5 divide-x divide-[#B7D31A]/20">
         {items?.map((item, i) => {
           const IconComp = ICON_MAP[item.icon] || Shield;
@@ -81,7 +81,7 @@ function TrustItemRow({ index, register, currentIcon, titleError, onRemove }: {
               <option key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
-          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[#C8FF00] pointer-events-none">
+          <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[#B3855C] pointer-events-none">
             {createElement(IconComp, { size: 14 })}
           </span>
         </div>
@@ -154,7 +154,7 @@ export default function ConfianzaProductosPage() {
         </Link>
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Shield className="w-5 h-5 text-[#C8FF00]" />Confianza Productos
+            <Shield className="w-5 h-5 text-[#B3855C]" />Confianza Productos
           </h1>
           <p className="text-gray-500 text-sm mt-0.5">Barra de confianza en la página de producto</p>
         </div>
@@ -167,7 +167,7 @@ export default function ConfianzaProductosPage() {
           <div className="flex items-center justify-between border-b border-gray-100 pb-3">
             <h2 className="text-sm font-semibold text-gray-800">Items ({fields.length})</h2>
             <button type="button" onClick={() => append({ icon: 'Shield', title: '', subtitle: '' })}
-              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00] transition-colors">
+              className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149] transition-colors">
               <Plus className="w-3.5 h-3.5" />Agregar
             </button>
           </div>
@@ -187,11 +187,11 @@ export default function ConfianzaProductosPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <input type="checkbox" id="ctActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+            <input type="checkbox" id="ctActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
             <label htmlFor="ctActive" className="text-sm text-gray-700 font-medium">Sección activa</label>
           </div>
           <button type="submit" disabled={saving}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>

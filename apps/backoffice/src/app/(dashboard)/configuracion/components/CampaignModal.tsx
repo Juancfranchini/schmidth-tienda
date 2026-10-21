@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 
-const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] text-gray-900';
+const inputClass = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] text-gray-900';
 
 interface CampaignModalProps {
   templates: any[];
@@ -52,7 +52,7 @@ export default function CampaignModal({ templates, recipients, onClose, onLoadRe
             <label className="block text-sm font-medium text-gray-700 mb-1.5">Destinatarios</label>
             <div className="flex gap-2 mb-3">
               {(['all', 'customers', 'newsletter'] as const).map((src) => (
-                <button key={src} onClick={() => handleSourceChange(src)} className={'px-3 py-1.5 rounded-lg text-xs font-medium ' + (source === src ? 'bg-[#0f172a] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}>
+                <button key={src} onClick={() => handleSourceChange(src)} className={'px-3 py-1.5 rounded-lg text-xs font-medium ' + (source === src ? 'bg-[#1A1A1A] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200')}>
                   {src === 'all' ? 'Todos' : src === 'customers' ? 'Clientes' : 'Newsletter'}
                 </button>
               ))}
@@ -73,7 +73,7 @@ export default function CampaignModal({ templates, recipients, onClose, onLoadRe
                           setSelectedRecipients(prev => prev.filter(r => r !== email));
                         }
                       }}
-                      className="w-4 h-4 rounded accent-[#C8FF00]"
+                      className="w-4 h-4 rounded accent-[#B3855C]"
                     />
                     <span className="text-sm text-gray-700">{email}</span>
                   </label>
@@ -87,7 +87,7 @@ export default function CampaignModal({ templates, recipients, onClose, onLoadRe
         </div>
         <div className="p-6 border-t border-gray-100 flex justify-end gap-2">
           <button onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50">Cancelar</button>
-          <button onClick={handleCreate} disabled={!name || !templateId || selectedRecipients.length === 0} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50">
+          <button onClick={handleCreate} disabled={!name || !templateId || selectedRecipients.length === 0} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50">
             <Plus className="w-4 h-4" />Crear campaña
           </button>
         </div>

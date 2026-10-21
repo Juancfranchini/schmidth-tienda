@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/Toast';
 import { createElement } from 'react';
 import { MARCA } from '@/config/marca';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 const ICON_OPTIONS = [
@@ -30,7 +30,7 @@ function BenefitsSection({ register, watch, benefitsArray }: { register: any; wa
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <h3 className="text-sm font-semibold text-gray-800">Beneficios</h3>
         <button type="button" onClick={() => benefitsArray.append({ icon: 'Shield', title: '', desc: '' })}
-          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00]"><Plus size={12} />Agregar</button>
+          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149]"><Plus size={12} />Agregar</button>
       </div>
       {benefitsArray.fields.length > 0 && (
         <div className="flex gap-2 mb-1 px-1">
@@ -46,10 +46,10 @@ function BenefitsSection({ register, watch, benefitsArray }: { register: any; wa
         return (
           <div key={field.id} className="flex gap-2 items-center p-2 bg-gray-50 rounded-lg">
             <div className="relative bg-white rounded-lg" style={{ width: '25%' }}>
-              <select {...register(('benefits.' + i + '.icon') as any)} className='w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] pl-8 pr-1 appearance-none'>
+              <select {...register(('benefits.' + i + '.icon') as any)} className='w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] pl-8 pr-1 appearance-none'>
                 {ICON_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
               </select>
-              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[#C8FF00] pointer-events-none z-10">
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-[#B3855C] pointer-events-none z-10">
                 {createElement(IconComp, { size: 14 })}
               </span>
             </div>
@@ -71,7 +71,7 @@ function StringListSection({ title, register, fieldName, fieldsArray, iconBg, ic
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
         <button type="button" onClick={() => fieldsArray.append('')}
-          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00]"><Plus size={12} />Agregar</button>
+          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149]"><Plus size={12} />Agregar</button>
       </div>
       {fieldsArray.fields.map((field: any, i: number) => (
         <div key={field.id} className="flex gap-2">
@@ -90,7 +90,7 @@ function StepsSection({ register, stepsArray }: { register: any; stepsArray: any
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <h3 className="text-sm font-semibold text-gray-800">Como solicitar una devolución</h3>
         <button type="button" onClick={() => stepsArray.append({ title: '', desc: '' })}
-          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00]"><Plus size={12} />Agregar</button>
+          className="flex items-center gap-1 text-xs font-semibold px-2 py-1 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149]"><Plus size={12} />Agregar</button>
       </div>
       {stepsArray.fields.map((field: any, i: number) => (
         <div key={field.id} className="flex gap-2">
@@ -137,21 +137,16 @@ export default function PoliticaDevoluciónPage() {
       const res = await api.get('/site-sections/politica_devolución');
       const data = res.data?.data ?? res.data ?? {};
       reset({
-        chip: data.chip || 'DEVOLUCIONES Y CAMBIOS',
-        title: data.title || 'Política de Devolución',
-        description: data.description || 'En ' + MARCA.nombre + ' queremos que estés 100% conforme con tu compra.',
-        benefits: data.benefits?.length >= 4 ? data.benefits : [
-          { icon: 'RefreshCw', title: '30 DÍAS', desc: 'Tenes hasta 30 días corridos desde que recibis tu pedido.' },
-          { icon: 'Package', title: 'PRODUCTO SIN USO', desc: 'El producto debe estar sin uso, con etiquetas y en su embalaje original.' },
-          { icon: 'Shield', title: 'CAMBIO O REINTEGRO', desc: 'Podes elegir entre cambio por otro producto o reintegro del dinero.' },
-          { icon: 'Check', title: 'COMPRA SEGURA', desc: 'Proceso simple, rapido y 100% seguro.' },
-        ],
-        conditionsOk: data.conditionsOk?.length > 0 ? data.conditionsOk : ['El producto debe estar sin uso y en perfectas condiciones.','Debe incluir su embalaje original, etiquetas, manuales y accesorios.','La solicitud debe realizarse dentro de los 30 días corridos desde la recepcion.','El producto no debe presentar signos de uso, desgaste o dano.','En caso de devolución por falla o error nuestro, nos hacemos cargo del envío.','En caso de devolución por arrepentimiento, el costo del envío corre por cuenta del cliente.'],
-        conditionsNo: data.conditionsNo?.length > 0 ? data.conditionsNo : ['Productos usados o con signos de desgaste.','Productos que no incluyan su embalaje original, etiquetas o accesorios.','Productos en oferta o con descuento especial (salvo fallas de fabrica).','Productos personalizados o a pedido.','Productos que hayan sido alterados o modificados.','Pelotas, grips, overgrips u otros accesorios que hayan sido abiertos.'],
-        steps: data.steps?.length > 0 ? data.steps : [{ title: 'CONTACTANOS', desc: 'Escribinos por WhatsApp, email o completa el formulario de contacto.' },{ title: 'PREPARA EL PRODUCTO', desc: 'Te indicaremos como y a donde enviar el producto.' },{ title: 'ENVIALO', desc: 'Despacha el producto segun las instrucciones que te dimos.' },{ title: 'REVISION', desc: 'Una vez recibido, revisaremos el estado del producto.' },{ title: 'CAMBIO O REINTEGRO', desc: 'Procesamos el cambio o el reintegro segun tu eleccion.' }],
-        helpTitle: data.helpTitle || 'Necesitas ayuda?',
-        helpDescription: data.helpDescription || 'Nuestro equipo esta listo para ayudarte con tu devolución.',
-        helpSchedule: data.helpSchedule || 'Lunes a Viernes de 9 a 18 hs. | Sabados de 9 a 13 hs.',
+        chip: data.chip || MARCA.textos.devoluciones.chip,
+        title: data.title || MARCA.textos.devoluciones.title,
+        description: data.description || MARCA.textos.devoluciones.description,
+        benefits: data.benefits?.length >= 4 ? data.benefits : MARCA.textos.devoluciones.benefits,
+        conditionsOk: data.conditionsOk?.length > 0 ? data.conditionsOk : MARCA.textos.devoluciones.conditionsOk,
+        conditionsNo: data.conditionsNo?.length > 0 ? data.conditionsNo : MARCA.textos.devoluciones.conditionsNo,
+        steps: data.steps?.length > 0 ? data.steps : MARCA.textos.devoluciones.steps,
+        helpTitle: data.helpTitle || MARCA.textos.devoluciones.helpTitle,
+        helpDescription: data.helpDescription || MARCA.textos.devoluciones.helpDescription,
+        helpSchedule: data.helpSchedule || MARCA.textos.horario,
         helpWhatsapp: data.helpWhatsapp || MARCA.whatsapp,
         helpEmail: data.helpEmail || MARCA.email.contacto,
       });
@@ -174,7 +169,7 @@ export default function PoliticaDevoluciónPage() {
     <div className="space-y-6 w-full">
       <div className="flex items-center gap-3">
         <Link href="/configuracion" className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"><ArrowLeft className="w-4 h-4" /></Link>
-        <div><h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-5 h-5 text-[#C8FF00]" />Política de Devolución</h1><p className="text-gray-500 text-sm mt-0.5">Contenido de la página de devoluciónes y cambios</p></div>
+        <div><h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><FileText className="w-5 h-5 text-[#B3855C]" />Política de Devolución</h1><p className="text-gray-500 text-sm mt-0.5">Contenido de la página de devoluciónes y cambios</p></div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -196,7 +191,7 @@ export default function PoliticaDevoluciónPage() {
 
         <div className="flex justify-end">
           <button type="submit" disabled={saving}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>

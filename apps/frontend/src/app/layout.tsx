@@ -9,13 +9,13 @@ import ModoPruebaAviso from '@/components/layout/ModoPruebaAviso';
 import CarritoDeCuenta from '@/components/layout/CarritoDeCuenta';
 import FavoritosSync from '@/components/layout/FavoritosSync';
 import { getSiteUrl } from '@/lib/siteUrl';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
+import { Playfair_Display, Montserrat } from 'next/font/google';
 import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_BASE } from '@/lib/seoPortada';
 import { MARCA } from '@/config/marca';
 
-// Títulos en serif (como el logo) y texto en una sans geométrica liviana.
-const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
-const sans = Jost({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' });
+// Tipografías del branding: Playfair Display para el logo y los títulos, Montserrat para los textos.
+const display = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' });
+const sans = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' });
 
 async function getFaviconUrl(): Promise<string> {
   try {
@@ -27,7 +27,7 @@ async function getFaviconUrl(): Promise<string> {
     if (isotipo) { if (isotipo.startsWith('data:') || isotipo.startsWith('http')) return isotipo; return baseUrl + isotipo; }
   } catch { }
   // Respaldo si la API no responde: un archivo que existe en public/.
-  return MARCA.logo.archivo;
+  return MARCA.logo.isotipo;
 }
 
 export async function generateMetadata(): Promise<Metadata> {

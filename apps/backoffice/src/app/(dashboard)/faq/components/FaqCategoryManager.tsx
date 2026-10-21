@@ -12,7 +12,7 @@ interface Props {
 
 type View = 'list' | 'add' | 'edit' | 'delete';
 
-const selectInputClass = 'flex-1 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40';
+const selectInputClass = 'flex-1 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40';
 
 function ListView({ categories }: { categories: string[] }) {
   return (
@@ -33,7 +33,7 @@ function AddView({ value, onChange, onSubmit }: { value: string; onChange: (v: s
       <h3 className="text-sm font-semibold text-gray-700 mb-3">Nueva categoria</h3>
       <div className="flex gap-2">
         <input type="text" value={value} onChange={(e) => onChange(e.target.value.toUpperCase())} placeholder="Ej: GARANTIA" className={selectInputClass} />
-        <button onClick={onSubmit} disabled={!value.trim()} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold disabled:opacity-50"><Check className="w-4 h-4" /></button>
+        <button onClick={onSubmit} disabled={!value.trim()} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold disabled:opacity-50"><Check className="w-4 h-4" /></button>
       </div>
     </div>
   );
@@ -53,7 +53,7 @@ function EditView({ categories, target, value, onTargetChange, onValueChange, on
         {target && (
           <div className="flex gap-2">
             <input type="text" value={value} onChange={(e) => onValueChange(e.target.value.toUpperCase())} className={selectInputClass} />
-            <button onClick={onSubmit} disabled={!value.trim()} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold disabled:opacity-50"><Check className="w-4 h-4" /></button>
+            <button onClick={onSubmit} disabled={!value.trim()} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold disabled:opacity-50"><Check className="w-4 h-4" /></button>
           </div>
         )}
       </div>
@@ -70,7 +70,7 @@ function DeleteView({ categories, target, onTargetChange, onSubmit }: { categori
         {categories.map(cat => (<option key={cat} value={cat}>{cat}</option>))}
       </select>
       {target && (
-        <button onClick={onSubmit} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00]">Eliminar {target}</button>
+        <button onClick={onSubmit} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149]">Eliminar {target}</button>
       )}
     </div>
   );
@@ -112,16 +112,16 @@ export default function FaqCategoryManager({ categories, onAdd, onEdit, onDelete
     <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6">
       <div className="flex gap-6">
         <div className="w-48 flex-shrink-0 flex flex-col gap-1">
-          <button onClick={() => setView('list')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'list' ? 'bg-white border border-[#C8FF00] text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-100')}>
+          <button onClick={() => setView('list')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'list' ? 'bg-white border border-[#B3855C] text-[#B3855C]' : 'text-gray-600 hover:bg-gray-100')}>
             <ListChecks className="w-4 h-4" />Ver categorias
           </button>
-          <button onClick={() => setView('add')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'add' ? 'bg-white border border-[#C8FF00] text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-100')}>
+          <button onClick={() => setView('add')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'add' ? 'bg-white border border-[#B3855C] text-[#B3855C]' : 'text-gray-600 hover:bg-gray-100')}>
             <CirclePlus className="w-4 h-4" />Nueva
           </button>
-          <button onClick={() => setView('edit')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'edit' ? 'bg-white border border-[#C8FF00] text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-100')}>
+          <button onClick={() => setView('edit')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'edit' ? 'bg-white border border-[#B3855C] text-[#B3855C]' : 'text-gray-600 hover:bg-gray-100')}>
             <FilePenLine className="w-4 h-4" />Editar
           </button>
-          <button onClick={() => setView('delete')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'delete' ? 'bg-white border border-[#C8FF00] text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-100')}>
+          <button onClick={() => setView('delete')} className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ' + (view === 'delete' ? 'bg-white border border-[#B3855C] text-[#B3855C]' : 'text-gray-600 hover:bg-gray-100')}>
             <Trash2 className="w-4 h-4" />Eliminar
           </button>
         </div>

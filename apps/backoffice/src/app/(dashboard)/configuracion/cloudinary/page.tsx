@@ -18,7 +18,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 function CloudinaryFields({ register, errors }: { register: UseFormRegister<FormData>; errors: FieldErrors<FormData> }) {
@@ -103,12 +103,12 @@ export default function CloudinaryConfigPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <Cloud className="w-5 h-5 text-[#C8FF00]" />
+            <Cloud className="w-5 h-5 text-[#B3855C]" />
             <p className="text-sm text-gray-700 font-medium">Las imágenes se subirán a Cloudinary y se almacenará la URL en la base de datos.</p>
           </div>
           <div className="flex justify-end">
             <button type="submit" disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
               <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
             </button>
           </div>

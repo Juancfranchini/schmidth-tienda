@@ -21,26 +21,27 @@
 :root,
 [data-theme='light'] {
   color-scheme: light;
-  --c-page: 244 240 234;     /* #F4F0EA blanco roto */
-  --c-panel: 250 248 244;    /* #FAF8F4 paneles, modales */
-  --c-card: 250 248 244;     /* tarjetas */
+  --c-page: 247 245 239;     /* #F7F5EF blanco roto */
+  --c-panel: 251 250 246;    /* #FBFAF6 paneles, modales */
+  --c-card: 251 250 246;     /* tarjetas */
   --c-field: 255 255 255;    /* inputs */
-  --c-chip: 230 223 212;     /* #E6DFD4 piedra: chips, fondos suaves */
-  --c-line: 222 214 202;     /* #DED6CA bordes */
-  --c-night: 236 230 221;    /* #ECE6DD secciones alternadas */
+  --c-chip: 233 227 216;     /* #E9E3D8 piedra: chips, fondos de foto */
+  --c-line: 224 218 208;     /* #E0DAD0 bordes */
+  --c-night: 239 235 227;    /* #EFEBE3 secciones alternadas */
   --c-ocean: 236 230 221;
   --c-ocean-2: 230 223 212;
   --c-olive: 241 233 222;
-  --c-fg: 22 20 19;          /* #161413 negro: texto */
-  --c-fg-soft: 72 66 61;     /* #48423D */
-  --c-fg-muted: 108 100 93;  /* #6C645D: 5:1 sobre la página */
-  --c-brand-fg: 110 30 43;   /* #6E1E2B bordó como texto (8,9:1) */
-  --c-accent: 22 20 19;      /* botón principal: negro */
-  --c-accent-hover: 110 30 43; /* al pasar: bordó */
-  --c-on-accent: 244 240 234;  /* texto sobre el botón */
-  --c-ink: 22 20 19;
-  --c-camel: 168 116 73;     /* #A87449 */
-  --c-bordo: 110 30 43;      /* #6E1E2B */
+  --c-fg: 26 26 26;          /* #1A1A1A negro: texto */
+  --c-fg-soft: 74 70 66;     /* #4A4642 */
+  --c-fg-muted: 107 101 95;  /* #6B655F: 5,4:1 sobre la página */
+  --c-brand-fg: 107 42 55;   /* #6B2A37 bordó como texto (9:1) */
+  --c-accent: 26 26 26;      /* botón principal: negro */
+  --c-accent-hover: 107 42 55; /* al pasar: bordó */
+  --c-on-accent: 247 245 239;  /* texto sobre el botón */
+  --c-ink: 26 26 26;
+  --c-camel: 179 133 92;     /* #B3855C */
+  --c-bordo: 107 42 55;      /* #6B2A37 */
+  --c-rosado: 217 200 200;   /* #D9C8C8 */
 }
 
 html {
@@ -49,7 +50,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans), 'Jost', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans), 'Montserrat', system-ui, -apple-system, sans-serif;
   background: rgb(var(--c-page));
   color: rgb(var(--c-fg));
   -webkit-font-smoothing: antialiased;
@@ -74,16 +75,18 @@ body {
 
 /* Títulos en serif (display); el resto en sans. */
 h1, .h1, h2, .h2 {
-  font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: 0;
   text-transform: none;
 }
 h3, .h3 { font-weight: 500; }
 h4, .h4 { font-weight: 500; }
-.font-display { font-family: var(--font-display), 'Cormorant Garamond', Georgia, serif; }
+.font-display { font-family: var(--font-display), 'Playfair Display', Georgia, serif; }
 /* Rótulo chico en mayúsculas espaciadas, como en el catálogo impreso. */
-.rotulo { font-size: 0.6875rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+.rotulo { font-size: 0.6875rem; letter-spacing: 0.24em; text-transform: uppercase; font-weight: 500; }
+/* Guion corto debajo de un rótulo o una frase, como en el branding. */
+.guion { display: block; width: 2rem; height: 1px; background: currentColor; }
 
 @keyframes scroll-brands {
   0% { transform: translateX(0); }

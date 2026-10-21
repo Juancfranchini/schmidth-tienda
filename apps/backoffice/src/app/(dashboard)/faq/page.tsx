@@ -9,7 +9,7 @@ import FaqAdvancedSearchModal from './components/FaqAdvancedSearchModal';
 import FaqCategoryManager from './components/FaqCategoryManager';
 import { useFaq, FaqItem } from './useFaq';
 
-const inputClass = 'w-full px-3 py-2 pr-10 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 pr-10 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 function FaqTable({ faqs, sortIcon, onToggleActive, onEdit, onDelete, onDetail }: {
   faqs: FaqItem[]; sortIcon: (field: string) => React.ReactNode; onToggleActive: (t: FaqItem) => void; onEdit: (t: FaqItem) => void; onDelete: (t: FaqItem) => void; onDetail: (t: FaqItem) => void;
@@ -43,7 +43,7 @@ function FaqTable({ faqs, sortIcon, onToggleActive, onEdit, onDelete, onDetail }
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-1">
-                    <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                    <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                     <button onClick={() => onDelete(t)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                     <button onClick={() => onDetail(t)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Ver detalle"><ArrowRight className="w-4 h-4" /></button>
                   </div>
@@ -78,7 +78,7 @@ function FaqCards({ faqs, onToggleActive, onEdit, onDelete, onDetail }: {
           <div className="flex items-center justify-between pt-2 border-t border-gray-100">
             <span className="text-xs text-gray-400">Orden: {t.order}</span>
             <div className="flex items-center gap-1">
-              <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(t)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
               <button onClick={() => onDetail(t)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Ver detalle"><ArrowRight className="w-4 h-4" /></button>
             </div>
@@ -117,12 +117,12 @@ function FaqFormModal({ isOpen, editItem, categories, register, errors, saving, 
           <input type="number" min={0} {...register('order')} className={inputClass} />
         </div>
         <div className="flex items-center gap-3">
-          <input type="checkbox" id="fActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+          <input type="checkbox" id="fActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
           <label htmlFor="fActive" className="text-sm text-gray-700">Visible en el sitio</label>
         </div>
         <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
         </div>
       </form>
     </Modal>
@@ -169,7 +169,7 @@ export default function FaqPage() {
   const { register, handleSubmit, formState: { errors } } = form;
 
   const sortIcon = (field: string) => (
-    <ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === field ? 'text-[#C8FF00]' : 'text-gray-400')} onClick={() => handleSort(field)} />
+    <ArrowUpDown className={'w-3 h-3 ml-1 inline cursor-pointer ' + (sortField === field ? 'text-[#B3855C]' : 'text-gray-400')} onClick={() => handleSort(field)} />
   );
 
   if (loading) return <PageLoader />;
@@ -185,17 +185,17 @@ export default function FaqPage() {
           {!showCategories && (
             <>
               <FaqSearchBar value={search} onChange={setSearch} onAdvancedSearch={() => setAdvancedOpen(true)} hasAdvancedFilters={advancedFilters !== null} onClearFilters={() => { setAdvancedFilters(null); setAdvancedOpen(false); }} />
-              <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors">
+              <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors">
                 <Plus className="w-4 h-4" />Nueva FAQ
               </button>
             </>
           )}
           {showCategories ? (
-            <button onClick={() => setShowCategories(false)} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-medium hover:bg-[#b8ef00] transition-colors">
+            <button onClick={() => setShowCategories(false)} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-medium hover:bg-[#9E7149] transition-colors">
               <Undo2 className="w-4 h-4" />Regresar a FAQ
             </button>
           ) : (
-            <button onClick={() => setShowCategories(true)} className="flex items-center gap-2 px-4 py-2 border border-[#C8FF00]/50 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+            <button onClick={() => setShowCategories(true)} className="flex items-center gap-2 px-4 py-2 border border-[#B3855C]/50 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
               <Tags className="w-4 h-4" />Categorías FAQ
             </button>
           )}
@@ -223,7 +223,7 @@ export default function FaqPage() {
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2">
               {Array.from({ length: totalPages }).map((_, i) => (
-                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+                <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
               ))}
             </div>
           )}

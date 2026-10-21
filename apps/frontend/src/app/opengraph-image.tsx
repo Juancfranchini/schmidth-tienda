@@ -32,7 +32,7 @@ export default function OpenGraphImage() {
           {MARCA.nombreLogo}
         </div>
         <div style={{ marginTop: 16, fontSize: 34, color: MARCA.colores.piedra, letterSpacing: 4, textTransform: 'uppercase' }}>
-          {MARCA.rubro}
+          {MARCA.bajada}
         </div>
       </div>
     ),

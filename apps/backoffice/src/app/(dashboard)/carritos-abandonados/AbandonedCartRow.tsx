@@ -92,7 +92,7 @@ export default function AbandonedCartRow({ carrito, onToggleContacted, onDelete 
             href={whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-[#C8FF00] text-[#0f172a] rounded-lg hover:bg-[#b8ef00] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg hover:bg-[#9E7149] transition-colors"
           >
             <MessageCircle className="w-3.5 h-3.5" /> Escribir por WhatsApp
           </a>

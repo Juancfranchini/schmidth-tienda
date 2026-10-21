@@ -219,7 +219,7 @@ function OpenCash({
           className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2.5"
         />
       </label>
-      <button className="w-full rounded-xl bg-[#C8FF00] px-4 py-3 font-black text-[#0f172a]">
+      <button className="w-full rounded-xl bg-[#B3855C] px-4 py-3 font-black text-[#1A1A1A]">
         Abrir caja
       </button>
     </form>
@@ -283,7 +283,7 @@ function OpenSession({
             placeholder="Motivo"
             className="w-full rounded-lg border px-3 py-2"
           />
-          <button className="flex items-center gap-2 rounded-lg bg-[#0f172a] px-3 py-2 text-sm font-semibold text-white">
+          <button className="flex items-center gap-2 rounded-lg bg-[#1A1A1A] px-3 py-2 text-sm font-semibold text-white">
             {movementForm.watch('type') === 'INCOME' ? (
               <ArrowUpCircle className="h-4 w-4" />
             ) : (

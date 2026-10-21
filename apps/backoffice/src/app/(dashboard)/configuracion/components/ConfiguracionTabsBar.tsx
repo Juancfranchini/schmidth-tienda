@@ -23,9 +23,9 @@ export default function ConfiguracionTabsBar({ activeTab, onChange }: { activeTa
               key={tab.id}
               onClick={() => onChange(tab.id)}
               className={'flex-shrink-0 lg:flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ' +
-                (isActive ? 'bg-[#0f172a] text-white shadow-sm' : 'text-gray-500 hover:bg-white hover:text-gray-700')}
+                (isActive ? 'bg-[#1A1A1A] text-white shadow-sm' : 'text-gray-500 hover:bg-white hover:text-gray-700')}
             >
-              <Icon className={'w-4 h-4 shrink-0 ' + (isActive ? 'text-[#C8FF00]' : 'text-gray-400')} />
+              <Icon className={'w-4 h-4 shrink-0 ' + (isActive ? 'text-[#B3855C]' : 'text-gray-400')} />
               <span className="truncate">{tab.label}</span>
             </button>
           );

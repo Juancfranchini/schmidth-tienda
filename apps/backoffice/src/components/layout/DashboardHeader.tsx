@@ -65,14 +65,14 @@ export function DashboardHeader({ onMenuClick, onCollapseToggle, collapsed }: Da
       <div className="flex items-center gap-2 md:gap-3">
         <button className="relative p-2 rounded-lg text-slate-400 hover:bg-gray-100 hover:text-slate-600 transition-colors">
           <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#C8FF00]" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B3855C]" />
         </button>
 
         <div className="w-px h-6 bg-gray-200 hidden md:block" />
 
         <div className="flex items-center gap-2 md:gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#0f172a] flex items-center justify-center shrink-0">
-            <span className="text-[#C8FF00] text-xs font-bold">AD</span>
+          <div className="w-8 h-8 rounded-full bg-[#1A1A1A] flex items-center justify-center shrink-0">
+            <span className="text-[#B3855C] text-xs font-bold">AD</span>
           </div>
           <div className="hidden md:block">
             <p className="text-sm font-medium text-slate-800 leading-none">Admin</p>

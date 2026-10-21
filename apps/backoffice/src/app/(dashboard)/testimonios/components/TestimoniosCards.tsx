@@ -16,8 +16,8 @@ export default function TestimoniosCards({ testimonials, onToggleActive, onEdit,
               {t.photo ? (
                 <img src={t.photo} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-[#C8FF00]/10 border border-[#C8FF00]/20 flex items-center justify-center">
-                  <span className="text-[#C8FF00] font-bold text-xs">{t.name.slice(0, 2).toUpperCase()}</span>
+                <div className="w-10 h-10 rounded-full bg-[#B3855C]/10 border border-[#B3855C]/20 flex items-center justify-center">
+                  <span className="text-[#B3855C] font-bold text-xs">{t.name.slice(0, 2).toUpperCase()}</span>
                 </div>
               )}
               <div>
@@ -49,7 +49,7 @@ export default function TestimoniosCards({ testimonials, onToggleActive, onEdit,
             </div>
           </div>
           <div className="border-t pt-2 flex justify-end gap-2">
-            <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+            <button onClick={() => onEdit(t)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
             <button onClick={() => onDelete(t)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             <button onClick={() => onDetail(t)} className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors" title="Ver detalle"><ArrowRight className="w-4 h-4" /></button>
           </div>

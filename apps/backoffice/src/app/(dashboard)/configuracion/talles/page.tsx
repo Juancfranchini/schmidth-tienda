@@ -8,7 +8,7 @@ import Toggle from '../../testimonios/components/Toggle';
 import RichTextEditor from '@/components/ui/RichTextEditor';
 import { useTalles, getCategoryName, getProductNames, SizeGuide, Category } from './useTalles';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 function GuidesTable({ guides, getCategoryName, getProductNames, onToggleActive, onEdit, onDelete }: {
@@ -41,7 +41,7 @@ function GuidesTable({ guides, getCategoryName, getProductNames, onToggleActive,
               </td>
               <td className="px-4 py-3">
                 <div className="flex items-center justify-center gap-1">
-                  <button onClick={() => onEdit(item)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                  <button onClick={() => onEdit(item)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                   <button onClick={() => onDelete(item)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                 </div>
               </td>
@@ -72,7 +72,7 @@ function GuidesCards({ guides, getCategoryName, getProductNames, onToggleActive,
                 <span className={'text-xs font-medium ' + (item.active ? 'text-green-600' : 'text-gray-400')}>{item.active ? 'Activo' : 'Inactivo'}</span>
               </div>
               <div className="flex items-center gap-1">
-                <button onClick={() => onEdit(item)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                <button onClick={() => onEdit(item)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                 <button onClick={() => onDelete(item)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>
@@ -130,7 +130,7 @@ function GuideFormModal({ isOpen, editItem, categories, filteredProducts, select
             ) : (
               filteredProducts.slice(0, 50).map(p => (
                 <label key={p.id} className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 px-1 py-0.5 rounded text-sm">
-                  <input type="checkbox" checked={selectedProducts.includes(p.id)} onChange={() => onToggleProduct(p.id)} className="w-3.5 h-3.5 rounded accent-[#C8FF00]" />
+                  <input type="checkbox" checked={selectedProducts.includes(p.id)} onChange={() => onToggleProduct(p.id)} className="w-3.5 h-3.5 rounded accent-[#B3855C]" />
                   <span className="text-gray-700 text-xs">{p.name}</span>
                 </label>
               ))
@@ -141,7 +141,7 @@ function GuideFormModal({ isOpen, editItem, categories, filteredProducts, select
               {selectedProducts.map(pid => {
                 const p = products.find(pr => pr.id === pid);
                 return (
-                  <span key={pid} className="inline-flex items-center gap-1 bg-[#C8FF00]/10 text-[#0f172a] text-xs px-2 py-0.5 rounded-full">
+                  <span key={pid} className="inline-flex items-center gap-1 bg-[#B3855C]/10 text-[#1A1A1A] text-xs px-2 py-0.5 rounded-full">
                     {p?.name || pid}
                     <button type="button" onClick={() => onToggleProduct(pid)}><X size={12} /></button>
                   </span>
@@ -157,13 +157,13 @@ function GuideFormModal({ isOpen, editItem, categories, filteredProducts, select
         </div>
 
         <div className="flex items-center gap-3">
-          <input type="checkbox" id="sgActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+          <input type="checkbox" id="sgActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
           <label htmlFor="sgActive" className="text-sm text-gray-700">Visible en el sitio</label>
         </div>
 
         <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50">
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50">
             <Save className="w-4 h-4 inline mr-1" />{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}
           </button>
         </div>
@@ -219,11 +219,11 @@ export default function TallesPage() {
         <div className="flex items-center gap-3">
           <Link href="/configuracion" className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"><ArrowLeft className="w-4 h-4" /></Link>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><Ruler className="w-5 h-5 text-[#C8FF00]" />Guía de Talles</h1>
+            <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><Ruler className="w-5 h-5 text-[#B3855C]" />Guía de Talles</h1>
             <p className="text-gray-500 text-sm mt-0.5">{guides.length} Guías configuradas</p>
           </div>
         </div>
-        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors">
+        <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors">
           <Plus className="w-4 h-4" />Nueva Guía
         </button>
       </div>

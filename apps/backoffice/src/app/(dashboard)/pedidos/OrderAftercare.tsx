@@ -204,7 +204,7 @@ function PendingPaymentForm({
           className="rounded-lg border px-2 py-2 text-xs"
         />
       </div>
-      <button className="rounded-lg bg-[#0f172a] px-3 py-2 text-xs font-bold text-white">
+      <button className="rounded-lg bg-[#1A1A1A] px-3 py-2 text-xs font-bold text-white">
         Guardar cobro
       </button>
     </form>

@@ -14,8 +14,8 @@ export default function BeneficiosCards({ benefits, onToggleActive, onEdit, onDe
           <div key={b.id} className="bg-white border border-gray-200 rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#0f172a] flex items-center justify-center">
-                  {createElement(IconComp, { size: 18, className: 'text-[#C8FF00]' })}
+                <div className="w-10 h-10 rounded-lg bg-[#1A1A1A] flex items-center justify-center">
+                  {createElement(IconComp, { size: 18, className: 'text-[#B3855C]' })}
                 </div>
                 <div>
                   <p className="text-gray-900 font-medium text-sm">{b.title}</p>
@@ -35,7 +35,7 @@ export default function BeneficiosCards({ benefits, onToggleActive, onEdit, onDe
               </div>
             </div>
             <div className="border-t pt-2 flex justify-end gap-2">
-              <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(b)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>

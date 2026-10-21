@@ -8,6 +8,7 @@ import Beneficios from '@/components/home/Beneficios';
 import PromoBanners from '@/components/home/PromoBanners';
 import InstagramSection from '@/components/home/InstagramSection';
 import Newsletter from '@/components/home/Newsletter';
+import Manifiesto from '@/components/home/Manifiesto';
 import { Product, Banner, HeroSlide, Benefit, InstagramConfig, SiteSection } from '@/types';
 import type { Metadata } from 'next';
 import { HOME_DESCRIPTION, HOME_TITLE, OPEN_GRAPH_BASE } from '@/lib/seoPortada';
@@ -89,6 +90,7 @@ export default async function HomePage() {
       <ColeccionGrid products={coleccion} />
       <ColoresStrip products={coleccion} />
       <AEscala products={coleccion} />
+      <Manifiesto />
       <APedido />
       {benefitsSection !== null && <Beneficios benefits={benefits} />}
       {bannersSection !== null && banners.length > 0 && <PromoBanners banners={banners} />}

@@ -38,7 +38,7 @@ export default function ProductosPage() {
               hasAdvancedFilters={advancedFilters !== null} onClearFilters={() => { setAdvancedFilters(null); setAdvancedOpen(false); }} />
           </div>
           <BotonBolsaRegalo />
-          <button onClick={openCreate} className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors whitespace-nowrap shrink-0">
+          <button onClick={openCreate} className="flex items-center justify-center gap-1.5 px-3 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors whitespace-nowrap shrink-0">
             <Plus className="w-4 h-4" />
             <span>Nuevo producto</span>
           </button>
@@ -59,7 +59,7 @@ export default function ProductosPage() {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
-            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
           ))}
         </div>
       )}

@@ -16,7 +16,7 @@ export default function ReviewsCards({ reviews, onToggleActive, onEdit, onDelete
               <p className="text-sm font-medium text-gray-900 truncate">{r.product?.name || r.productId}</p>
               <p className="text-xs text-gray-400">{r.name}</p>
             </div>
-            <div className="flex gap-0.5 shrink-0">{STARS.map((s) => (<Star key={s} className={'w-3 h-3 ' + (s <= r.rating ? 'text-[#C8FF00] fill-[#C8FF00]' : 'text-gray-200')} />))}</div>
+            <div className="flex gap-0.5 shrink-0">{STARS.map((s) => (<Star key={s} className={'w-3 h-3 ' + (s <= r.rating ? 'text-[#B3855C] fill-[#B3855C]' : 'text-gray-200')} />))}</div>
           </div>
 
           <p className="text-xs text-gray-500 line-clamp-2">{r.comment}</p>
@@ -27,7 +27,7 @@ export default function ReviewsCards({ reviews, onToggleActive, onEdit, onDelete
               <span className={'text-xs ' + (r.active ? 'text-green-600' : 'text-gray-400')}>{r.active ? 'Activo' : 'Inactivo'}</span>
             </div>
             <div className="flex gap-2">
-              <button onClick={() => onEdit(r)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(r)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(r)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>

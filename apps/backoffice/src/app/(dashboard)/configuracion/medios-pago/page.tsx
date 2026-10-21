@@ -26,7 +26,7 @@ const schema = z.object({
 });
 type FormData = z.infer<typeof schema>;
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 function SecretField({ label, register, name, show, onToggleShow }: { label: string; register: any; name: string; show: boolean; onToggleShow: () => void }) {
@@ -49,7 +49,7 @@ function MercadoPagoSection({ register, watch, setValue, showKey, onToggleShowKe
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-        <h2 className="text-sm font-semibold text-gray-800 flex items-center gap-2"><Wallet className="w-4 h-4 text-[#C8FF00]" />Mercado Pago</h2>
+        <h2 className="text-sm font-semibold text-gray-800 flex items-center gap-2"><Wallet className="w-4 h-4 text-[#B3855C]" />Mercado Pago</h2>
         <Toggle checked={watch('mercadopagoActive')} onChange={() => setValue('mercadopagoActive', !watch('mercadopagoActive'), { shouldDirty: true })} />
       </div>
       {watch('mercadopagoActive') && (
@@ -69,7 +69,7 @@ function TransferenciaSection({ register, watch, setValue, showCbu, onToggleShow
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
-        <h2 className="text-sm font-semibold text-gray-800 flex items-center gap-2"><Landmark className="w-4 h-4 text-[#C8FF00]" />Transferencia Bancaria</h2>
+        <h2 className="text-sm font-semibold text-gray-800 flex items-center gap-2"><Landmark className="w-4 h-4 text-[#B3855C]" />Transferencia Bancaria</h2>
         <Toggle checked={watch('transferenciaActive')} onChange={() => setValue('transferenciaActive', !watch('transferenciaActive'), { shouldDirty: true })} />
       </div>
       {watch('transferenciaActive') && (
@@ -88,7 +88,7 @@ function TransferenciaSection({ register, watch, setValue, showCbu, onToggleShow
 function TarjetasSection({ setValue, cards }: { setValue: any; cards: { key: string; label: string; logo: string; active: boolean }[] }) {
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
-      <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2"><CreditCard className="w-4 h-4 text-[#C8FF00]" />Tarjetas</h2>
+      <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2"><CreditCard className="w-4 h-4 text-[#B3855C]" />Tarjetas</h2>
       <div className="grid grid-cols-3 gap-4">
         {cards.map((item) => (
           <div key={item.key} className="space-y-2">
@@ -234,7 +234,7 @@ export default function MediosPagoPage() {
     <div className="space-y-6 w-full">
       <div className="flex items-center gap-3">
         <Link href="/configuracion" className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"><ArrowLeft className="w-4 h-4" /></Link>
-        <div><h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><CreditCard className="w-5 h-5 text-[#C8FF00]" />Medios de Pago y Envío</h1><p className="text-gray-500 text-sm mt-0.5">Configuración de medios de pago y envío</p></div>
+        <div><h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2"><CreditCard className="w-5 h-5 text-[#B3855C]" />Medios de Pago y Envío</h1><p className="text-gray-500 text-sm mt-0.5">Configuración de medios de pago y envío</p></div>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -247,7 +247,7 @@ export default function MediosPagoPage() {
         ]} />
 
         <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
-          <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2"><Truck className="w-4 h-4 text-[#C8FF00]" />Medios de Envío</h2>
+          <h2 className="text-sm font-semibold text-gray-800 border-b border-gray-100 pb-3 flex items-center gap-2"><Truck className="w-4 h-4 text-[#B3855C]" />Medios de Envío</h2>
           <CorreoArgentinoSection register={register} watch={watch} setValue={setValue} showCaPassword={visible.caPassword} onToggleShowCaPassword={() => toggleVisible('caPassword')} logo={caLogo} />
           <div className="grid grid-cols-2 gap-4">
             <SimpleCarrierCard label="OCA" watch={watch} setValue={setValue} activeKey="ocaActive" logoKey="ocaLogo" logo={ocaLogo} />
@@ -256,7 +256,7 @@ export default function MediosPagoPage() {
         </div>
 
         <div className="flex justify-end">
-          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
             <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
           </button>
         </div>

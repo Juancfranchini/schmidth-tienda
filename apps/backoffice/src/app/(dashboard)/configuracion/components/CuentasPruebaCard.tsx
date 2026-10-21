@@ -99,7 +99,7 @@ export default function CuentasPruebaCard() {
           value={texto}
           onChange={(e) => setTexto(e.target.value)}
           placeholder="tu-mail@gmail.com"
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00] text-gray-900"
+          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C] text-gray-900"
         />
         {error && <p className="text-xs text-red-600 mt-1">{error}</p>}
       </div>
@@ -111,7 +111,7 @@ export default function CuentasPruebaCard() {
           type="button"
           onClick={guardar}
           disabled={cargando || guardando}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] disabled:bg-gray-200 disabled:text-gray-400"
+          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] disabled:bg-gray-200 disabled:text-gray-400"
         >
           <Save className="w-4 h-4" /> {guardando ? 'Guardando...' : 'Guardar cuentas de prueba'}
         </button>

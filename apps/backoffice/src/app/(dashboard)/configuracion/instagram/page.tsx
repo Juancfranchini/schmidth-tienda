@@ -7,7 +7,7 @@ import { useInstagramConfig } from './useInstagramConfig';
 import { FORMATOS_ACEPTADOS } from '@/lib/subirImagen';
 import { MARCA } from '@/config/marca';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'block text-sm font-medium text-gray-700 mb-1';
 
 function GeneralDataSection({ register }: { register: any }) {
@@ -30,7 +30,7 @@ function MetaApiSection({ register, testing, testResult, onTest }: { register: a
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-3">
         <h2 className="text-sm font-semibold text-gray-800">Conexion API de Meta</h2>
         <button type="button" onClick={onTest} disabled={testing}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 self-start sm:self-auto">
+          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 self-start sm:self-auto">
           {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : testResult === true ? <CheckCircle className="w-4 h-4 text-green-500" /> : testResult === false ? <XCircle className="w-4 h-4 text-red-500" /> : null}
           {testing ? 'Probando...' : 'Probar conexion'}
         </button>
@@ -59,7 +59,7 @@ function PostUrlRow({ index, register, total, uploadingIndex, onUploadClick, onR
       </div>
       <div className="flex gap-2">
         <button type="button" onClick={onUploadClick} disabled={uploadingIndex !== null}
-          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap">
+          className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap">
           <Upload className="w-3 h-3" />{uploadingIndex === index ? 'Subiendo...' : 'Subir imagen'}
         </button>
         {total > 1 && (
@@ -81,7 +81,7 @@ function PostUrlsSection({ register, fields, uploadingIndex, fileRef, onAppend, 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-100 pb-3">
         <h2 className="text-sm font-semibold text-gray-800">URLs de posts ({fields.length})</h2>
         <button type="button" onClick={onAppend}
-          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] transition-colors self-start sm:self-auto">
+          className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] transition-colors self-start sm:self-auto">
           <Plus className="w-3 h-3" />Agregar
         </button>
       </div>
@@ -120,13 +120,13 @@ export default function InstagramConfigPage() {
         </div>
       </div>
 
-      <div className="bg-[#0f172a] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="bg-[#1A1A1A] rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <p className="text-[#C8FF00] text-xs font-bold uppercase tracking-widest mb-1">Vista previa</p>
+          <p className="text-[#B3855C] text-xs font-bold uppercase tracking-widest mb-1">Vista previa</p>
           <p className="text-white font-black text-lg">{watch('title') || 'No te pierdas ninguna publicacion'}</p>
         </div>
         <a href={watch('buttonUrl')} target="_blank" rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-[#C8FF00] text-[#0f172a] px-4 py-2 rounded-full font-bold text-sm self-start sm:self-auto">
+          className="flex items-center gap-2 bg-[#B3855C] text-[#1A1A1A] px-4 py-2 rounded-full font-bold text-sm self-start sm:self-auto">
           {watch('username') || MARCA.redes.instagramUsuario || '@usuario'}
           <ExternalLink className="w-3.5 h-3.5" />
         </a>
@@ -149,12 +149,12 @@ export default function InstagramConfigPage() {
 
         <div className="bg-white rounded-xl border border-gray-200 px-4 sm:px-6 py-4 sm:py-6 flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <input type="checkbox" id="igActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+            <input type="checkbox" id="igActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
             <label htmlFor="igActive" className="text-sm text-gray-700 font-medium">Sección activa (visible en el inicio)</label>
           </div>
           <div className="flex justify-end">
             <button type="submit" disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] disabled:opacity-50 transition-colors">
               <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar cambios'}
             </button>
           </div>

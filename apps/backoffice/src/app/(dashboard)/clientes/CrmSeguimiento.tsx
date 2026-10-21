@@ -5,7 +5,7 @@ import type { CambiosFicha, Contacto } from './tipos';
 import { capitalizar, fechaCorta } from './formato';
 import { motivoDelError } from './useCrm';
 
-const CAMPO = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40';
+const CAMPO = 'w-full rounded-lg border border-gray-200 px-2.5 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40';
 const ETIQUETAS_SUGERIDAS = ['vip', 'profesor', 'club', 'mayorista', 'reventa'];
 
 type Guardar = (cambios: CambiosFicha) => Promise<void>;
@@ -34,7 +34,7 @@ function EditorDeEtiquetas({ etiquetas, onGuardar }: { etiquetas: string[]; onGu
       <form onSubmit={(e) => { e.preventDefault(); agregar(nueva); }} className="mt-2 flex gap-2">
         <input value={nueva} onChange={(e) => setNueva(e.target.value)} maxLength={30} placeholder="Nueva etiqueta" list="etiquetas-sugeridas" className={CAMPO} />
         <datalist id="etiquetas-sugeridas">{ETIQUETAS_SUGERIDAS.filter((t) => !etiquetas.includes(t)).map((t) => <option key={t} value={t} />)}</datalist>
-        <button type="submit" className="rounded-lg bg-[#0f172a] px-3 text-sm font-medium text-white">Agregar</button>
+        <button type="submit" className="rounded-lg bg-[#1A1A1A] px-3 text-sm font-medium text-white">Agregar</button>
       </form>
     </div>
   );
@@ -57,7 +57,7 @@ function EditorDeAccion({ contacto, onGuardar }: { contacto: Contacto; onGuardar
       <div className="flex gap-2">
         <input type="date" value={dia} onChange={(e) => setDia(e.target.value)} className={CAMPO} aria-label="Fecha de la acción" />
         <button type="button" disabled={sinCambios || guardando} onClick={() => guardar({ proximaAccion: texto.trim(), proximaAccionFecha: aIso(dia) })}
-          className="rounded-lg bg-[#0f172a] px-3 text-sm font-medium text-white disabled:opacity-40">Guardar</button>
+          className="rounded-lg bg-[#1A1A1A] px-3 text-sm font-medium text-white disabled:opacity-40">Guardar</button>
         {contacto.proximaAccion && (
           <button type="button" disabled={guardando} onClick={() => guardar({ proximaAccion: null, proximaAccionFecha: null, ultimoContacto: new Date().toISOString() })}
             className="flex items-center gap-1 rounded-lg border border-green-200 bg-green-50 px-3 text-sm font-medium text-green-700"><Check className="h-4 w-4" />Hecho</button>
@@ -85,7 +85,7 @@ export function CrmSeguimiento({ contacto, onGuardar }: { contacto: Contacto; on
       </div>
       <div className="flex items-center justify-between text-sm">
         <span className="text-gray-500">Último contacto: <span className="font-medium text-gray-800">{contacto.ultimoContacto ? fechaCorta(contacto.ultimoContacto) : 'nunca'}</span></span>
-        <button type="button" onClick={() => guardar({ ultimoContacto: new Date().toISOString() })} className="text-xs font-medium text-[#0f172a] underline">Lo contacté hoy</button>
+        <button type="button" onClick={() => guardar({ ultimoContacto: new Date().toISOString() })} className="text-xs font-medium text-[#1A1A1A] underline">Lo contacté hoy</button>
       </div>
     </section>
   );

@@ -26,7 +26,7 @@ export default function ContentEditorModal({ isOpen, selected, products, activeT
             const Icon = tab.icon;
             return (
               <button key={tab.key} type="button" onClick={() => onTabChange(tab.key)}
-                className={'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ' + (activeTab === tab.key ? 'bg-[#C8FF00]/10 border border-[#C8FF00]/30 text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-50')}>
+                className={'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ' + (activeTab === tab.key ? 'bg-[#B3855C]/10 border border-[#B3855C]/30 text-[#B3855C]' : 'text-gray-600 hover:bg-gray-50')}>
                 <Icon size={14} />{tab.label}
               </button>
             );
@@ -39,7 +39,7 @@ export default function ContentEditorModal({ isOpen, selected, products, activeT
           {activeTab === 'relacionados' && <RelacionadosTab products={products} selectedId={selected.id} register={register} setValue={setValue} control={control} showRelated={watch('showRelated')} onToggleShowRelated={() => setValue('showRelated', !watch('showRelated'), { shouldDirty: true })} />}
           <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
             <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
-            <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Guardando...' : 'Guardar'}</button>
+            <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Guardando...' : 'Guardar'}</button>
           </div>
         </form>
       </div>

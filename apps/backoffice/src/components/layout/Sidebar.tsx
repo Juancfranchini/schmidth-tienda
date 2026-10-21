@@ -74,11 +74,11 @@ function SidebarNav({ pathname, collapsed }: { pathname: string; collapsed: bool
                     title={collapsed ? item.label : undefined}
                     className={
                       'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ' +
-                      (active ? 'bg-[#1e293b] text-white border-l-2 border-[#C8FF00] pl-[10px]' : 'text-slate-400 hover:bg-[#1e293b] hover:text-white border-l-2 border-transparent pl-[10px]') +
+                      (active ? 'bg-[#2A2A2A] text-white border-l-2 border-[#B3855C] pl-[10px]' : 'text-slate-400 hover:bg-[#2A2A2A] hover:text-white border-l-2 border-transparent pl-[10px]') +
                       (collapsed ? 'lg:justify-center lg:px-2' : '')
                     }
                   >
-                    <Icon className={'w-4 h-4 shrink-0 ' + (active ? 'text-[#C8FF00]' : 'text-slate-500')} />
+                    <Icon className={'w-4 h-4 shrink-0 ' + (active ? 'text-[#B3855C]' : 'text-slate-500')} />
                     <span className={'whitespace-nowrap ' + (collapsed ? 'lg:hidden' : '')}>{item.label}</span>
                   </Link>
                 </li>
@@ -120,7 +120,7 @@ export function Sidebar({ collapsed, mobileOpen, onMobileClose }: SidebarProps) 
       <aside
         ref={sidebarRef}
         className={
-          'fixed lg:sticky top-0 left-0 z-50 h-screen bg-[#0f172a] flex flex-col shrink-0 transition-all duration-300 ' +
+          'fixed lg:sticky top-0 left-0 z-50 h-screen bg-[#1A1A1A] flex flex-col shrink-0 transition-all duration-300 ' +
           'w-64 ' +
           (collapsed ? 'lg:!w-16' : 'lg:w-64') +
           ' ' +
@@ -130,7 +130,7 @@ export function Sidebar({ collapsed, mobileOpen, onMobileClose }: SidebarProps) 
         <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2 overflow-hidden">
             <NextImage src={MARCA.logo.archivo} alt={MARCA.nombre} width={150} height={30} priority className="object-contain h-6 w-auto" />
-            <span className="w-2 h-2 rounded-full bg-[#C8FF00] shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-[#B3855C] shrink-0" />
           </div>
           <button
             onClick={onMobileClose}

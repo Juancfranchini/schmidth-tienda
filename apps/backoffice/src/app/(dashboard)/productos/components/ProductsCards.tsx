@@ -52,10 +52,10 @@ export default function ProductsCards({ products, onToggleFeatured, onToggleActi
 
             <div className="flex items-center justify-between pt-2 border-t border-gray-100">
               <button onClick={() => onToggleFeatured(p)} className="focus:outline-none" title={p.featured ? 'Quitar destacado' : 'Destacar'}>
-                <Star className={'w-6 h-6 ' + (p.featured ? 'text-[#C8FF00] fill-[#C8FF00]' : 'text-gray-300')} />
+                <Star className={'w-6 h-6 ' + (p.featured ? 'text-[#B3855C] fill-[#B3855C]' : 'text-gray-300')} />
               </button>
               <div className="flex gap-2">
-                <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                <button onClick={() => onEdit(p)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
                 <button onClick={() => onDelete(p)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
               </div>
             </div>

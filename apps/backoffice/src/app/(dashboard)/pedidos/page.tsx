@@ -41,16 +41,16 @@ function Filtros({ cuentas, etapa, onEtapa, busqueda, onBusqueda }: {
         <span className="sr-only">Buscar pedidos</span>
         <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
         <input value={busqueda} onChange={(e) => onBusqueda(e.target.value)} placeholder="Buscar por número, cliente, mail o teléfono"
-          className="w-full rounded-lg border border-gray-200 py-2 pl-8 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40" />
+          className="w-full rounded-lg border border-gray-200 py-2 pl-8 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40" />
       </label>
       <div className="flex flex-wrap gap-1.5">
         {ETAPAS.map((e) => {
           const activa = etapa === e.valor;
           return (
             <button key={e.valor} type="button" onClick={() => onEtapa(e.valor)}
-              className={'flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ' + (activa ? 'border-[#0f172a] bg-[#0f172a] text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50')}>
+              className={'flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ' + (activa ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white' : 'border-gray-200 bg-white text-gray-600 hover:bg-gray-50')}>
               {e.texto}
-              <span className={'rounded-full px-1.5 text-[10px] font-bold ' + (activa ? 'bg-[#C8FF00] text-[#0f172a]' : 'bg-gray-100 text-gray-500')}>{cuentas[e.valor]}</span>
+              <span className={'rounded-full px-1.5 text-[10px] font-bold ' + (activa ? 'bg-[#B3855C] text-[#1A1A1A]' : 'bg-gray-100 text-gray-500')}>{cuentas[e.valor]}</span>
             </button>
           );
         })}
@@ -65,7 +65,7 @@ function Paginas({ total, actual, onPagina }: { total: number; actual: number; o
     <div className="flex flex-wrap items-center justify-center gap-2">
       {Array.from({ length: total }).map((_, i) => (
         <button key={i} type="button" onClick={() => onPagina(i + 1)}
-          className={'h-8 w-8 rounded-lg text-sm font-medium ' + (i + 1 === actual ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-100')}>{i + 1}</button>
+          className={'h-8 w-8 rounded-lg text-sm font-medium ' + (i + 1 === actual ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-100')}>{i + 1}</button>
       ))}
     </div>
   );

@@ -32,7 +32,7 @@ type MenuSection = 'category' | 'brand' | 'active' | 'featured';
 
 function radioLabelClass(isSelected: boolean) {
   return 'flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-lg border cursor-pointer transition-colors ' +
-    (isSelected ? 'border-[#C8FF00] bg-[#C8FF00]/5 text-[#C8FF00]' : 'border-gray-200 text-gray-600 hover:bg-gray-50');
+    (isSelected ? 'border-[#B3855C] bg-[#B3855C]/5 text-[#B3855C]' : 'border-gray-200 text-gray-600 hover:bg-gray-50');
 }
 const panelGridClass = 'grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3';
 
@@ -150,9 +150,9 @@ export default function ProductAdvancedSearchModal({ isOpen, onClose, onApply, c
                     key={item.id}
                     onClick={() => setActiveSection(item.id as MenuSection)}
                     className={'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap shrink-0 ' +
-                      (isActive ? 'bg-white border border-[#C8FF00] text-[#C8FF00]' : 'text-gray-600 hover:bg-gray-100')}
+                      (isActive ? 'bg-white border border-[#B3855C] text-[#B3855C]' : 'text-gray-600 hover:bg-gray-100')}
                   >
-                    <Icon className={'w-4 h-4 ' + (isActive ? 'text-[#C8FF00]' : 'text-gray-400')} />
+                    <Icon className={'w-4 h-4 ' + (isActive ? 'text-[#B3855C]' : 'text-gray-400')} />
                     {item.label}
                   </button>
                 );
@@ -172,10 +172,10 @@ export default function ProductAdvancedSearchModal({ isOpen, onClose, onApply, c
         </div>
 
         <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-200 bg-gray-50 flex-shrink-0">
-          <button onClick={handleClear} disabled={!hasFilters} className={'text-sm font-medium ' + (hasFilters ? 'text-[#C8FF00] cursor-pointer hover:underline' : 'text-gray-400 cursor-not-allowed')}>Limpiar Filtros</button>
+          <button onClick={handleClear} disabled={!hasFilters} className={'text-sm font-medium ' + (hasFilters ? 'text-[#B3855C] cursor-pointer hover:underline' : 'text-gray-400 cursor-not-allowed')}>Limpiar Filtros</button>
           <div className="flex items-center gap-2">
             <button onClick={onClose} className="px-3 sm:px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-white transition-colors">Cancelar</button>
-            <button onClick={handleApply} className="px-3 sm:px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] transition-colors">Buscar</button>
+            <button onClick={handleApply} className="px-3 sm:px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] transition-colors">Buscar</button>
           </div>
         </div>
       </div>

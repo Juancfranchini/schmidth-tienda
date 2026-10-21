@@ -72,7 +72,7 @@ export function ConfirmDialog({
           <button onClick={onClose} className="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors text-sm font-medium">
             Cancelar
           </button>
-          <button onClick={onConfirm} disabled={isLoading} className="px-4 py-2 rounded-lg bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] transition-colors text-sm font-medium disabled:opacity-50">
+          <button onClick={onConfirm} disabled={isLoading} className="px-4 py-2 rounded-lg bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] transition-colors text-sm font-medium disabled:opacity-50">
             {isLoading ? 'Eliminando...' : confirmLabel}
           </button>
         </div>

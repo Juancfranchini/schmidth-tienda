@@ -40,7 +40,7 @@ export default function VariantEditor({ variants, onChange, inputClass, hasSize,
     <div className="sm:col-span-2 border-t border-gray-100 pt-4">
       <div className="flex items-center justify-between mb-3">
         <label className="text-xs font-medium text-gray-400 uppercase tracking-wider">Variantes (talles/colores)</label>
-        <button type="button" onClick={addVariant} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] transition-colors">
+        <button type="button" onClick={addVariant} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] transition-colors">
           <Plus className="w-3 h-3" />Agregar variante
         </button>
       </div>

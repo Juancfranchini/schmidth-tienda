@@ -33,7 +33,7 @@ export default function TestimoniosPage() {
           <div className="flex-1 min-w-0">
             <SearchBar value={search} onChange={setSearch} onAdvancedSearch={() => setAdvancedOpen(true)} hasAdvancedFilters={advancedFilters !== null} onClearFilters={() => { setAdvancedFilters(null); setAdvancedOpen(false); setCurrentPage(1); }} />
           </div>
-          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors shrink-0">
+          <button onClick={openCreate} className="flex items-center gap-2 px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors shrink-0">
             <Plus className="w-4 h-4" />Nuevo
           </button>
         </div>

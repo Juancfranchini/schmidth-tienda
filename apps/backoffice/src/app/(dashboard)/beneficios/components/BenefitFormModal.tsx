@@ -3,7 +3,7 @@ import { Star } from 'lucide-react';
 import { Modal } from '@/components/ui/Modal';
 import { Benefit, ICON_OPTIONS, ICON_MAP } from '../useBeneficios';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 export default function BenefitFormModal({ isOpen, editItem, register, errors, watchIcon, saving, onClose, onSubmit }: {
   isOpen: boolean; editItem: Benefit | null; register: any; errors: any; watchIcon: string; saving: boolean; onClose: () => void; onSubmit: (e?: React.BaseSyntheticEvent) => void;
@@ -18,7 +18,7 @@ export default function BenefitFormModal({ isOpen, editItem, register, errors, w
             <select {...register('icon')} className={inputClass + ' pl-10'}>
               {ICON_OPTIONS.map((opt) => (<option key={opt.value} value={opt.value}>{opt.label}</option>))}
             </select>
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#C8FF00] pointer-events-none">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#B3855C] pointer-events-none">
               {createElement(ICON_MAP[watchIcon] || Star, { size: 16 })}
             </span>
           </div>
@@ -38,12 +38,12 @@ export default function BenefitFormModal({ isOpen, editItem, register, errors, w
           <input type="number" min={0} {...register('order')} className={inputClass} />
         </div>
         <div className="flex items-center gap-3">
-          <input type="checkbox" id="bActive" {...register('active')} className="w-4 h-4 rounded accent-[#C8FF00]" />
+          <input type="checkbox" id="bActive" {...register('active')} className="w-4 h-4 rounded accent-[#B3855C]" />
           <label htmlFor="bActive" className="text-sm text-gray-700">Activo</label>
         </div>
         <div className="flex justify-end gap-3 pt-2 border-t border-gray-100">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
         </div>
       </form>
     </Modal>

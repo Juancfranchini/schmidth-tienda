@@ -26,8 +26,8 @@ export default function BeneficiosTable({ benefits, onToggleActive, onEdit, onDe
               <tr key={b.id} className="border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
                 <td className="px-4 py-3 text-center text-sm text-gray-400">{b.order}</td>
                 <td className="px-4 py-3">
-                  <div className="w-9 h-9 rounded-lg bg-[#0f172a] flex items-center justify-center">
-                    {createElement(IconComp, { size: 16, className: 'text-[#C8FF00]' })}
+                  <div className="w-9 h-9 rounded-lg bg-[#1A1A1A] flex items-center justify-center">
+                    {createElement(IconComp, { size: 16, className: 'text-[#B3855C]' })}
                   </div>
                 </td>
                 <td className="px-4 py-3"><p className="text-gray-900 font-medium text-sm">{b.title}</p></td>
@@ -40,7 +40,7 @@ export default function BeneficiosTable({ benefits, onToggleActive, onEdit, onDe
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex items-center justify-center gap-1">
-                    <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                    <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10 transition-colors" title="Editar"><Edit2 className="w-4 h-4" /></button>
                     <button onClick={() => onDelete(b)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10 transition-colors" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                   </div>
                 </td>

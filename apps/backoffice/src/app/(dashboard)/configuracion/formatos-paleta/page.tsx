@@ -15,7 +15,7 @@ const FORMATOS = [
 ];
 
 const inputClass =
-  'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+  'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 
 function FilaFormato({ etiqueta, valor, onChange, onSubir, subiendo }: {
   etiqueta: string; valor: string;
@@ -42,7 +42,7 @@ function FilaFormato({ etiqueta, valor, onChange, onSubir, subiendo }: {
       />
 
       <button type="button" onClick={onSubir} disabled={subiendo}
-        className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap flex-shrink-0">
+        className="flex items-center gap-1 px-3 py-2 rounded-lg text-xs font-medium border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 whitespace-nowrap flex-shrink-0">
         <Upload className="w-3 h-3" />{subiendo ? 'Subiendo...' : 'Subir imagen'}
       </button>
     </div>
@@ -96,7 +96,7 @@ export default function FormatosPaletaPage() {
       </div>
 
       <button type="button" onClick={guardar} disabled={saving}
-        className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-[#C8FF00] text-[#0f172a] hover:bg-[#b8ef00] disabled:opacity-50">
+        className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold bg-[#B3855C] text-[#1A1A1A] hover:bg-[#9E7149] disabled:opacity-50">
         <Save className="w-4 h-4" />{saving ? 'Guardando...' : 'Guardar'}
       </button>
     </div>

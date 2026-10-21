@@ -6,7 +6,7 @@ import { PageLoader } from '@/components/ui/LoadingSpinner';
 import Toggle from '../testimonios/components/Toggle';
 import { useMarcas, getImageUrl, isBrandActive, Brand } from './useMarcas';
 
-const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]';
+const inputClass = 'w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]';
 const labelClass = 'text-xs font-medium text-gray-400 uppercase tracking-wider';
 
 function BrandsTable({ brands, onToggleActive, onEdit, onDelete }: { brands: Brand[]; onToggleActive: (b: Brand) => void; onEdit: (b: Brand) => void; onDelete: (b: Brand) => void }) {
@@ -38,7 +38,7 @@ function BrandsTable({ brands, onToggleActive, onEdit, onDelete }: { brands: Bra
                   <td className="px-4 py-3 text-center"><Toggle checked={isBrandActive(b)} onChange={() => onToggleActive(b)} /></td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-1">
-                      <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+                      <button onClick={() => onEdit(b)} className="p-1.5 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
                       <button onClick={() => onDelete(b)} className="p-1.5 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   </td>
@@ -72,7 +72,7 @@ function BrandsCards({ brands, onToggleActive, onEdit, onDelete }: { brands: Bra
               </div>
             </div>
             <div className="flex justify-end gap-2 pt-2 border-t border-gray-100">
-              <button onClick={() => onEdit(b)} className="p-2 rounded-lg text-[#C8FF00] hover:bg-[#C8FF00]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
+              <button onClick={() => onEdit(b)} className="p-2 rounded-lg text-[#B3855C] hover:bg-[#B3855C]/10" title="Editar"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => onDelete(b)} className="p-2 rounded-lg text-red-400 hover:bg-red-400/10" title="Eliminar"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>
@@ -102,11 +102,11 @@ function BrandFormModal({ isOpen, editItem, previewUrl, register, errors, upload
             <div className="flex gap-2 w-full">
               <input
                 {...register('logo')}
-                className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#C8FF00]/40 focus:border-[#C8FF00]"
+                className="flex-1 min-w-0 px-2 py-1.5 bg-white border border-gray-200 rounded-lg text-xs text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#B3855C]/40 focus:border-[#B3855C]"
                 placeholder="URL del logo"
               />
               <button type="button" onClick={onUpload} disabled={uploading}
-                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#C8FF00]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 shrink-0">
+                className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all border border-[#B3855C]/50 text-gray-600 hover:bg-gray-50 disabled:opacity-50 shrink-0">
                 <Upload className="w-3 h-3" />{uploading ? '...' : 'Subir'}
               </button>
             </div>
@@ -141,7 +141,7 @@ function BrandFormModal({ isOpen, editItem, previewUrl, register, errors, upload
 
         <div className="flex justify-end gap-3 px-4 md:px-6 py-3 md:py-4 border-t border-gray-200 bg-gray-50 rounded-b-xl flex-shrink-0">
           <button type="button" onClick={onClose} className="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors">Cancelar</button>
-          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg text-sm font-semibold hover:bg-[#b8ef00] disabled:opacity-50 transition-colors">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
+          <button type="submit" disabled={saving} className="px-4 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg text-sm font-semibold hover:bg-[#9E7149] disabled:opacity-50 transition-colors">{saving ? 'Guardando...' : editItem ? 'Actualizar' : 'Crear'}</button>
         </div>
       </form>
     </Modal>
@@ -169,7 +169,7 @@ export default function MarcasPage() {
           <h1 className="text-2xl font-bold text-gray-900">Marcas</h1>
           <p className="text-gray-500 text-sm mt-0.5">{brands.length} registros</p>
         </div>
-        <button onClick={openCreate} className="flex items-center justify-center gap-2 px-3 py-2 bg-[#C8FF00] text-[#0f172a] rounded-lg font-semibold text-sm hover:bg-[#b8ef00] transition-colors whitespace-nowrap">
+        <button onClick={openCreate} className="flex items-center justify-center gap-2 px-3 py-2 bg-[#B3855C] text-[#1A1A1A] rounded-lg font-semibold text-sm hover:bg-[#9E7149] transition-colors whitespace-nowrap">
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Nueva marca</span>
           <span className="sm:hidden">Nueva</span>
@@ -188,7 +188,7 @@ export default function MarcasPage() {
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
-            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#C8FF00] text-[#0f172a]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
+            <button key={i} onClick={() => setCurrentPage(i + 1)} className={'w-8 h-8 rounded-lg text-sm font-medium ' + (i + 1 === currentPage ? 'bg-[#B3855C] text-[#1A1A1A]' : 'text-gray-500 hover:bg-gray-50')}>{i + 1}</button>
           ))}
         </div>
       )}
