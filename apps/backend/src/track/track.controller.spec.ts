@@ -21,7 +21,7 @@ function request(origin = PRODUCCION) {
   } as never;
 }
 
-function construir(meta: Record<string, unknown> | null = { pixelId: '1041282918808105', accessToken: 'token' }, pruebas: string[] = []) {
+function construir(meta: Record<string, unknown> | null = { pixelId: '1234567890123456', accessToken: 'token' }, pruebas: string[] = []) {
   const prisma = {
     siteSection: {
       findUnique: jest.fn(async ({ where }: { where: { key: string } }) =>
@@ -119,7 +119,7 @@ describe('TrackController', () => {
   });
 
   it('fuera de producción, con código de prueba, va a Eventos de prueba y el navegador no manda el Pixel', async () => {
-    const { prisma, controller } = construir({ pixelId: '1041282918808105', accessToken: 'token', testEventCode: 'TEST123' });
+    const { prisma, controller } = construir({ pixelId: '1234567890123456', accessToken: 'token', testEventCode: 'TEST123' });
     const resultado = await controller.track(EVENTO, request('https://otro-dominio.example'));
     await esperarEnvio();
 
@@ -129,7 +129,7 @@ describe('TrackController', () => {
   });
 
   it('en producción ignora el código de prueba del backoffice: si no, los eventos reales no cuentan', async () => {
-    const { controller } = construir({ pixelId: '1041282918808105', accessToken: 'token', testEventCode: 'TEST123' });
+    const { controller } = construir({ pixelId: '1234567890123456', accessToken: 'token', testEventCode: 'TEST123' });
     await controller.track(EVENTO, request());
     await esperarEnvio();
     expect(cuerpo().test_event_code).toBeUndefined();
@@ -170,7 +170,7 @@ describe('TrackController', () => {
     const { controller } = construir();
     await controller.track({ ...EVENTO, pixelId: '999' }, request());
     await esperarEnvio();
-    expect((global.fetch as jest.Mock).mock.calls[0][0]).toContain('/1041282918808105/events');
+    expect((global.fetch as jest.Mock).mock.calls[0][0]).toContain('/1234567890123456/events');
   });
 
   it('si falla guardar el evento propio, igual sale a Meta', async () => {
@@ -187,7 +187,7 @@ describe('TrackController', () => {
   });
 
   it('probando eventos con el código del backoffice: va a Probar eventos, sin Pixel ni embudo, aunque sea producción', async () => {
-    const { prisma, controller } = construir({ pixelId: '1041282918808105', accessToken: 'token', testEventCode: 'TEST777' });
+    const { prisma, controller } = construir({ pixelId: '1234567890123456', accessToken: 'token', testEventCode: 'TEST777' });
     const resultado = await controller.track({ ...EVENTO, testEventCode: 'TEST777' }, request());
     await esperarEnvio();
 
@@ -198,14 +198,14 @@ describe('TrackController', () => {
   });
 
   it('probando eventos con una cuenta de prueba también llega a Probar eventos', async () => {
-    const { controller } = construir({ pixelId: '1041282918808105', accessToken: 'token', testEventCode: 'TEST777' }, ['cuenta@ejemplo.com']);
+    const { controller } = construir({ pixelId: '1234567890123456', accessToken: 'token', testEventCode: 'TEST777' }, ['cuenta@ejemplo.com']);
     await controller.track({ ...EVENTO, testEventCode: 'TEST777' }, request(), { id: 'user-1' });
     await esperarEnvio();
     expect(cuerpo().test_event_code).toBe('TEST777');
   });
 
   it('un código de prueba que no es el del backoffice no cambia nada: evento real', async () => {
-    const { prisma, controller } = construir({ pixelId: '1041282918808105', accessToken: 'token', testEventCode: 'TEST777' });
+    const { prisma, controller } = construir({ pixelId: '1234567890123456', accessToken: 'token', testEventCode: 'TEST777' });
     const resultado = await controller.track({ ...EVENTO, testEventCode: 'OTRO1' }, request());
     await esperarEnvio();
 

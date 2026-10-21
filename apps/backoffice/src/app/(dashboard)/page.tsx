@@ -6,12 +6,18 @@ import { OrderStatusBadge } from '@/components/ui/Badge';
 import { TrendingUp, ShoppingBag, BarChart2, Package, Star, Megaphone, Truck, TrendingDown, Wallet } from 'lucide-react';
 import { PageLoader } from '@/components/ui/LoadingSpinner';
 import api from '@/lib/api';
+import { esRutaOculta } from '@/components/layout/navegacion';
+
+// Con el módulo de gastos apagado (packages/marca/marca.json) no se muestran sus números.
+const CON_GASTOS = !esRutaOculta('/gastos');
 
 function KpiGrid({ kpis }: { kpis: any }) {
   const kpiCards = [
     { label: 'Ventas (30 dias)', value: formatPrice(kpis.ventas30), icon: TrendingUp, color: 'bg-green-50 text-green-600', border: 'border-green-200' },
-    { label: 'Gastos (30 dias)', value: formatPrice(kpis.gastos30), icon: TrendingDown, color: 'bg-red-50 text-red-600', border: 'border-red-200' },
-    { label: 'Balance neto', value: formatPrice(kpis.ganancia), icon: Wallet, color: 'bg-blue-50 text-blue-600', border: 'border-blue-200' },
+    ...(CON_GASTOS ? [
+      { label: 'Gastos (30 dias)', value: formatPrice(kpis.gastos30), icon: TrendingDown, color: 'bg-red-50 text-red-600', border: 'border-red-200' },
+      { label: 'Balance neto', value: formatPrice(kpis.ganancia), icon: Wallet, color: 'bg-blue-50 text-blue-600', border: 'border-blue-200' },
+    ] : []),
     { label: 'Total Pedidos', value: String(kpis.totalPedidos), icon: ShoppingBag, color: 'bg-purple-50 text-purple-600', border: 'border-purple-200' },
     { label: 'Ticket Promedio', value: formatPrice(kpis.ticketPromedio), icon: BarChart2, color: 'bg-orange-50 text-orange-600', border: 'border-orange-200' },
   ];
@@ -209,7 +215,7 @@ export default function DashboardPage() {
       </div>
 
       <KpiGrid kpis={kpis} />
-      <ExpensesCard expensesStats={expensesStats} />
+      {CON_GASTOS && <ExpensesCard expensesStats={expensesStats} />}
       <OrdersByStatusCard ordersByStatus={ordersByStatus} />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">

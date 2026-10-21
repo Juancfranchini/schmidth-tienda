@@ -9,7 +9,75 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | 2. Modelo de producto, ocultar módulos, seed de 5 productos | ✅ Terminada (2026-10-20); seed y migraciones probados en la etapa 3 |
 | 3. Tema y diseño de la tienda (home, producto, carrito, checkout) | ✅ Terminada (2026-10-21), probada en local con datos |
 | 4. Textos, mails, páginas legales + branding completo | ✅ Terminada (2026-10-21); textos legales a revisar por un profesional |
-| 5. Revisión final y pendientes del cliente | Pendiente |
+| 5. Revisión final y pendientes del cliente | ✅ Terminada (2026-10-21): ver "Pendientes que dependen de vos" |
+
+## Etapa 5: revisión final
+
+### Qué se revisó y corrigió
+
+- **CI de GitHub**: las cuatro etapas pasan (la última corrida, `40f767b`, en verde).
+- **Backoffice probado en el navegador por primera vez** (base local, admin de prueba): login, menú sin los módulos ocultos, `/caja` redirige al inicio, editor de términos con el aviso "a revisar", editar y guardar un producto con sus variantes de color, guardar "Contenido de fichas". Todo OK.
+- Corregido en esta revisión:
+  - **Google Analytics de HomePadel**: la tienda traía por defecto su ID de medición (`G-LNWKM8X505`); las visitas de Schmidt iban a ir a la cuenta de HomePadel. Ahora sin `NEXT_PUBLIC_GA_MEASUREMENT_ID` no se instala.
+  - Un ID de Pixel de Meta que parecía el real de HomePadel en los tests: reemplazado por uno ficticio.
+  - El middleware de login del backoffice bloqueaba `/marca/…`: el isotipo no se veía en el login ni como favicon.
+  - El inicio del backoffice mostraba gastos con el módulo de gastos oculto.
+  - `.env.example`: se documentaron `SWAGGER_ENABLED`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` y `NEXT_PUBLIC_META_DOMAIN_VERIFICATION`.
+
+### Pendientes que dependen de vos
+
+**1. Datos de la marca** (en `packages/marca/marca.json`; después correr `node scripts/sync-marca.mjs`)
+- [ ] Dominio: `sitio.url` y `sitio.hosts`.
+- [ ] WhatsApp de ventas (`whatsapp`, solo dígitos con 549). En el catálogo de Canva figura 11 6115-0361: confirmar.
+- [ ] Instagram y otras redes (`redes`).
+- [ ] Mails: contacto, remitente, avisos y admin (`email`).
+- [ ] Razón social, CUIT y domicilio (`legal`): hoy los textos legales muestran "[completar …]".
+- [ ] Horario de atención (`textos.horario`).
+
+**2. Credenciales y variables** (nada de esto está en el repo)
+- [ ] Backend (Railway): `DATABASE_URL`, `JWT_SECRET`, `SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD`, `FRONTEND_URL`, `BACKEND_URL`, `BACKOFFICE_URL`, `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET`, `CLOUDINARY_URL`, `REVALIDATE_SECRET`, `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` / `GOOGLE_REDIRECT_URI` (si se usa login con Google), `ENABLE_BANK_TRANSFER` (si se ofrece transferencia).
+- [ ] Tienda (Vercel): `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`, `REVALIDATE_SECRET`, `NEXT_PUBLIC_GA_MEASUREMENT_ID` (opcional), `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_META_DOMAIN_VERIFICATION`.
+- [ ] Backoffice (Vercel): `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_STORE_URL`.
+- [ ] Desde el backoffice (Configuración): clave de Resend y remitente (con el dominio verificado en Resend), Pixel de Meta y token de la API de Conversiones, Instagram, datos de la cuenta para transferencias, Correo Argentino (si se usa).
+- [ ] Webhook de Mercado Pago apuntando a `https://<backend>/api/payments/webhook`.
+- [ ] **Sin Resend configurado no salen mails y el botón de arrepentimiento responde error**: es lo primero a configurar.
+
+**3. Meta**
+- [ ] Verificar el dominio en el Administrador comercial (código en `NEXT_PUBLIC_META_DOMAIN_VERIFICATION`).
+- [ ] Pixel y API de Conversiones cargados en el backoffice; probar eventos con `?modo_prueba=1`.
+- [ ] Catálogo: fuente de datos con el feed `https://<backend>/api/catalog-feed/meta.csv`.
+
+**4. Productos**
+- [ ] Fotos reales en alta, una por color como mínimo (formato 4:5); reemplazan las provisorias de placehold.co.
+- [ ] Confirmar medidas, bolsillos, forrado y precios de los 5 modelos (están "a confirmar").
+- [ ] Ambar: ¿30 o 36 cm de ancho? (el seed usa 30).
+- [ ] Categorías (propuesta: De hombro, Bandoleras, Totes, Bolsos) y a cuál va cada modelo.
+- [ ] Stock real por color (hoy 10 de prueba).
+- [ ] Modelos o colores a pedido: marcar "a pedido" y días de confección en cada producto.
+- [ ] Cuotas: configurar en Configuración → Cuotas si se ofrecen.
+
+**5. Textos legales**
+- [ ] Revisar con un profesional términos, privacidad, envíos y cambios/devoluciones (borradores marcados "a revisar" en el backoffice).
+- [ ] Ojo: el editor del backoffice muestra los títulos de los textos base como texto común; al guardar desde ahí se pierden los subtítulos. Conviene reescribirlos con el editor al revisarlos.
+
+**6. Marca visual**
+- [ ] Logo e isotipo definitivos en vector (SVG): hoy son provisorios armados con la tipografía (`public/marca/` de tienda y backoffice).
+
+**7. Envíos** (desestimado por ahora)
+- [ ] Definir qué se ofrece: Correo Argentino (tarifa fija configurable), Andreani, OCA, retiro en local (necesita dirección). El checkout hoy muestra las opciones heredadas.
+- [ ] Integración con Correo Argentino (Paq.ar) para cotizar y generar envíos: no está hecha (TODO en `shipping.service.ts`); requiere contrato.
+
+**8. Deploy**
+- [ ] Backend en Railway (Dockerfile; `start:prod` corre las migraciones). La primera vez, cargar datos con `npx prisma db seed`.
+- [ ] Tienda y backoffice en Vercel, cada una con su carpeta como raíz.
+- [ ] Dominio de la tienda (y uno para el backoffice), y actualizar `sitio` en `marca.json`.
+
+### Deuda técnica conocida (no bloquea)
+
+- Warnings de lint heredados (0 errores).
+- Backend con `strictNullChecks` apagado (de origen).
+- Las variantes de producto llegan al backend sin DTO propio (como en el origen).
+- Quedan en el código, sin uso visible: filtros de pádel del endpoint de productos (`shape`, `gender`, `level`), filtro "Marca" del catálogo, módulos ocultos.
 
 ## Etapa 4: qué se hizo
 

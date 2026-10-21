@@ -6,7 +6,7 @@ const sha256 = (v: string) => crypto.createHash('sha256').update(v).digest('hex'
 function construir(order: Record<string, unknown> | null, meta: Record<string, unknown> = {}) {
   const prisma = {
     order: { findUnique: jest.fn().mockResolvedValue(order) },
-    siteSection: { findUnique: jest.fn().mockResolvedValue({ data: { pixelId: '1041282918808105', accessToken: 'token', ...meta } }) },
+    siteSection: { findUnique: jest.fn().mockResolvedValue({ data: { pixelId: '1234567890123456', accessToken: 'token', ...meta } }) },
     marketingEvent: { create: jest.fn().mockResolvedValue({}) },
   };
   global.fetch = jest.fn().mockResolvedValue({ ok: true, status: 200 }) as never;
@@ -58,7 +58,7 @@ describe('informarTransferenciaPagadaAMeta', () => {
     prisma.siteSection.findUnique.mockImplementation(async ({ where }: { where: { key: string } }) =>
       where.key === 'cuentas_prueba'
         ? { data: { emails: ['cliente@ejemplo.com'] } }
-        : { data: { pixelId: '1041282918808105', accessToken: 'token' } },
+        : { data: { pixelId: '1234567890123456', accessToken: 'token' } },
     );
     await informarTransferenciaPagadaAMeta(prisma as never, 'o-1');
     expect(global.fetch).not.toHaveBeenCalled();
