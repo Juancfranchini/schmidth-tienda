@@ -1,0 +1,128 @@
+// Store de carrito con Zustand
+// Persiste en localStorage bajo la clave '<marca>-cart'
+// Permite agregar, eliminar y actualizar items, y calcular totales
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { CartItem, Product } from '@/types';
+import { trackMetaEvent } from '@/lib/metaPixel';
+import { useCartFeedbackStore } from './cartFeedbackStore';
+import { MARCA } from '@/config/marca';
+
+interface CartStore {
+  items: CartItem[];
+  couponCode: string | null;
+  salesLinkToken: string | null;
+  /** Bolsas de regalo pedidas (sin cargo). Las que van: ver bolsasEfectivas. */
+  bolsasRegalo: number;
+  addItem: (product: Product, quantity?: number, variant?: { id: string; sku: string; size: string; color?: string | null; dimensions?: string | null; weight?: number | null; weightUnit?: string | null; imageUrl?: string | null }) => void;
+  removeItem: (itemKey: string) => void;
+  updateQuantity: (itemKey: string, quantity: number) => void;
+  clearCart: () => void;
+  totalItems: () => number;
+  totalPrice: () => number;
+  setCoupon: (code: string | null) => void;
+  setSalesLinkToken: (token: string | null) => void;
+  setBolsasRegalo: (cantidad: number) => void;
+}
+
+export const useCartStore = create<CartStore>()(
+  persist(
+    (set, get) => ({
+      items: [],
+      couponCode: null,
+      salesLinkToken: null,
+      bolsasRegalo: 0,
+
+      // Agrega un producto al carrito; si ya existe, incrementa la cantidad
+      addItem: (product, quantity = 1, variant) => {
+        const existing = get().items.find((i) => 
+          i.product.id === product.id && i.variantId === variant?.id
+        );
+
+        trackMetaEvent('AddToCart', {
+          content_ids: [product.id],
+          content_type: 'product',
+          content_name: product.name,
+          value: product.effectivePrice * quantity,
+          currency: 'ARS',
+          contents: [{ id: product.id, quantity, item_price: product.effectivePrice }],
+        });
+        useCartFeedbackStore.getState().showAdded(product.name, quantity);
+
+        if (existing) {
+          set((state) => ({
+            items: state.items.map((i) =>
+              i.product.id === product.id && i.variantId === variant?.id
+                ? { ...i, quantity: i.quantity + quantity }
+                : i
+            ),
+          }));
+        } else {
+          set((state) => ({ 
+            items: [...state.items, { 
+              product, 
+              quantity,
+              variantId: variant?.id,
+              variantSku: variant?.sku,
+              variantSize: variant?.size,
+              variantColor: variant?.color,
+              variantDimensions: variant?.dimensions,
+              variantWeight: variant?.weight,
+              variantWeightUnit: variant?.weightUnit,
+              variantImageUrl: variant?.imageUrl,
+            }] 
+          }));
+        }
+      },
+
+      // Elimina un producto del carrito por su ID
+      removeItem: (itemKey) => {
+        set((state) => ({
+          items: state.items.filter((i) => getItemKey(i) !== itemKey),
+        }));
+      },
+
+      // Actualiza la cantidad de un producto; si es 0 o menos, lo elimina
+      updateQuantity: (itemKey, quantity) => {
+        if (quantity <= 0) {
+          get().removeItem(itemKey);
+          return;
+        }
+        set((state) => ({
+          items: state.items.map((i) =>
+            getItemKey(i) === itemKey ? { ...i, quantity } : i
+          ),
+        }));
+      },
+
+      clearCart: () => set({ items: [], couponCode: null, salesLinkToken: null, bolsasRegalo: 0 }),
+
+      setCoupon: (code) => set({ couponCode: code }),
+      setSalesLinkToken: (token) => set({ salesLinkToken: token }),
+      setBolsasRegalo: (cantidad) => set({ bolsasRegalo: Math.max(0, Math.floor(cantidad)) }),
+
+      // Suma total de unidades en el carrito
+      totalItems: () => get().items.reduce((acc, i) => acc + i.quantity, 0),
+
+      // Precio efectivo calculado por el backend (nunca `salePrice ?? price`
+      // acá: un salePrice de 0 no es una oferta válida).
+      totalPrice: () =>
+        get().items.reduce((acc, i) => acc + i.product.effectivePrice * i.quantity, 0),
+    }),
+    { name: MARCA.prefijoStorage + '-cart' }
+  )
+);
+
+export function getItemKey(item: Pick<CartItem, 'product' | 'variantId'>): string {
+  return item.product.id + '-' + (item.variantId ?? 'base');
+}
+
+/**
+ * Bolsas que van de verdad: como máximo una por unidad del carrito, así sacar
+ * un producto no deja bolsas de más. El servidor aplica el mismo tope.
+ */
+export function bolsasEfectivas(bolsasRegalo: number | undefined, items: Pick<CartItem, 'quantity'>[]): number {
+  const unidades = items.reduce((acc, i) => acc + i.quantity, 0);
+  return Math.min(bolsasRegalo ?? 0, unidades);
+}

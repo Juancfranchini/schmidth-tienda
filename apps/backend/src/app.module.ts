@@ -1,0 +1,90 @@
+﻿import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { CuentaModule } from './cuenta/cuenta.module';
+import { ProductsModule } from './products/products.module';
+import { CategoriesModule } from './categories/categories.module';
+import { BrandsModule } from './brands/brands.module';
+import { OrdersModule } from './orders/orders.module';
+import { PromotionsModule } from './promotions/promotions.module';
+import { CouponsModule } from './coupons/coupons.module';
+import { BannersModule } from './banners/banners.module';
+import { UploadsModule } from './uploads/uploads.module';
+import { ExpensesModule } from './expenses/expenses.module';
+import { HeroSlidesModule } from './hero-slides/hero-slides.module';
+import { BenefitsModule } from './benefits/benefits.module';
+import { TestimonialsModule } from './testimonials/testimonials.module';
+import { FaqModule } from './faq/faq.module';
+import { SiteSectionsModule } from './site-sections/site-sections.module';
+import { ContactModule } from './contact/contact.module';
+import { ContactChannelsModule } from './contact-channels/contact-channels.module';
+import { SizeGuidesModule } from './size-guides/size-guides.module';
+import { NewsletterModule } from './newsletter/newsletter.module';
+import { AbandonedCartsModule } from './abandoned-carts/abandoned-carts.module';
+import { InstagramModule } from './instagram/instagram.module';
+import { ReviewsModule } from './reviews/reviews.module';
+import { PaymentsModule } from './payments/payments.module';
+import { EmailModule } from './email/email.module';
+import { ShippingModule } from './shipping/shipping.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { TrackModule } from './track/track.module';
+import { MarketingModule } from './marketing/marketing.module';
+import { CatalogFeedModule } from './catalog-feed/catalog-feed.module';
+import { CrmModule } from './crm/crm.module';
+import { HealthModule } from './health/health.module';
+import { PosModule } from './pos/pos.module';
+import { CashModule } from './cash/cash.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    ThrottlerModule.forRoot([{ ttl: 60000, limit: 100 }]),
+    PrismaModule,
+    AuthModule,
+    UsersModule,
+    CuentaModule,
+    ProductsModule,
+    CategoriesModule,
+    BrandsModule,
+    OrdersModule,
+    PromotionsModule,
+    CouponsModule,
+    BannersModule,
+    UploadsModule,
+    ExpensesModule,
+    HeroSlidesModule,
+    BenefitsModule,
+    TestimonialsModule,
+    FaqModule,
+    SiteSectionsModule,
+    InstagramModule,
+    ContactModule,
+    ContactChannelsModule,
+    SizeGuidesModule,
+    NewsletterModule,
+    AbandonedCartsModule,
+    ReviewsModule,
+    PaymentsModule,
+    EmailModule,
+    ShippingModule,
+    DashboardModule,
+    TrackModule,
+    MarketingModule,
+    CatalogFeedModule,
+    CrmModule,
+    HealthModule,
+    PosModule,
+    CashModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
+})
+export class AppModule {}

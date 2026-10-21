@@ -1,0 +1,60 @@
+'use client';
+
+import { MessageCircle } from 'lucide-react';
+import { useSiteSettings, buildWhatsappUrl } from '@/hooks/useSiteSettings';
+import { trackMetaEvent } from '@/lib/metaPixel';
+import { valoresDe } from '../catalogQuery';
+
+const MENSAJE =
+  'Hola! Estoy mirando el catálogo y quiero ayuda para elegir una paleta.';
+
+/** Categorías donde el asesoramiento aporta: elegir es difícil y el precio es alto. */
+const CATEGORIAS_CON_ASESORAMIENTO = ['paletas'];
+
+interface Props {
+  selectedCategory: string;
+}
+
+/**
+ * Invitación a pedir asesoramiento, arriba del catálogo.
+ *
+ * Aparece solo en las categorías donde la elección es genuinamente difícil.
+ * Ofrecer asesoramiento para comprar un grip o unas pelotitas no ayuda a nadie
+ * y le quita peso al mensaje donde sí importa.
+ *
+ * Tampoco se dibuja si no hay un número de WhatsApp cargado en el backoffice,
+ * para no ofrecer un canal que no existe.
+ */
+export default function CatalogAdvisor({ selectedCategory }: Props) {
+  const settings = useSiteSettings();
+  const url = buildWhatsappUrl(settings.whatsapp || settings.phone, MENSAJE);
+
+  if (!valoresDe(selectedCategory).some((c) => CATEGORIAS_CON_ASESORAMIENTO.includes(c))) return null;
+  if (!url) return null;
+
+  return (
+    <div className="mb-5 rounded-2xl border border-[#B7D31A]/25 bg-gradient-to-r from-[#B7D31A]/[0.07] to-transparent px-4 py-4 sm:px-6 sm:py-5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+        <div className="flex flex-col gap-1">
+          <p className="text-sm sm:text-base font-bold text-fg">
+            ¿No sabés qué paleta elegir?
+          </p>
+          <p className="text-xs sm:text-sm text-fg-soft max-w-xl">
+            Te asesoramos según tu nivel, tu tipo de juego y tu presupuesto.
+          </p>
+        </div>
+
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackMetaEvent('Contact', { content_type: 'whatsapp_catalogo' })}
+          className="inline-flex flex-shrink-0 items-center justify-center gap-2 rounded-lg bg-[#B7D31A] px-5 py-2.5 text-xs font-bold uppercase tracking-wide text-[#050606] transition-colors hover:bg-[#CAE52E]"
+        >
+          <MessageCircle size={15} />
+          Hablar con un asesor
+        </a>
+      </div>
+    </div>
+  );
+}

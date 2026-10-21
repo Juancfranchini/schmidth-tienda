@@ -1,0 +1,81 @@
+﻿'use client';
+
+import { useRef } from 'react';
+import Link from 'next/link';
+import { ChevronLeft, ChevronRight, Truck } from 'lucide-react';
+import { Product } from '@/types';
+import { formatPrice, getDiscountPercent, getImageUrl } from '@/lib/utils';
+import { formatDiscountPercent, getInstallmentTerms } from '@/lib/productPricing';
+import PrecioTransferencia from '@/components/ui/PrecioTransferencia';
+import { useShippingRates } from '@/hooks/useShippingRates';
+import { useConfigCuotas } from '@/lib/cuotas';
+
+interface Props {
+  products: Product[];
+}
+
+export default function RelatedProducts({ products }: Props) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { freeShippingThreshold, isLoaded } = useShippingRates();
+  const cuotas = useConfigCuotas();
+
+  if (products.length === 0) return null;
+
+  return (
+    <section className="border-t border-line py-5 sm:py-8 md:py-10 bg-panel">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <h2 className="text-base sm:text-xl md:text-2xl font-semibold uppercase tracking-tight text-fg mb-3 sm:mb-6 md:mb-8">
+          PRODUCTOS RELACIONADOS
+        </h2>
+        <div className="relative">
+          <button onClick={() => scrollRef.current?.scrollBy({ left: -280, behavior: 'smooth' })}
+            className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-[#B7D31A]/30 flex items-center justify-center text-brand-fg hover:bg-[#B7D31A]/20 hover:border-[#B7D31A] transition-all hidden md:flex">
+            <ChevronLeft size={14} />
+          </button>
+          <div ref={scrollRef} className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 scrollbar-hide" style={{ scrollSnapType: 'x mandatory' }}>
+            {products.map((p) => {
+              const relMadeToOrder = p.isMadeToOrder === true;
+              const relDiscount = !relMadeToOrder && p.effectivePrice < p.price;
+              const discountPct = relDiscount ? getDiscountPercent(p.price, p.effectivePrice) : 0;
+              const displayPrice = relMadeToOrder ? p.price : p.effectivePrice;
+              const installments = relMadeToOrder ? null : getInstallmentTerms(p, cuotas);
+              const freeShipping = isLoaded && !relMadeToOrder && displayPrice >= freeShippingThreshold;
+              return (
+                <Link key={p.id} href={'/producto/' + p.slug}
+                  className="flex-none w-36 sm:w-44 md:w-52 bg-chip border border-[#B7D31A]/20 rounded-lg sm:rounded-xl overflow-hidden hover:border-[#B7D31A]/60 transition-all group relative"
+                  style={{ scrollSnapAlign: 'start' }}>
+                  <div className="aspect-square bg-page overflow-hidden">
+                    {p.images.length > 0 ? (
+                      <img src={getImageUrl(p.images[0], 600)} alt={p.name} className="w-full h-full object-contain p-2 sm:p-3 md:p-4 group-hover:scale-105 transition-transform" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <span className="text-3xl font-bold text-fg/[0.06]">{p.name.slice(0, 2).toUpperCase()}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-2 sm:p-3">
+                    <p className="text-[10px] text-fg-muted font-semibold uppercase tracking-wider">{p.brand?.name}</p>
+                    <p className="text-fg text-xs font-medium leading-snug mt-0.5 line-clamp-2">{p.name}</p>
+                    {relDiscount && <p className="text-fg-muted text-[10px] line-through mt-1.5">{formatPrice(p.price)}</p>}
+                    <p className="flex flex-wrap items-baseline gap-1.5 text-fg font-bold text-base">
+                      {formatPrice(displayPrice)}
+                      {relDiscount && <span className="text-brand-fg text-[10px]">{formatDiscountPercent(discountPct)}% OFF</span>}
+                    </p>
+                    {!relMadeToOrder && <PrecioTransferencia product={p} />}
+                    {installments && <p className="text-brand-fg text-[10px] mt-0.5">{installments.count} cuotas de {formatPrice(installments.amount)}</p>}
+                    {freeShipping && <p className="flex items-center gap-1 text-brand-fg text-[10px] font-bold mt-1"><Truck size={10} />Envío gratis</p>}
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[#B7D31A] to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                </Link>
+              );
+            })}
+          </div>
+          <button onClick={() => scrollRef.current?.scrollBy({ left: 280, behavior: 'smooth' })}
+            className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-chip border border-[#B7D31A]/30 flex items-center justify-center text-brand-fg hover:bg-[#B7D31A]/20 hover:border-[#B7D31A] transition-all hidden md:flex">
+            <ChevronRight size={14} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,74 @@
+'use client';
+
+import Link from 'next/link';
+import { ArrowRight, X } from 'lucide-react';
+import { useCartStore } from '@/store/cartStore';
+import { useShippingRates } from '@/hooks/useShippingRates';
+import { useCoupon } from '@/hooks/useCoupon';
+import CarritoItemRow from './CarritoItemRow';
+import CarritoSummary from './CarritoSummary';
+import CarritoEmpty from './CarritoEmpty';
+import BolsaRegaloOption from '@/components/cart/BolsaRegaloOption';
+import { useCargoBolsas } from '@/hooks/useBolsaRegalo';
+import { useCheckoutNavigation } from '@/components/auth/useCheckoutNavigation';
+
+function CartTitle({ count, onClear }: { count: number; onClear: () => void }) {
+  return (
+    <div className="flex items-center justify-between mb-8">
+      <h1 className="text-2xl font-black uppercase tracking-tight text-fg">Mi carrito ({count} {count === 1 ? 'producto' : 'productos'})</h1>
+      <button onClick={onClear} className="text-sm text-red-500 light:text-red-600 hover:text-red-400 light:hover:text-red-700 transition-colors flex items-center gap-1"><X size={14} /> Vaciar carrito</button>
+    </div>
+  );
+}
+
+export default function CarritoPage() {
+  const { items, removeItem, updateQuantity, clearCart, totalItems, totalPrice } = useCartStore();
+  const { flatRate, freeShippingThreshold } = useShippingRates();
+  const checkoutNavigation = useCheckoutNavigation();
+
+  const subtotal = totalPrice();
+  const coupon = useCoupon(subtotal);
+  // Estimación para mostrar en pantalla — el monto que se cobra de verdad lo
+  // recalcula el servidor al crear la orden (P1), esto nunca es la fuente de
+  // verdad.
+  const shippingCost = subtotal >= freeShippingThreshold ? 0 : flatRate;
+  const bolsas = useCargoBolsas();
+  const total = subtotal - coupon.discount + shippingCost + bolsas.total;
+
+  if (items.length === 0) {
+    return <CarritoEmpty />;
+  }
+
+  return (
+    <div className="min-h-screen bg-page">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        <CartTitle count={totalItems()} onClear={clearCart} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-3">
+            {items.map((item) => (
+              <CarritoItemRow key={item.product.id + '-' + (item.variantSku || '')} item={item} onRemove={removeItem} onUpdateQuantity={updateQuantity} />
+            ))}
+
+            <BolsaRegaloOption />
+
+            <Link href="/catalogo" className="flex items-center gap-2 text-sm font-semibold text-fg-muted hover:text-fg transition-colors pt-2">
+              <ArrowRight size={14} className="rotate-180" /> Seguir comprando
+            </Link>
+          </div>
+
+          <CarritoSummary
+            coupon={coupon}
+            items={items}
+            subtotal={subtotal}
+            flatRate={flatRate}
+            shippingCost={shippingCost}
+            freeShippingThreshold={freeShippingThreshold}
+            total={total}
+            onCheckout={checkoutNavigation.handleCheckout}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}

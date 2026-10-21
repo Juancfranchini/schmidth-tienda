@@ -1,0 +1,95 @@
+﻿// Punto de entrada de la app NestJS
+// Configura Swagger, CORS, validación global, Helmet
+// Para correr en dev: npm run start:dev
+// Docs disponibles en: http://localhost:4000/api/docs
+
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+import { Logger, ValidationPipe } from '@nestjs/common';
+import { PrismaExceptionFilter } from './common/filters/prisma-exception.filter';
+import { MARCA } from './config/marca';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import helmet from 'helmet';
+import { json, urlencoded } from 'express';
+import { AppModule } from './app.module';
+import { esOrigenPermitido } from './cors-origin';
+
+const logger = new Logger('CORS');
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Prefijo global de rutas  /api/...
+  app.setGlobalPrefix('api');
+
+  // Servir archivos estaticos de la carpeta uploads
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+    prefix: '/uploads/',
+  });
+
+  // Seguridad HTTP headers - F5: cross-origin para permitir imágenes desde Vercel
+  app.use(helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  }));
+
+  // Aumentar límite de body para imágenes base64 (50MB)
+  app.use(json({ limit: '50mb' }));
+  app.use(urlencoded({ extended: true, limit: '50mb' }));
+
+  // CORS  acepta localhost en dev y dominios de Vercel + URLs configuradas en producción
+  const isDev = process.env.NODE_ENV !== 'production';
+  app.enableCors({
+    origin: isDev
+      ? true
+      : (origin, callback) => {
+          const permitido = esOrigenPermitido(origin, {
+            frontendUrl: process.env.FRONTEND_URL,
+            backofficeUrl: process.env.BACKOFFICE_URL,
+          });
+
+          if (permitido) return callback(null, true);
+
+          // callback(new Error(...)) hace que Nest devuelva 500 en vez de
+          // rechazar el CORS: el navegador ve "Failed to fetch" pero el
+          // request real vuelve como error de servidor, no como bloqueo de
+          // origen. callback(null, false) rechaza limpio — misma protección,
+          // sin fingir una falla del backend que no existe.
+          logger.warn(`Origen no permitido: ${origin}. Revisar FRONTEND_URL/BACKOFFICE_URL en las variables de entorno.`);
+          callback(null, false);
+        },
+    credentials: true,
+  });
+
+  // Filtro global de errores de Prisma (R4)
+  app.useGlobalFilters(new PrismaExceptionFilter());
+
+  // Validación global de DTOs
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  // Swagger docs  /api/docs. En producción queda apagado: es el mapa completo de la API
+  // para cualquiera. Se prende solo con SWAGGER_ENABLED=true.
+  const conSwagger = isDev || process.env.SWAGGER_ENABLED === 'true';
+  if (conSwagger) {
+    const config = new DocumentBuilder()
+      .setTitle(MARCA.nombre + ' API')
+      .setDescription('API REST de la tienda ' + MARCA.nombre)
+      .setVersion('1.0')
+      .addBearerAuth()
+      .build();
+    SwaggerModule.setup('api/docs', app, SwaggerModule.createDocument(app, config));
+  }
+
+  const port = process.env.PORT || 4000;
+  await app.listen(port);
+  console.log(`Backend corriendo en http://localhost:${port}`);
+  if (conSwagger) console.log(`Swagger docs: http://localhost:${port}/api/docs`);
+}
+
+bootstrap();

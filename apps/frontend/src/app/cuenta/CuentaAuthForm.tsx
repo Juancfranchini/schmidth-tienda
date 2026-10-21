@@ -1,0 +1,97 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import Link from 'next/link';
+import { login, register as registerUser } from '@/lib/api';
+import BrandLogo from '@/components/ui/BrandLogo';
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton';
+import { User } from '@/types';
+import CuentaLoginForm from './CuentaLoginForm';
+import CuentaRegisterForm from './CuentaRegisterForm';
+import { loginSchema, registerSchema, LoginFormData, RegisterFormData } from './authFormSchemas';
+import { MARCA } from '@/config/marca';
+
+interface Props {
+  onAuth: (user: User, token: string) => void;
+  initialError?: string;
+  embedded?: boolean;
+  returnTo?: string;
+}
+
+function apiErrorMessage(error: unknown, fallback: string): string {
+  if (!axios.isAxiosError<{ message?: string }>(error)) return fallback;
+  return error.response?.data?.message || fallback;
+}
+
+export default function CuentaAuthForm({ onAuth, initialError = '', embedded = false, returnTo = '/cuenta' }: Props) {
+  const [isRegister, setIsRegister] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [apiError, setApiError] = useState(initialError);
+
+  const loginForm = useForm<LoginFormData>({ resolver: zodResolver(loginSchema) });
+  const registerForm = useForm<RegisterFormData>({ resolver: zodResolver(registerSchema), defaultValues: { acceptTerms: false, acceptMarketing: true } });
+
+  useEffect(() => {
+    if (initialError) setApiError(initialError);
+  }, [initialError]);
+
+  const onLogin = async (data: LoginFormData) => {
+    setApiError('');
+    try { const result = await login(data); onAuth(result.user, result.token); }
+    catch (error: unknown) { setApiError(apiErrorMessage(error, 'Email o contraseña incorrectos')); }
+  };
+
+  const onRegister = async (data: RegisterFormData) => {
+    setApiError('');
+    try { const result = await registerUser({ name: data.name, email: data.email, password: data.password, acceptTerms: data.acceptTerms, acceptMarketing: data.acceptMarketing }); onAuth(result.user, result.token); }
+    catch (error: unknown) { setApiError(apiErrorMessage(error, 'No se pudo crear la cuenta.')); }
+  };
+
+  return (
+    <div className={embedded ? 'w-full' : 'min-h-screen bg-page flex items-center justify-center py-12'}>
+      <div className={embedded ? 'w-full' : 'w-full max-w-md mx-4'}>
+        <div className="flex rounded-xl overflow-hidden border border-chip mb-6">
+          <button onClick={() => { setIsRegister(false); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (!isRegister ? 'bg-[#B7D31A] text-[#050606]' : 'bg-transparent text-fg-muted hover:text-fg')}>Iniciar sesión</button>
+          <button onClick={() => { setIsRegister(true); setApiError(''); }} className={'flex-1 py-3 text-sm font-bold transition-colors ' + (isRegister ? 'bg-[#B7D31A] text-[#050606]' : 'bg-transparent text-fg-muted hover:text-fg')}>Crear cuenta</button>
+        </div>
+
+        <div className={'bg-card rounded-2xl border border-[#B7D31A]/20 ' + (embedded ? 'p-6 sm:p-8' : 'p-8')}>
+          <div className="text-center mb-6">
+            <Link href="/" aria-label={MARCA.nombre} className="inline-block">
+              <BrandLogo size="lg" />
+            </Link>
+            <h1 className="text-xl font-black mt-4 text-fg">{isRegister ? 'Crear cuenta' : 'Bienvenido de vuelta'}</h1>
+            <p className="text-fg-muted text-sm mt-1">{isRegister ? 'Completa tus datos para registrarte' : 'Ingresa para acceder a tu cuenta'}</p>
+          </div>
+
+          {apiError && <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 mb-4"><p className="text-red-500 light:text-red-600 text-sm">{apiError}</p></div>}
+
+          <GoogleAuthButton returnTo={returnTo} />
+          <div className="my-5 flex items-center gap-3" aria-hidden="true">
+            <span className="h-px flex-1 bg-[#252A2C] light:bg-[#E4E4DD]" />
+            <span className="text-xs uppercase tracking-wider text-fg-muted">o con email</span>
+            <span className="h-px flex-1 bg-[#252A2C] light:bg-[#E4E4DD]" />
+          </div>
+
+          {!isRegister && (
+            <CuentaLoginForm form={loginForm} onSubmit={onLogin} showPassword={showPassword} onToggleShowPassword={() => setShowPassword(!showPassword)} />
+          )}
+
+          {isRegister && (
+            <CuentaRegisterForm form={registerForm} onSubmit={onRegister} showPassword={showPassword} onToggleShowPassword={() => setShowPassword(!showPassword)} />
+          )}
+
+          <div className="mt-5 pt-5 border-t border-line text-center">
+            <p className="text-sm text-fg-muted">
+              {isRegister ? 'Ya tenes cuenta? ' : 'No tenes cuenta? '}
+              <button onClick={() => { setIsRegister(!isRegister); setApiError(''); }} className="text-brand-fg font-bold hover:text-[#c8e81f] light:hover:text-[#4B5A00] transition-colors">{isRegister ? 'Inicia sesión' : 'Registrate gratis'}</button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

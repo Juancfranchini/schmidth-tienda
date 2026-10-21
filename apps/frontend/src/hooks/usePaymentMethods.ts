@@ -1,0 +1,68 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+
+export interface PaymentMethodConfig {
+  active?: boolean;
+  logo?: string;
+}
+
+interface PaymentMethodsData {
+  mercadopago?: PaymentMethodConfig;
+  transferencia?: PaymentMethodConfig;
+  visa?: PaymentMethodConfig;
+  mastercard?: PaymentMethodConfig;
+  amex?: PaymentMethodConfig;
+  ca?: PaymentMethodConfig;
+  correo_argentino?: PaymentMethodConfig;
+  oca?: PaymentMethodConfig;
+  andreani?: PaymentMethodConfig;
+}
+
+function parsePaymentMethods(response: unknown): PaymentMethodsData {
+  if (!response || typeof response !== 'object') return {};
+  const wrapped = response as { data?: unknown };
+  const value = wrapped.data ?? response;
+  return value && typeof value === 'object' ? value as PaymentMethodsData : {};
+}
+
+// Un solo pedido por carga de página: lo usan todas las tarjetas del
+// catálogo (precio con transferencia) y sin esto cada una pedía lo mismo.
+let pedido: Promise<PaymentMethodsData> | null = null;
+function cargarMediosDePago(): Promise<PaymentMethodsData> {
+  pedido ??= fetch(API_URL + '/site-sections/payment_methods')
+    .then((r) => r.json())
+    .then((res: unknown) => parsePaymentMethods(res))
+    .catch(() => {
+      pedido = null;
+      return {};
+    });
+  return pedido;
+}
+
+export function usePaymentMethods() {
+  const [data, setData] = useState<PaymentMethodsData | null>(null);
+
+  useEffect(() => {
+    let vigente = true;
+    cargarMediosDePago().then((medios) => { if (vigente) setData(medios); });
+    return () => { vigente = false; };
+  }, []);
+
+  return {
+    mercadopago: data?.mercadopago || { active: true },
+    // El backend ya resuelve si la transferencia está disponible (variable
+    // ENABLE_BANK_TRANSFER + interruptor del backoffice) y nunca manda acá los
+    // datos de la cuenta: esos llegan solo con el pedido creado.
+    transferencia: { ...(data?.transferencia || {}), active: data?.transferencia?.active === true },
+    visa: { ...(data?.visa || {}), active: false },
+    mastercard: { ...(data?.mastercard || {}), active: false },
+    amex: { ...(data?.amex || {}), active: false },
+    ca: data?.ca || data?.correo_argentino || { active: true },
+    oca: data?.oca || { active: true },
+    andreani: data?.andreani || { active: true },
+    isLoaded: data !== null,
+  };
+}

@@ -1,0 +1,52 @@
+﻿'use client';
+
+import { useState } from 'react';
+import { MessageCircle, Plus, X } from 'lucide-react';
+import { FAQ } from '@/types';
+import { WHATSAPP_URL } from '@/lib/marcaLinks';
+
+interface Props {
+  faqs: FAQ[];
+}
+
+export default function FaqSection({ faqs }: Props) {
+  const [openFaqs, setOpenFaqs] = useState<Record<string, boolean>>({});
+
+  const toggleFaq = (id: string) => {
+    setOpenFaqs(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  if (faqs.length === 0) return null;
+
+  return (
+    <section className="max-w-7xl mx-auto px-6 lg:px-8 py-14">
+      <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
+        <h2 className="text-2xl md:text-3xl font-semibold text-fg">Preguntas Frecuentes</h2>
+        <p className="text-fg-soft text-sm">
+          ¿No encontraste lo que buscabas?{' '}
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-brand-fg font-semibold hover:underline inline-flex items-center gap-1">
+            Escríbenos por WhatsApp <MessageCircle size={14} />
+          </a>
+        </p>
+      </div>
+      <div className="space-y-3">
+        {faqs.map((faq) => {
+          const open = openFaqs[faq.id] || false;
+          return (
+            <div key={faq.id} className="bg-ocean border border-line rounded-2xl overflow-hidden">
+              <button onClick={() => toggleFaq(faq.id)} className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left">
+                <span className="text-fg font-semibold text-sm">{faq.question}</span>
+                <div className={'flex-shrink-0 transition-transform duration-300 ' + (open ? 'rotate-180' : '')}>
+                  {open ? <X size={18} className="text-brand-fg" /> : <Plus size={18} className="text-brand-fg" />}
+                </div>
+              </button>
+              <div className={'overflow-hidden transition-all duration-300 ' + (open ? 'max-h-96' : 'max-h-0')}>
+                <div className="px-6 pb-5"><p className="text-fg-soft text-sm leading-relaxed">{faq.answer}</p></div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

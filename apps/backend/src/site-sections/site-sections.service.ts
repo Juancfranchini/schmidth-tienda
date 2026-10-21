@@ -1,0 +1,194 @@
+﻿import { Injectable, Logger } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import * as fs from 'fs';
+import * as path from 'path';
+import { CUOTAS_POR_DEFECTO } from '../payments/cuotas';
+import { validarConfigBolsa } from '../orders/bolsas-regalo';
+import { MARCA } from '../config/marca';
+
+export type SectionKey = 'categories' | 'meta_pixel' | 'hero' | 'benefits' | 'promo_destacada' | 'featured_products' | 'banners' | 'about' | 'testimonials' | 'brands' | 'instagram' | 'final_message' | 'branding' | 'settings' | 'trust_bottom' | 'politica_devolución' | 'envíos' | 'medios_pago' | 'terminos' | 'privacidad' | 'contacto' | 'talles' | 'reviews_info' | 'payment_methods' | 'email_settings' | 'shipping_rates' | 'formatos_paleta' | 'cuentas_prueba' | 'cuotas' | 'bolsa_regalo';
+
+@Injectable()
+export class SiteSectionsService {
+  private readonly logger = new Logger(SiteSectionsService.name);
+
+  constructor(private prisma: PrismaService) {}
+
+  async findOne(key: SectionKey) {
+    const section = await this.prisma.siteSection.findUnique({ where: { key } });
+    return section ?? { key, data: this.getDefault(key), active: true };
+  }
+
+  async upsert(key: SectionKey, dto: { data: Record<string, unknown>; active?: boolean }) {
+    if (key === 'bolsa_regalo') dto = { ...dto, data: { ...validarConfigBolsa(dto.data ?? {}) } };
+    if (key === 'branding') {
+      await this.removeOldImages(dto.data);
+    }
+
+    const seccion = await this.prisma.siteSection.upsert({
+      where: { key },
+      update: { data: dto.data as Prisma.InputJsonValue, active: dto.active ?? true },
+      create: { key, data: dto.data as Prisma.InputJsonValue, active: dto.active ?? true },
+    });
+
+    await this.revalidarHome();
+    return seccion;
+  }
+
+  /**
+   * Avisa a la tienda que borre el caché de la portada.
+   *
+   * La home se genera y se cachea, así que apagar una sección acá no se veía
+   * hasta que venciera ese plazo. El visitante no puede forzarlo refrescando:
+   * el caché es del servidor. El backoffice decía "los cambios se aplican al
+   * instante" y no era cierto.
+   *
+   * Si falta la configuración no se corta el guardado: la sección ya quedó
+   * guardada y la portada se va a actualizar igual cuando venza su plazo.
+   */
+  private async revalidarHome(): Promise<void> {
+    const secret = process.env.REVALIDATE_SECRET;
+    const frontendUrl = process.env.FRONTEND_URL;
+
+    if (!secret || !frontendUrl) {
+      this.logger.warn(
+        'Sin REVALIDATE_SECRET o FRONTEND_URL: el cambio se verá en la tienda recién cuando venza su caché.',
+      );
+      return;
+    }
+
+    try {
+      const respuesta = await fetch(frontendUrl.replace(/\/+$/, '') + '/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-revalidate-secret': secret },
+        body: JSON.stringify({ path: '/' }),
+        signal: AbortSignal.timeout(5000),
+      });
+      if (!respuesta.ok) {
+        this.logger.warn(`La tienda rechazó la revalidación (HTTP ${respuesta.status}).`);
+      }
+    } catch (err) {
+      this.logger.warn(`No se pudo avisar a la tienda para refrescar la portada: ${err}`);
+    }
+  }
+
+  private async removeOldImages(newData: Record<string, unknown>) {
+    try {
+      const existing = await this.prisma.siteSection.findUnique({ where: { key: 'branding' } });
+      if (!existing?.data) return;
+
+      const oldData = existing.data as Record<string, unknown>;
+      const uploadsDir = path.join(__dirname, '..', '..', 'uploads');
+
+      const imageKeys = ['logoHeader', 'logoFooter', 'isotipo', 'logoMobile'];
+
+      for (const key of imageKeys) {
+        const oldUrl = oldData[key] as string;
+        const newUrl = newData[key] as string;
+
+        if (oldUrl && oldUrl !== newUrl && oldUrl.startsWith('/uploads/')) {
+          const filename = oldUrl.replace('/uploads/', '');
+          const filepath = path.join(uploadsDir, filename);
+
+          try {
+            if (fs.existsSync(filepath)) {
+              fs.unlinkSync(filepath);
+              console.log('Imagen eliminada:', filename);
+            }
+          } catch (err) {
+            console.error('Error al eliminar imagen:', filename, err);
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Error en removeOldImages:', err);
+    }
+  }
+
+  private getDefault(key: SectionKey): Record<string, unknown> {
+    const defaults: Partial<Record<SectionKey, Record<string, unknown>>> = {
+      hero: {},
+      benefits: {},
+      promo_destacada: {},
+      featured_products: {},
+      banners: {},
+      testimonials: {},
+      brands: {},
+      categories: { title: 'Categorias', description: 'Encontra lo que necesitas para tu mejor version en la cancha.' },
+      cuotas: { ...CUOTAS_POR_DEFECTO },
+      meta_pixel: {
+        pixelId: '',
+        testEventCode: '',
+        events: {
+          pageView: true,
+          viewContent: true,
+          addToCart: true,
+          initiateCheckout: true,
+          purchase: true,
+          contact: true,
+        },
+      },
+      'politica_devolución': { title: 'Politica de Devolución', content: '' },
+      'envíos': { title: 'Envíos', sections: [{ title: 'Tiempos y costos', content: '' }] },
+      'medios_pago': { title: 'Medios de Pago', content: '' },
+      'terminos': { title: 'Terminos y Condiciones', content: '' },
+      'privacidad': { title: 'Politica de Privacidad', content: '' },
+      'contacto': { chip: 'ESTAMOS PARA AYUDARTE', title: 'Contactanos', description: 'Tenes dudas sobre nuestros productos, envíos o pagos? Nuestro equipo esta para ayudarte.', heroImage: '', mapUrl: '', newsletterTitle: 'ENTERATE DE LAS NOVEDADES', newsletterText: 'Suscribite y recibi ofertas exclusivas y lanzamientos.', heroActive: true, benefitsActive: true, channelsActive: true, faqActive: true, mapActive: true, newsletterActive: true },
+      'talles': { title: 'Guia de Talles', content: '' },
+      'payment_methods': { mercadopago: { active: true, publicKey: '', accessToken: '' }, transferencia: { active: false, cbu: '', alias: '', titular: '', banco: '' }, tarjeta: { active: false }, correo_argentino: { active: true, usuario: '', password: '', apiKey: '', agreement: '', remitente: { nombre: '', calle: '', número: '', ciudad: '', códigoPostal: '', provincia: '', teléfono: '' } }, oca: { active: false, usuario: '', password: '' }, andreani: { active: false, usuario: '', password: '' } },
+      'email_settings': {
+        resendApiKey: '',
+        fromEmail: MARCA.email.remitente,
+        adminEmail: MARCA.email.avisos,
+        notifications: {
+          newOrder: true,
+          shippedOrder: true,
+          contactForm: true
+        }
+      },
+      // Imagen por formato de paleta, para mostrar al lado del texto en el
+      // catálogo. Vacío a propósito: sin imagen cargada no se dibuja nada.
+      'formatos_paleta': { Diamante: '', Lagrima: '', Redondo: '', Hibrido: '' },
+      // Mails de prueba (ver common/test-accounts.ts). Privada: no se sirve a la tienda.
+      'cuentas_prueba': { emails: [] },
+      'reviews_info': { content: 'Las opiniones son realizadas por clientes verificados que compraron el producto. El promedio se calcula en base a todas las resenas aprobadas.' },
+      about: {
+        title: 'Somos ' + MARCA.nombre,
+        description: MARCA.descripcion,
+        image: null,
+        benefits: [],
+      },
+      instagram: {
+        title: 'Seguinos en Instagram',
+        username: MARCA.redes.instagramUsuario,
+        buttonText: 'Ver perfil',
+        buttonUrl: MARCA.redes.instagram,
+      },
+      settings: {
+        storeName: MARCA.nombre,
+        contactEmail: MARCA.email.contacto,
+        phone: '',
+        address: '',
+        whatsapp: MARCA.whatsapp,
+      },
+      branding: {
+        logoHeader: null,
+        logoFooter: null,
+        isotipo: null,
+        logoMobile: null,
+      },
+      trust_bottom: { items: [], active: true },
+      shipping_rates: { flatRate: 4500, freeShippingThreshold: 100000, flex: { activo: true, zona1: 4500, zona2: 7000, zona3: 9000 } },
+      final_message: {
+        title: 'Un mensaje para vos',
+        text: 'Gracias por elegir ' + MARCA.nombre + '.',
+        buttonText: 'Ver catálogo',
+        buttonUrl: '/catálogo',
+      },
+    };
+    return defaults[key] ?? {};
+  }
+}
+
+

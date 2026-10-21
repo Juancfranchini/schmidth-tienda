@@ -1,0 +1,33 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "schmidt-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:preview", "--prefix", "apps/frontend"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "schmidt-frontend-prodapi",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:preview", "--prefix", "apps/frontend"],
+      "env": { "NEXT_PUBLIC_API_URL": "http://localhost:4000/api" },
+      "port": 3000
+    },
+    {
+      "name": "schmidt-frontend-build",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "apps/frontend"],
+      "env": { "NEXT_PUBLIC_API_URL": "http://localhost:4000/api" },
+      "port": 3000
+    },
+    {
+      "name": "schmidt-backoffice",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "apps/backoffice"],
+      "port": 3001,
+      "autoPort": true
+    }
+  ]
+}

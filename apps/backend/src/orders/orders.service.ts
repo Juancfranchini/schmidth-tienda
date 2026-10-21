@@ -1,0 +1,388 @@
+﻿import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { BadRequestException } from '@nestjs/common';
+import { EmailService } from '../email/email.service';
+import { MARCA } from '../config/marca';
+import { PricingService, ResolvedItem } from '../pricing/pricing.service';
+import { CouponsService } from '../coupons/coupons.service';
+import { AbandonedCartsService } from '../abandoned-carts/abandoned-carts.service';
+import { CreateOrderDto } from './dto/create-order.dto';
+import { OrderStatus } from '@prisma/client';
+import { InventoryService } from '../inventory/inventory.service';
+import { informarTransferenciaPagadaAMeta } from '../payments/payments.meta';
+import { pedidoSinDatosPersonales } from './orders.public-view';
+import { esCuentaDePrueba } from '../common/test-accounts';
+import { datosAlConfirmarPago } from './orders.confirm-payment';
+import { avisarAlCliente, queAvisar } from './orders.status-emails';
+import { etiquetaFlex } from '../shipping/envio-flex';
+import { cargoDeBolsas, CargoBolsas, leerConfigBolsa, NOMBRE_BOLSA, notasDeBolsas } from './bolsas-regalo';
+import { direccionDeSucursal, entregaDe, entregaEnNotas } from './entrega';
+import { ClienteMeta } from '../common/meta/meta-cliente';
+import { esPedidoDePruebaDeMeta } from '../common/meta/meta-destino';
+import { exigirTransferencia } from '../payments/transferencia';
+
+interface SalesLinkContext {
+  id: string;
+  channel: import('@prisma/client').SalesChannel;
+  branchId: string | null;
+  sellerId: string;
+  items: unknown;
+}
+
+@Injectable()
+export class OrdersService {
+  constructor(
+    private prisma: PrismaService,
+    private emailService: EmailService,
+    private pricing: PricingService,
+    private coupons: CouponsService,
+    private abandonedCarts: AbandonedCartsService,
+    private inventory: InventoryService = new InventoryService(prisma),
+  ) {}
+
+  async findAll() {
+    const orders = await this.prisma.order.findMany({
+      include: {
+        items: { include: { product: true, variant: true } },
+        user: { select: { id: true, name: true, email: true } },
+        seller: { select: { id: true, name: true } },
+        branch: { select: { id: true, name: true } },
+        payments: { orderBy: { receivedAt: 'asc' } },
+        returns: { include: { items: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return orders.map((order) => {
+      let buyerInfo: any = {};
+      try {
+        buyerInfo = order.notes ? JSON.parse(order.notes) : {};
+      } catch {
+        console.warn('No se pudo parsear notes de la orden ' + order.number);
+      }
+      return {
+        ...order,
+        buyerName: buyerInfo.buyerName || order.user?.name || null,
+        buyerEmail: buyerInfo.buyerEmail || order.user?.email || null,
+        buyerPhone: buyerInfo.buyerPhone || null,
+        paymentMethod: buyerInfo.paymentMethod || null,
+        bolsasRegalo: Number(buyerInfo.bolsasRegalo) || 0,
+      };
+    });
+  }
+
+  findByUser(userId: string) {
+    return this.prisma.order.findMany({
+      where: { userId },
+      include: { items: { include: { product: true, variant: true } } },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findOne(id: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { id },
+      include: {
+        items: { include: { product: true, variant: true } },
+        user: { select: { id: true, name: true, email: true } },
+        seller: { select: { id: true, name: true } },
+        branch: true,
+        payments: { orderBy: { receivedAt: 'asc' } },
+        returns: { include: { items: true } },
+        shipments: true,
+      },
+    });
+    if (!order) throw new NotFoundException('Pedido no encontrado');
+    return order;
+  }
+
+  async trackByNumber(number: string, email?: string, phone?: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { number },
+      include: {
+        items: { include: { product: true, variant: true } },
+        user: { select: { id: true, name: true, email: true } },
+      },
+    });
+    if (!order) throw new NotFoundException('Pedido no encontrado. Verifica el número de orden.');
+
+    if (email || phone) {
+      let buyerInfo: any = {};
+      try {
+        buyerInfo = order.notes ? JSON.parse(order.notes) : {};
+      } catch {
+        console.warn('No se pudo parsear notes de la orden ' + order.number);
+      }
+
+      if (email) {
+        const orderEmail = buyerInfo.buyerEmail?.toLowerCase();
+        const userEmail = order.user?.email?.toLowerCase();
+        if (orderEmail !== email.toLowerCase() && userEmail !== email.toLowerCase()) {
+          throw new NotFoundException('El email no coincide con el pedido.');
+        }
+      }
+      if (phone && buyerInfo.buyerPhone !== phone) {
+        throw new NotFoundException('El teléfono no coincide con el pedido.');
+      }
+    }
+
+    // Sin email ni teléfono que lo confirmen, solo lo no personal: estado,
+    // montos e ítems (lo que necesita la pantalla de vuelta de Mercado Pago).
+    // Antes devolvía nombre, email, teléfono y domicilio a cualquiera con el
+    // número, y los de transferencia (SCH-<hora>) y Punto de Venta
+    // (POS-<hora>) se pueden adivinar recorriendo horarios.
+    if (!email && !phone) return pedidoSinDatosPersonales(order);
+
+    const { userId, user, notes, ...rest } = order as any;
+    let buyerInfo: any = {};
+    try {
+      buyerInfo = notes ? JSON.parse(notes) : {};
+    } catch {
+      console.warn('No se pudo parsear notes de una orden');
+    }
+
+    return {
+      ...rest,
+      buyerEmail: buyerInfo.buyerEmail || user?.email || null,
+      buyerPhone: buyerInfo.buyerPhone || null,
+      buyerName: buyerInfo.buyerName || user?.name || null,
+      hasAccount: !!userId,
+    };
+  }
+
+  async create(dto: CreateOrderDto, userId?: string, cliente?: ClienteMeta) {
+    const datosTransferencia = await exigirTransferencia(this.prisma, userId, dto.buyerEmail);
+    const number = MARCA.prefijoPedido + '-' + Date.now();
+    const salesLink = await this.resolveSalesLink(dto.salesLinkToken);
+    const requestedItems = salesLink
+      ? (salesLink.items as unknown as {
+          productId: string;
+          variantId?: string;
+          quantity: number;
+        }[])
+      : dto.items;
+
+    // S3 / F6 - Precios desde la base y verificación de stock. Este camino es
+    // siempre transferencia: cada producto sale a su precio de transferencia,
+    // el mismo que muestra la tienda.
+    const resolvedItems = await this.pricing.resolveItems(
+      requestedItems.map((item) => ({
+        productId: item.productId,
+        variantId: item.variantId,
+        quantity: item.quantity,
+      })),
+      { porTransferencia: true },
+    );
+
+    const subtotal = resolvedItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    // P1 — el envío sale siempre de la tarifa configurada, nunca de lo que
+    // mande el navegador.
+    const shipping = await this.pricing.calculateShipping(subtotal, dto.carrier, dto.city);
+
+    // P2 — el cupón se valida y se cobra acá, no en el carrito. Si el código
+    // no existe, está vencido, sin usos o no llega al mínimo, la orden falla
+    // en vez de aplicar un descuento fantasma.
+    let discount = 0;
+    let coupon: Awaited<ReturnType<CouponsService['validate']>> | null = null;
+    if (dto.couponCode) {
+      coupon = await this.coupons.validate(dto.couponCode, subtotal);
+      discount = this.coupons.calculateDiscount(coupon, subtotal);
+    }
+
+    const bolsas = cargoDeBolsas(dto.bolsasRegalo, resolvedItems, await leerConfigBolsa(this.prisma));
+    const total = subtotal + shipping - discount + bolsas.total;
+
+    const buyerInfo = {
+      buyerEmail: dto.buyerEmail,
+      buyerPhone: dto.buyerPhone,
+      buyerName: dto.buyerName,
+      paymentMethod: dto.paymentMethod,
+      shippingCarrier: dto.carrier || 'correo_argentino',
+      ...entregaEnNotas(entregaDe(dto.carrier, dto.modalidad, dto.sucursal)),
+      ...notasDeBolsas(bolsas),
+      // Para informar la compra a Meta cuando la tienda confirme la transferencia.
+      ...(cliente ? { metaCliente: cliente } : {}),
+    };
+
+    const order = await this.persistOnlineOrder({
+      dto,
+      userId,
+      number,
+      salesLink,
+      resolvedItems,
+      subtotal,
+      total,
+      shipping,
+      discount,
+      buyerInfo,
+      isTest: (await this.esDePrueba(dto.buyerEmail, userId)) || (await esPedidoDePruebaDeMeta(this.prisma, cliente)),
+    });
+
+    // Se consume el uso recién con la orden ya creada — si algo de arriba
+    // falla, el cupón no se gasta por una compra que no se concretó.
+    if (coupon) {
+      this.coupons
+        .incrementUsage(coupon.id)
+        .catch((err) => console.error('Error incrementando uso de cupón:', err));
+    }
+
+    // Si esta persona tenía un carrito abandonado registrado, queda marcado
+    // como recuperado: es lo que permite medir cuántos terminan en venta.
+    this.abandonedCarts.markRecovered([dto.buyerEmail, order.user?.email], number);
+
+    this.avisarTransferencia(order, { address: dto.address, total, bolsas, datos: datosTransferencia, comprador: buyerInfo });
+
+    // Los datos de la cuenta van solo a quien acaba de hacer el pedido.
+    return { ...order, datosTransferencia };
+  }
+
+  /** A la tienda: hay un pedido por transferencia. Al cliente: cómo pagar y que mande el comprobante. */
+  private avisarTransferencia(
+    order: { number: string; items: { quantity: number; price: number; product: { name: string } }[] },
+    p: { address: string; total: number; bolsas: CargoBolsas; datos: Awaited<ReturnType<typeof exigirTransferencia>>; comprador: { buyerName: string; buyerEmail: string; buyerPhone: string } },
+  ) {
+    const itemsForEmail = order.items.map((item) => ({ name: item.product.name, quantity: item.quantity, price: item.price }));
+    if (p.bolsas.cantidad > 0) itemsForEmail.push({ name: NOMBRE_BOLSA, quantity: p.bolsas.cantidad, price: p.bolsas.precio });
+    const { buyerName, buyerEmail, buyerPhone } = p.comprador;
+    this.emailService
+      .sendTransferOrderNotification({ orderNumber: order.number, customerName: buyerName, customerEmail: buyerEmail, customerPhone: buyerPhone, address: p.address, items: itemsForEmail, total: p.total })
+      .catch((err) => console.error('Error enviando aviso de transferencia:', err.message));
+    if (!buyerEmail) return;
+    this.emailService
+      .sendTransferInstructions(buyerEmail, { orderNumber: order.number, customerName: buyerName, items: itemsForEmail, total: p.total, datos: p.datos })
+      .catch((err) => console.error('Error enviando las instrucciones de transferencia:', err.message));
+  }
+
+  private persistOnlineOrder(input: {
+    dto: CreateOrderDto;
+    userId?: string;
+    number: string;
+    salesLink: SalesLinkContext | null;
+    resolvedItems: ResolvedItem[];
+    subtotal: number;
+    total: number;
+    shipping: number;
+    discount: number;
+    buyerInfo: Record<string, unknown>;
+    isTest: boolean;
+  }) {
+    return this.prisma.$transaction(async (tx) => {
+      const { dto, userId, number, salesLink, resolvedItems } = input;
+      const created = await tx.order.create({
+        data: {
+          number,
+          userId: userId || null,
+          channel: salesLink?.channel ?? 'ONLINE',
+          branchId: salesLink?.branchId,
+          sellerId: salesLink?.sellerId,
+          createdById: salesLink?.sellerId,
+          inventoryStatus: resolvedItems.some((item) => !item.isMadeToOrder) ? 'DEDUCTED' : 'NONE',
+          soldAt: new Date(),
+          address: direccionDelPedido(dto),
+          subtotal: input.subtotal,
+          total: input.total,
+          shipping: input.shipping,
+          discount: input.discount,
+          couponCode: dto.couponCode,
+          notes: JSON.stringify(input.buyerInfo),
+          isTest: input.isTest,
+          items: {
+            create: resolvedItems.map((item) => ({
+              productId: item.productId,
+              variantId: item.variantId,
+              quantity: item.quantity,
+              price: item.price,
+            })),
+          },
+        },
+      });
+      await this.inventory.deductWithClient(tx, resolvedItems, {
+        orderId: created.id,
+        branchId: salesLink?.branchId || undefined,
+        userId,
+        reason: `Pedido online ${number}`,
+      });
+      if (salesLink) {
+        await tx.salesCheckoutLink.update({
+          where: { id: salesLink.id },
+          data: { status: 'CHECKOUT', orderId: created.id },
+        });
+      }
+      return tx.order.findUniqueOrThrow({
+        where: { id: created.id },
+        include: {
+          items: { include: { product: true, variant: true } },
+          user: { select: { id: true, name: true, email: true } },
+        },
+      });
+    });
+  }
+
+  /** Compra hecha con un mail de prueba, sea el del checkout o el de la cuenta. */
+  private async esDePrueba(buyerEmail: string | undefined, userId?: string): Promise<boolean> {
+    const cuenta = userId
+      ? await this.prisma.user.findUnique({ where: { id: userId }, select: { email: true } })
+      : null;
+    return esCuentaDePrueba(this.prisma, [buyerEmail, cuenta?.email]);
+  }
+
+  private async resolveSalesLink(token?: string): Promise<SalesLinkContext | null> {
+    if (!token) return null;
+    const link = await this.prisma.salesCheckoutLink.findUnique({ where: { token } });
+    if (!link) throw new NotFoundException('El enlace de venta no existe');
+    if (
+      link.orderId ||
+      link.expiresAt < new Date() ||
+      !['OPEN', 'CHECKOUT'].includes(link.status)
+    ) {
+      throw new BadRequestException('Este enlace ya fue usado o venció');
+    }
+    return link;
+  }
+
+  async updateStatus(
+    id: string,
+    status: OrderStatus,
+    trackingNumber?: string,
+    trackingUrl?: string,
+  ) {
+    const anterior = await this.findOne(id);
+
+    if (status === OrderStatus.CANCELLED) {
+      throw new BadRequestException(
+        'Usá la cancelación del Punto de Venta para restituir stock, cobros y caja de forma auditable',
+      );
+    }
+
+    const data: any = { status };
+    if (trackingNumber) data.trackingNumber = trackingNumber;
+    if (trackingUrl) data.trackingUrl = trackingUrl;
+
+    // Seguimiento: solo http(s); va como link en el mail del cliente.
+    if (trackingUrl && !/^https?:\/\//i.test(trackingUrl)) {
+      throw new BadRequestException('El link de seguimiento tiene que empezar con http:// o https://');
+    }
+    const aviso = queAvisar(anterior, { status, trackingNumber });
+    // Marcar enviado un pedido sin cobrar es "pagado y enviado": el cobro también se registra.
+    const confirmacion = aviso.pasoAPagado ? datosAlConfirmarPago(anterior) : null;
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const pedido = await tx.order.update({ where: { id }, data: { ...data, ...(confirmacion?.pedido ?? {}) } });
+      if (confirmacion?.cobro) await tx.payment.create({ data: confirmacion.cobro });
+      return pedido;
+    });
+
+    if (aviso.pasoAPagado) await informarTransferenciaPagadaAMeta(this.prisma, id);
+    await avisarAlCliente(this.prisma, this.emailService, id, aviso);
+
+    return updated;
+  }
+}
+
+/** Domicilio que ve la tienda: con Flex lleva la zona, con Andreani el nombre, y en sucursal dice cuál. */
+function direccionDelPedido(dto: CreateOrderDto): string {
+  const entrega = entregaDe(dto.carrier, dto.modalidad, dto.sucursal);
+  if (entrega.sucursal) return direccionDeSucursal(dto.carrier, entrega.sucursal, dto.address);
+  if (dto.carrier === 'flex') return etiquetaFlex(dto.city) + dto.address;
+  return dto.carrier === 'andreani' ? 'Andreani — ' + dto.address : dto.address;
+}
