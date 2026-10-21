@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { FOTO_NEWSLETTER } from '@/config/editorial';
 import TituloEditorial from './TituloEditorial';
+import Revelar from './Revelar';
 import { MARCA } from '@/config/marca';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
@@ -45,9 +46,9 @@ export default function Newsletter() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
       <div className="grid overflow-hidden bg-night lg:grid-cols-[1fr_1.2fr]">
-        <div className="hidden aspect-[4/5] lg:block">
-          <img src={FOTO_NEWSLETTER.src} alt={FOTO_NEWSLETTER.alt} loading="lazy" className="h-full w-full object-cover" />
-        </div>
+        <Revelar tipo="foto" className="hidden aspect-[4/5] overflow-hidden lg:block">
+          <div className="asentar h-full w-full"><img src={FOTO_NEWSLETTER.src} alt={FOTO_NEWSLETTER.alt} loading="lazy" className="h-full w-full object-cover" /></div>
+        </Revelar>
         <div className="flex flex-col justify-center gap-8 p-8 sm:p-12 lg:p-16">
         <div>
           <p className="rotulo mb-4 text-bordo">El club {MARCA.nombre}</p>

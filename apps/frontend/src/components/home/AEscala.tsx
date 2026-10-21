@@ -3,6 +3,7 @@ import type { Product } from '@/types';
 import { medidasDe } from '@/lib/colores';
 import SiluetaCartera from '@/components/ui/SiluetaCartera';
 import TituloEditorial from './TituloEditorial';
+import Revelar from './Revelar';
 
 const ESCALA = 4; // px por cm
 
@@ -29,13 +30,13 @@ export default function AEscala({ products }: { products: Product[] }) {
   if (conMedidas.length === 0) return null;
   return (
     <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:py-20">
-      <div className="mb-10 grid gap-4 lg:grid-cols-[1fr_1fr] lg:items-end">
+      <Revelar className="mb-10 grid gap-4 lg:grid-cols-[1fr_1fr] lg:items-end">
         <div>
           <p className="rotulo mb-3 text-bordo">A escala</p>
           <TituloEditorial texto="¿Qué tan *grande* es?" className="text-4xl leading-tight sm:text-6xl" />
         </div>
         <p className="max-w-md text-fg-soft lg:justify-self-end">Todos los modelos dibujados en proporción real, junto a un celular. Tocá uno para ver sus fotos.</p>
-      </div>
+      </Revelar>
       <div className="scrollbar-hide -mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0">
         <div className="flex min-w-max items-end gap-10 border-b border-line pb-6 lg:min-w-0 lg:justify-between">
           {conMedidas.map((p) => (

@@ -45,10 +45,10 @@ export default function ProductCard({ product, numero, coloresPreferidos = [] }:
         {foto ? (
           <>
             <img src={getImageUrl(foto, 800)} alt={product.name + (color ? ' ' + color.nombre : '')} loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover transition-opacity duration-500" />
+              className="absolute inset-0 h-full w-full object-cover transition-[opacity,transform] duration-[1200ms] ease-out group-hover:scale-[1.04]" />
             {segunda && (
               <img src={getImageUrl(segunda, 800)} alt="" aria-hidden loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                className="absolute inset-0 h-full w-full object-cover opacity-0 transition-[opacity,transform] duration-[1200ms] ease-out group-hover:scale-[1.04] group-hover:opacity-100" />
             )}
           </>
         ) : (

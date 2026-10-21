@@ -26,6 +26,13 @@ Pedido: "mucho más distintiva, no tan básica, diseño moderno". Qué cambió:
 
 Corrido: tsc ✅, lint 0 errores, tests 4/4 ✅, build ✅. Revisado con capturas a 1366 px y en celular (375 px): sin desborde horizontal.
 
+**Ajuste (pedido de la clienta: más formal, sin formas de "ventana", sin el sello redondo):**
+
+- Fotos rectangulares en toda la portada, con un **marco fino desplazado** (camel en la portada, rosado en "A pedido") como detalle de la marca.
+- El sello circular se reemplazó por una **firma vertical** junto a la foto ("SCHMIDT — Eco cuero — Hecho en Argentina") con una línea que se dibuja.
+- Animaciones: el título sube palabra por palabra, la foto de portada se descubre como cortina y se asienta con un zoom leve, y las secciones aparecen al hacer scroll (`apps/frontend/src/components/home/Revelar.tsx`). Botones rectos con barrido de color, subrayados que se dibujan y zoom lento en las tarjetas de producto. Todo se apaga con "reducir movimiento" y sin JavaScript se ve todo de entrada.
+- Muestras de color rectangulares.
+
 ## Rediseño del backoffice
 
 Plan acordado (5 fases, cada una se puede usar sola):

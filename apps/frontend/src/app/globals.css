@@ -93,17 +93,60 @@ h4, .h4 { font-weight: 500; }
 
 /* Cinta de frases que corre bajo la portada. */
 @keyframes cinta { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.cinta { animation: cinta 40s linear infinite; }
-/* Sello circular con texto alrededor. */
-@keyframes girar { to { transform: rotate(360deg); } }
-.sello-giro { animation: girar 28s linear infinite; }
-/* Entrada suave de la portada. */
+.cinta { animation: cinta 60s linear infinite; }
+
+/*
+ * Movimiento de la portada y las secciones. Curvas lentas y cortas, nada que
+ * rebote: la idea es que la página "se acomode", no que salte.
+ */
+:root { --suave: cubic-bezier(.16, 1, .3, 1); --cortina: cubic-bezier(.77, 0, .18, 1); }
+
+/* Entrada de textos de la portada. */
 @keyframes aparecer { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-.aparecer { animation: aparecer 0.9s cubic-bezier(.2,.7,.2,1) both; }
-.aparecer-2 { animation-delay: .15s; }
-.aparecer-3 { animation-delay: .3s; }
+.aparecer { animation: aparecer 1s var(--suave) both; animation-delay: var(--retardo, 0ms); }
+
+/* Título que sube palabra por palabra desde una ranura. */
+@keyframes subir { from { transform: translateY(108%); } to { transform: none; } }
+.palabra { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .06em .12em 0; margin-bottom: -.12em; }
+.palabra > span { display: inline-block; animation: subir 1.2s var(--suave) both; animation-delay: calc(var(--i) * 70ms + 150ms); }
+
+/* Foto que se descubre como una cortina y se asienta con un zoom leve. */
+@keyframes cortina { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes asentar { from { transform: scale(1.14); } to { transform: scale(1); } }
+.cortina { animation: cortina 1.5s var(--cortina) both; animation-delay: var(--retardo, 0ms); }
+.cortina .asentar { animation: asentar 2.4s var(--suave) both; animation-delay: var(--retardo, 0ms); }
+
+/* Línea fina que se dibuja. */
+@keyframes trazar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.trazar { transform-origin: left; animation: trazar 1.2s var(--suave) both; animation-delay: var(--retardo, 0ms); }
+@keyframes trazar-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.trazar-y { transform-origin: top; animation: trazar-y 1.6s var(--suave) both; animation-delay: var(--retardo, 0ms); }
+
+/*
+ * Al hacer scroll (components/home/Revelar.tsx agrega .visible). Solo se
+ * esconde con JavaScript activo: sin JS, todo se ve de entrada.
+ */
+@media (scripting: enabled) {
+  .revelar { opacity: 0; transform: translateY(32px); transition: opacity 1.2s var(--suave), transform 1.2s var(--suave); transition-delay: var(--retardo, 0ms); }
+  .revelar.visible { opacity: 1; transform: none; }
+  .revelar-foto { clip-path: inset(100% 0 0 0); transition: clip-path 1.5s var(--cortina); transition-delay: var(--retardo, 0ms); }
+  .revelar-foto .asentar { transform: scale(1.14); transition: transform 2.2s var(--suave); transition-delay: var(--retardo, 0ms); }
+  .revelar-foto.visible { clip-path: inset(0 0 0 0); }
+  .revelar-foto.visible .asentar { transform: none; }
+}
+
+/* Botón con barrido: el fondo entra de izquierda a derecha al pasar. */
+.barrido { position: relative; isolation: isolate; overflow: hidden; }
+.barrido::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--barrido, rgb(var(--c-bordo))); transform: scaleX(0); transform-origin: right; transition: transform .6s var(--suave); }
+.barrido:hover::before, .barrido:focus-visible::before { transform: scaleX(1); transform-origin: left; }
+
+/* Enlace subrayado que se dibuja al pasar. */
+.subrayado { background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat; transition: background-size .5s var(--suave); }
+.subrayado:hover { background-size: 0% 1px; background-position: right bottom; }
+
 @media (prefers-reduced-motion: reduce) {
-  .cinta, .sello-giro, .aparecer { animation: none; }
+  .cinta, .aparecer, .palabra > span, .cortina, .cortina .asentar, .trazar, .trazar-y { animation: none; }
+  .revelar, .revelar-foto, .revelar-foto .asentar { transition: none; opacity: 1; transform: none; clip-path: none; }
 }
 
 @keyframes scroll-brands {
