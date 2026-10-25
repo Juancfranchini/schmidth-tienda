@@ -1,13 +1,15 @@
 import { MARCA } from '@/config/marca';
 import Revelar from './Revelar';
+import Paralaje from './Paralaje';
 
 /** La frase de la marca en grande, en cursiva, sobre el rosado del branding, con la S de fondo. */
 export default function Manifiesto() {
   return (
     <section className="relative overflow-hidden bg-rosado">
-      <span aria-hidden className="pointer-events-none absolute -right-10 -top-24 select-none font-display text-[22rem] italic leading-none text-page/40 sm:text-[30rem]">
-        {MARCA.nombre.charAt(0)}
-      </span>
+      {/* La S de fondo se mueve más que la página: queda en un plano más lejano. */}
+      <Paralaje fuerza={-110} className="pointer-events-none absolute -right-10 -top-24">
+        <span aria-hidden className="block select-none font-display text-[22rem] italic leading-none text-page/40 sm:text-[30rem]">{MARCA.nombre.charAt(0)}</span>
+      </Paralaje>
       <div className="relative mx-auto flex max-w-4xl flex-col items-center gap-10 px-5 py-24 text-center sm:py-32">
         <span className="rotulo text-bordo">Nuestra promesa</span>
         <Revelar retardo={150}>

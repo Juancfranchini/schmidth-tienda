@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { MOMENTOS } from '@/config/editorial';
 import TituloEditorial from './TituloEditorial';
 import Revelar from './Revelar';
+import Paralaje from './Paralaje';
 
 /**
  * "Una cartera para cada momento": tres escenas, la del medio más baja, como
@@ -21,7 +22,10 @@ export default function Momentos() {
             <Link href={m.href} className="group block">
               <Revelar tipo="foto" retardo={i * 180} className="relative aspect-[3/4] overflow-hidden bg-chip">
                 <div className="asentar h-full w-full">
-                  <img src={m.src} alt={m.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]" />
+                  {/* La foto es más alta que su recuadro y se desplaza con el scroll: el recuadro funciona como una ventana con profundidad. */}
+                  <Paralaje fuerza={44} className="absolute -top-[9%] left-0 h-[118%] w-full">
+                    <img src={m.src} alt={m.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]" />
+                  </Paralaje>
                 </div>
                 <span className="absolute inset-0 bg-ink/0 transition-colors duration-700 group-hover:bg-ink/10" aria-hidden />
               </Revelar>

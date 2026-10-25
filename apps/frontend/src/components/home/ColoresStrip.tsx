@@ -3,6 +3,7 @@ import type { Product } from '@/types';
 import { coloresDe } from '@/lib/colores';
 import TituloEditorial from './TituloEditorial';
 import Revelar from './Revelar';
+import Inclinar from './Inclinar';
 
 interface ColorDeColeccion {
   nombre: string;
@@ -46,11 +47,13 @@ export default function ColoresStrip({ products }: { products: Product[] }) {
             <li key={c.nombre} className="w-40 shrink-0 snap-start sm:w-auto">
               <Revelar retardo={i * 90}>
               <Link href={'/catalogo?color=' + encodeURIComponent(c.nombre)} className="group block">
+                <Inclinar max={9} brillo className="relative">
                 <span className="relative block aspect-[3/4] w-full overflow-hidden ring-1 ring-on-accent/15 transition-transform duration-700 ease-out group-hover:-translate-y-2" style={{ backgroundColor: c.hex ?? undefined }}>
                   <span className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-black/20" aria-hidden />
                   <span className="absolute inset-3 border border-white/0 transition-colors duration-700 group-hover:border-white/40" aria-hidden />
                   <span className="rotulo absolute inset-x-0 bottom-6 text-center !text-[10px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ color: esClaro(c.hex) ? '#1A1A1A' : '#F7F5EF' }}>Ver modelos</span>
                 </span>
+                </Inclinar>
                 <span className="mt-4 block font-display text-2xl italic">{c.nombre}</span>
                 <span className="block text-xs text-on-accent/60">{c.modelos === 1 ? '1 modelo' : c.modelos + ' modelos'}</span>
               </Link>

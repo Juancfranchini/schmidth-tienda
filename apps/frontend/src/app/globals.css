@@ -139,6 +139,27 @@ h4, .h4 { font-weight: 500; }
 @keyframes fundido { from { opacity: 0; } to { opacity: 1; } }
 .animate-fade-in { animation: fundido .4s ease-out both; }
 
+/*
+ * Profundidad 3D (components/home/Inclinar.tsx): el bloque se inclina hacia el
+ * cursor, las capas (.capa, con --z) se separan en profundidad, una sombra
+ * crece debajo y un reflejo de luz lo acompaña. Solo actúa con mouse.
+ */
+.inclinar {
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .9s var(--suave), box-shadow .9s var(--suave);
+  will-change: transform;
+}
+.inclinar[data-activo='true'] { transition: transform .18s ease-out, box-shadow .6s var(--suave); box-shadow: 0 40px 60px -30px rgba(26, 26, 26, .4); }
+.capa { transform: translateZ(var(--z, 0px)); transform-style: preserve-3d; }
+.inclinar-brillo {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none; opacity: 0; transition: opacity .7s var(--suave);
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .38), rgba(255, 255, 255, 0) 55%);
+}
+.inclinar[data-activo='true'] .inclinar-brillo { opacity: 1; }
+/* Sombra de apoyo bajo la foto de portada: la despega del fondo. */
+.sombra-suelo { background: rgba(26, 26, 26, .28); filter: blur(28px); }
+
 /* Panel lateral (filtros en el celular) que entra desde la izquierda. */
 @keyframes panel-entra { from { transform: translateX(-100%); } to { transform: none; } }
 .panel-entra { animation: panel-entra .5s var(--suave) both; }

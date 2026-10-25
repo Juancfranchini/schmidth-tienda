@@ -10,6 +10,7 @@ import { useConfigCuotas } from '@/lib/cuotas';
 import { coloresDe, type ColorDeProducto } from '@/lib/colores';
 import { useFavorito } from '@/store/favoritosStore';
 import ColorSwatches from './ColorSwatches';
+import Inclinar from '../home/Inclinar';
 
 interface ProductCardProps {
   product: Product;
@@ -41,6 +42,7 @@ export default function ProductCard({ product, numero, coloresPreferidos = [] }:
 
   return (
     <article className="group flex flex-col">
+      <Inclinar max={5} brillo className="relative">
       <Link href={href} className="relative block aspect-[4/5] overflow-hidden bg-chip">
         {foto ? (
           <>
@@ -68,6 +70,7 @@ export default function ProductCard({ product, numero, coloresPreferidos = [] }:
           <Heart size={15} strokeWidth={1.5} className={favorito.marcado ? 'fill-bordo text-bordo' : ''} />
         </button>
       </Link>
+      </Inclinar>
 
       <div className="flex flex-1 flex-col gap-1.5 pt-3">
         <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">

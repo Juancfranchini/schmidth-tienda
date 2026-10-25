@@ -5,6 +5,7 @@ import { formatPrice, getImageUrl } from '@/lib/utils';
 import { MARCA } from '@/config/marca';
 import { FOTO_PORTADA } from '@/config/editorial';
 import TituloEditorial from './TituloEditorial';
+import Inclinar from './Inclinar';
 
 interface Props {
   slide: HeroSlide | null;
@@ -57,18 +58,30 @@ export default function HomeHero({ slide, destacado, nuevos }: Props) {
         </div>
 
         <div className="relative lg:col-span-6">
-          <div className="relative mx-auto w-full max-w-[32rem]">
-            {/* Marco fino desplazado: el detalle de la casa, como el paspartú de una lámina. */}
-            <span aria-hidden className="aparecer absolute -bottom-4 -right-4 left-4 top-4 border border-camel/70 sm:-bottom-6 sm:-right-6 sm:left-6 sm:top-6" style={demora(1100)} />
-            <div className="cortina relative aspect-[4/5] overflow-hidden bg-chip" style={demora(200)}>
-              <picture>
-                {slide?.imageMobile && <source media="(max-width: 640px)" srcSet={getImageUrl(slide.imageMobile, 900)} />}
-                <img src={foto.src} alt={foto.alt} className="asentar h-full w-full object-cover" fetchPriority="high" style={demora(200)} />
-              </picture>
+          {/* Cada capa está a una profundidad distinta: al mover el mouse sobre la foto se separan, como un objeto sobre una mesa. */}
+          <Inclinar max={5} className="relative mx-auto w-full max-w-[32rem]">
+            <div className="capa absolute inset-x-6 bottom-0 h-16" style={{ '--z': '-90px' } as CSSProperties} aria-hidden>
+              <span className="sombra-suelo block h-full w-full" />
             </div>
-            <Firma />
-            {destacado && <TarjetaDestacado producto={destacado} />}
-          </div>
+            <div className="capa absolute inset-0" style={{ '--z': '-40px' } as CSSProperties} aria-hidden>
+              {/* Marco fino desplazado: el detalle de la casa, como el paspartú de una lámina. */}
+              <span className="aparecer absolute -bottom-4 -right-4 left-4 top-4 border border-camel/70 sm:-bottom-6 sm:-right-6 sm:left-6 sm:top-6" style={demora(1100)} />
+            </div>
+            <div className="capa relative">
+              <div className="cortina relative aspect-[4/5] overflow-hidden bg-chip" style={demora(200)}>
+                <picture>
+                  {slide?.imageMobile && <source media="(max-width: 640px)" srcSet={getImageUrl(slide.imageMobile, 900)} />}
+                  <img src={foto.src} alt={foto.alt} className="asentar h-full w-full object-cover" fetchPriority="high" style={demora(200)} />
+                </picture>
+              </div>
+            </div>
+            <div className="capa absolute -left-12 top-0 hidden h-full lg:block" style={{ '--z': '30px' } as CSSProperties}><Firma /></div>
+            {destacado && (
+              <div className="capa absolute -bottom-10 -right-2 sm:-right-12" style={{ '--z': '90px' } as CSSProperties}>
+                <TarjetaDestacado producto={destacado} />
+              </div>
+            )}
+          </Inclinar>
         </div>
       </div>
     </section>
@@ -96,7 +109,7 @@ function RecienLlegadas({ productos }: { productos: Product[] }) {
 /** Firma vertical junto a la foto: una línea que se dibuja y el nombre de la marca. */
 function Firma() {
   return (
-    <div aria-hidden className="absolute -left-12 top-0 hidden h-full flex-col items-center gap-5 lg:flex">
+    <div aria-hidden className="flex h-full flex-col items-center gap-5">
       <span className="trazar-y block w-px flex-1 bg-fg/25" style={demora(900)} />
       <span className="aparecer" style={demora(1300)}>
         <span className="rotulo block rotate-180 whitespace-nowrap text-fg-muted [writing-mode:vertical-rl]">{MARCA.nombreLogo} — Eco cuero — Hecho en Argentina</span>
@@ -109,7 +122,7 @@ function TarjetaDestacado({ producto }: { producto: Product }) {
   const precio = producto.effectivePrice ?? producto.price;
   return (
     <Link href={'/producto/' + producto.slug} style={demora(1400)}
-      className="aparecer group absolute -bottom-10 -right-2 flex items-center gap-4 bg-page p-3 pr-6 shadow-[0_20px_50px_-20px_rgba(26,26,26,0.35)] sm:-right-12">
+      className="aparecer group flex items-center gap-4 bg-page p-3 pr-6 shadow-[0_30px_60px_-20px_rgba(26,26,26,0.45)]">
       {producto.images?.[0] && (
         <span className="block h-20 w-16 overflow-hidden"><img src={getImageUrl(producto.images[0], 200)} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" /></span>
       )}
