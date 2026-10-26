@@ -1,9 +1,11 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { DashboardHeader } from '@/components/layout/DashboardHeader';
+import { PestanasSeccion } from '@/components/layout/PestanasSeccion';
+import { BarraInferior } from '@/components/layout/BarraInferior';
 import { ToastProvider } from '@/components/ui/Toast';
 import { esRutaOculta } from '@/components/layout/navegacion';
 
@@ -19,7 +21,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <ToastProvider>
-      <div className="flex min-h-screen bg-gray-50">
+      <div className="flex min-h-screen bg-[#F6F6F4]">
         <Sidebar
           collapsed={collapsed}
           mobileOpen={mobileOpen}
@@ -32,7 +34,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             onCollapseToggle={() => setCollapsed(!collapsed)}
             collapsed={collapsed}
           />
-          <main className="flex-1 p-6 overflow-auto">{oculta ? null : children}</main>
+          <main className="flex-1 overflow-x-hidden px-4 pb-24 pt-5 sm:px-6 lg:px-8 lg:pb-10 lg:pt-6">
+            <div className="mx-auto w-full max-w-[1400px]">
+              {oculta ? null : (
+                <>
+                  <PestanasSeccion />
+                  {children}
+                </>
+              )}
+            </div>
+          </main>
+          <BarraInferior onMenuClick={() => setMobileOpen(true)} />
         </div>
       </div>
     </ToastProvider>

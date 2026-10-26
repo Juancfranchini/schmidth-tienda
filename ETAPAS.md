@@ -13,6 +13,18 @@ Este archivo es el punto de partida para retomar en una conversación nueva.
 | Backoffice, fase 1 de 5 (menú, Inicio, link de pago, Clientes) | ✅ Terminada (2026-10-21) |
 | Backoffice, fase 2 de 5 (pedidos, remitos, acciones masivas, devoluciones) | ✅ Terminada (2026-10-21) |
 
+## Backoffice reorganizado (2026-10-26)
+
+Pedido: menú más simple y ejecutivo, como Shopify, usable también desde el celular.
+
+- **Menú de 8 entradas** (antes 33): Inicio, Pedidos, Productos, Clientes, Marketing, Análisis, Tienda online y Configuración. Cada una agrupa sus pantallas como **pestañas** (y una segunda fila de botones cuando una pestaña reúne varias pantallas). Pedidos: Pedidos, Devoluciones y Carritos abandonados, con el botón "Crear link de pago". Tienda online: Inicio de la tienda (portada, banners, beneficios, Instagram, sobre nosotros, mensaje final), Fichas de producto, Páginas (preguntas, contacto, envíos, legales) y Marca. Configuración: General, Pagos (medios de pago y cuotas) y Envíos.
+- Las **direcciones no cambiaron** y ninguna función se perdió. Los módulos apagados en `marca.json` siguen apagados; si se reactivan, aparecen solos como pestañas (Marcas, Atributos, Reseñas, Gastos) o como la entrada "Punto de venta". El menú vive en `apps/backoffice/src/components/layout/navegacion.ts`.
+- **Estilo minimalista**: barra lateral clara con íconos finos, cabecera con la ruta ("Pedidos / Devoluciones"), logo en Playfair, botones negros, fondo cálido. Se sacó la campana con el punto de aviso falso.
+- **Celular**: barra inferior (Inicio, Pedidos, Productos, Clientes, Menú), pestañas que se deslizan de costado, menú lateral que se cierra solo al elegir una pantalla, y el botón de acción como "+".
+- Límite: esto reorganiza la navegación; cada pantalla por dentro sigue como estaba. La pantalla única de "Tienda online" con vista previa y el editor de producto unificado quedan para una próxima fase, junto con retocar el estilo interno de cada pantalla.
+
+Corrido: tsc ✅, lint 0 errores, build ✅. Probado en el navegador (escritorio y 375 px): pestañas, segundas filas, ruta de la cabecera, menú lateral y barra inferior.
+
 ## Portada nueva de la tienda (2026-10-21)
 
 Pedido: "mucho más distintiva, no tan básica, diseño moderno". Qué cambió:

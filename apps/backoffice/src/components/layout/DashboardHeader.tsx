@@ -1,24 +1,8 @@
 ﻿'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { LogOut, Bell, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
-import { GRUPOS_MENU } from './navegacion';
-import { MARCA } from '@/config/marca';
-
-/**
- * El título sale del mismo menú (navegacion.ts): antes había una lista aparte
- * que se desactualizaba y media docena de pantallas decían solo "BackOffice".
- * Para una subpágina (/productos/nuevo) se usa la entrada más específica.
- */
-function tituloDe(pathname: string): string {
-  const items = GRUPOS_MENU.flatMap((g) => g.items);
-  const exacta = items.find((i) => i.href === pathname);
-  if (exacta) return exacta.label;
-  const padre = items
-    .filter((i) => i.href !== '/' && pathname.startsWith(i.href + '/'))
-    .sort((a, b) => b.href.length - a.href.length)[0];
-  return padre?.label ?? 'BackOffice';
-}
+import { LogOut, Menu, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { ubicacion } from './navegacion';
 
 interface DashboardHeaderProps {
   onMenuClick: () => void;
@@ -26,67 +10,50 @@ interface DashboardHeaderProps {
   collapsed: boolean;
 }
 
+/**
+ * Cabecera mínima: dónde estás (Sección / Pestaña) a la izquierda y la salida
+ * a la derecha. El título de cada pantalla lo pone la pantalla; acá solo va la
+ * ruta, que sale del mismo menú (navegacion.ts) para no desactualizarse.
+ */
 export function DashboardHeader({ onMenuClick, onCollapseToggle, collapsed }: DashboardHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const lugar = ubicacion(pathname);
 
-  const pageLabel = tituloDe(pathname);
-
-  const handleLogout = () => {
+  const cerrarSesion = () => {
     localStorage.removeItem('bo_token');
     document.cookie = 'bo_token=; Max-Age=0; path=/';
     router.push('/login');
   };
 
+  const boton = 'rounded-md p-2 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-900';
   return (
-    <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-6 shrink-0">
-      <div className="flex items-center gap-2">
-        <button
-          onClick={onMenuClick}
-          className="lg:hidden p-2 rounded-lg text-slate-500 hover:bg-gray-100 hover:text-slate-700 transition-colors"
-          title="Abrir menu"
-        >
-          <Menu className="w-5 h-5" />
+    <header className="sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between border-b border-gray-200 bg-white/90 px-4 backdrop-blur sm:px-6">
+      <div className="flex min-w-0 items-center gap-2">
+        <button type="button" onClick={onMenuClick} className={boton + ' lg:hidden'} aria-label="Abrir menú">
+          <Menu className="h-5 w-5" strokeWidth={1.6} />
         </button>
-
-        <button
-          onClick={onCollapseToggle}
-          className="hidden lg:flex p-2 rounded-lg text-slate-500 hover:bg-gray-100 hover:text-slate-700 transition-colors"
-          title={collapsed ? 'Expandir sidebar' : 'Contraer sidebar'}
-        >
-          {collapsed ? <PanelLeftOpen className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
+        <button type="button" onClick={onCollapseToggle} className={boton + ' hidden lg:block'} aria-label={collapsed ? 'Expandir el menú' : 'Contraer el menú'}>
+          {collapsed ? <PanelLeftOpen className="h-5 w-5" strokeWidth={1.6} /> : <PanelLeftClose className="h-5 w-5" strokeWidth={1.6} />}
         </button>
-
-        <span className="text-slate-400 text-sm hidden sm:inline">{MARCA.nombre}</span>
-        <span className="text-slate-300 hidden sm:inline">/</span>
-        <span className="text-slate-800 text-sm font-semibold">{pageLabel}</span>
+        {lugar && (
+          <p className="truncate text-[13px] text-gray-500">
+            <span className={lugar.seccion.label === lugar.pestana.label ? 'font-medium text-gray-900' : ''}>{lugar.seccion.label}</span>
+            {lugar.seccion.label !== lugar.pestana.label && (
+              <>
+                <span className="mx-2 text-gray-300" aria-hidden>/</span>
+                <span className="font-medium text-gray-900">{lugar.pestana.label}</span>
+              </>
+            )}
+          </p>
+        )}
       </div>
 
-      <div className="flex items-center gap-2 md:gap-3">
-        <button className="relative p-2 rounded-lg text-slate-400 hover:bg-gray-100 hover:text-slate-600 transition-colors">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#B3855C]" />
-        </button>
-
-        <div className="w-px h-6 bg-gray-200 hidden md:block" />
-
-        <div className="flex items-center gap-2 md:gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#1A1A1A] flex items-center justify-center shrink-0">
-            <span className="text-[#B3855C] text-xs font-bold">AD</span>
-          </div>
-          <div className="hidden md:block">
-            <p className="text-sm font-medium text-slate-800 leading-none">Admin</p>
-            <p className="text-xs text-slate-400 mt-0.5">Administrador</p>
-          </div>
-        </div>
-
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-1.5 px-2 md:px-3 py-1.5 rounded-lg text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors text-sm"
-          title="Cerrar sesion"
-        >
-          <LogOut className="w-4 h-4" />
-          <span className="hidden md:inline">Salir</span>
+      <div className="flex items-center gap-1">
+        <span className="mr-1 hidden h-8 w-8 items-center justify-center rounded-full bg-gray-900 text-[11px] font-semibold text-white sm:flex" aria-hidden>AD</span>
+        <button type="button" onClick={cerrarSesion} className={boton + ' flex items-center gap-2 text-[13px]'} title="Cerrar sesión">
+          <LogOut className="h-[18px] w-[18px]" strokeWidth={1.6} />
+          <span className="hidden sm:inline">Salir</span>
         </button>
       </div>
     </header>

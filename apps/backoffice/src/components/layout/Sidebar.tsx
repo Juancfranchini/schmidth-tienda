@@ -1,11 +1,10 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
-import NextImage from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, X } from 'lucide-react';
-import { GRUPOS_MENU, rutaActiva } from './navegacion';
+import { useEffect, useRef } from 'react';
+import { ArrowUpRight, X } from 'lucide-react';
+import { SECCIONES_MENU, ubicacion } from './navegacion';
 import { MARCA } from '@/config/marca';
 
 interface SidebarProps {
@@ -14,81 +13,45 @@ interface SidebarProps {
   onMobileClose: () => void;
 }
 
-const CLAVE_PLEGADOS = 'bo_menu_plegados';
+export const TIENDA_URL = (process.env.NEXT_PUBLIC_STORE_URL || MARCA.sitio.url).replace(/\/+$/, '');
 
-/**
- * Grupos plegados por quien usa el panel, recordados en este navegador. El
- * grupo de la pantalla abierta se muestra siempre, aunque se haya plegado.
- */
-function useGruposPlegados() {
-  const [plegados, setPlegados] = useState<string[]>([]);
-  useEffect(() => {
-    try {
-      const guardado = JSON.parse(localStorage.getItem(CLAVE_PLEGADOS) || '[]');
-      if (Array.isArray(guardado)) setPlegados(guardado.filter((g) => typeof g === 'string'));
-    } catch {
-      // Sin almacenamiento: todo desplegado.
-    }
-  }, []);
-  const alternar = (titulo: string) => setPlegados((actuales) => {
-    const nuevos = actuales.includes(titulo) ? actuales.filter((t) => t !== titulo) : [...actuales, titulo];
-    try { localStorage.setItem(CLAVE_PLEGADOS, JSON.stringify(nuevos)); } catch { /* sin almacenamiento */ }
-    return nuevos;
-  });
-  return { plegados, alternar };
+/** Marca de la barra: el logo en letras (Playfair) y, con la barra angosta, solo la inicial. */
+function Logo({ collapsed }: { collapsed: boolean }) {
+  return (
+    <Link href="/" className="flex items-center overflow-hidden text-gray-900" aria-label={MARCA.nombre + ': ir al inicio'}>
+      <span className={'font-display text-[15px] uppercase tracking-[0.3em] ' + (collapsed ? 'lg:hidden' : '')}>{MARCA.nombreLogo}</span>
+      <span className={'hidden font-display text-xl italic ' + (collapsed ? 'lg:inline' : '')}>{MARCA.nombre.charAt(0)}</span>
+    </Link>
+  );
 }
 
-function SidebarNav({ pathname, collapsed }: { pathname: string; collapsed: boolean }) {
-  const { plegados, alternar } = useGruposPlegados();
+function Navegacion({ pathname, collapsed }: { pathname: string; collapsed: boolean }) {
+  const actual = ubicacion(pathname)?.seccion.id;
   return (
-    <nav className="flex-1 px-3 py-4 overflow-y-auto space-y-3">
-      {GRUPOS_MENU.map((group, gi) => {
-        const tieneActiva = group.items.some((item) => rutaActiva(pathname, item.href));
-        // Con la barra angosta (solo íconos) no hay títulos: se ve todo.
-        const abierto = collapsed || !group.title || tieneActiva || !plegados.includes(group.title);
-        return (
-        <div key={gi}>
-          {group.title && (
-            <>
-              <button
-                type="button"
-                onClick={() => alternar(group.title as string)}
-                aria-expanded={abierto}
-                className={'flex w-full items-center justify-between px-3 mb-1 text-[10px] font-bold uppercase tracking-widest text-slate-500 hover:text-slate-300 whitespace-nowrap ' + (collapsed ? 'lg:hidden' : '')}
+    <nav aria-label="Secciones" className="flex-1 overflow-y-auto px-3 py-4">
+      <ul className="space-y-0.5">
+        {SECCIONES_MENU.map((seccion) => {
+          const activa = seccion.id === actual;
+          const Icono = seccion.icon;
+          return (
+            <li key={seccion.id}>
+              <Link
+                href={seccion.href}
+                title={collapsed ? seccion.label : undefined}
+                aria-current={activa ? 'page' : undefined}
+                className={
+                  'flex items-center gap-3 rounded-md px-3 py-2 text-[13.5px] transition-colors ' +
+                  (activa ? 'bg-gray-900/[0.06] font-semibold text-gray-900' : 'text-gray-600 hover:bg-gray-900/[0.04] hover:text-gray-900') +
+                  (collapsed ? ' lg:justify-center lg:px-2' : '')
+                }
               >
-                {group.title}
-                <ChevronDown className={'h-3 w-3 transition-transform ' + (abierto ? '' : '-rotate-90')} />
-              </button>
-              {collapsed && <div className="px-3 mb-1 border-b border-white/10 hidden lg:block" />}
-            </>
-          )}
-          {abierto && (
-          <ul className="space-y-0.5">
-            {group.items.map((item) => {
-              const active = rutaActiva(pathname, item.href);
-              const Icon = item.icon;
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    title={collapsed ? item.label : undefined}
-                    className={
-                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ' +
-                      (active ? 'bg-[#2A2A2A] text-white border-l-2 border-[#B3855C] pl-[10px]' : 'text-slate-400 hover:bg-[#2A2A2A] hover:text-white border-l-2 border-transparent pl-[10px]') +
-                      (collapsed ? 'lg:justify-center lg:px-2' : '')
-                    }
-                  >
-                    <Icon className={'w-4 h-4 shrink-0 ' + (active ? 'text-[#B3855C]' : 'text-slate-500')} />
-                    <span className={'whitespace-nowrap ' + (collapsed ? 'lg:hidden' : '')}>{item.label}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-          )}
-        </div>
-        );
-      })}
+                <Icono className={'h-[18px] w-[18px] shrink-0 ' + (activa ? 'text-gray-900' : 'text-gray-500')} strokeWidth={1.6} />
+                <span className={collapsed ? 'lg:hidden' : ''}>{seccion.label}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }
@@ -97,57 +60,49 @@ export function Sidebar({ collapsed, mobileOpen, onMobileClose }: SidebarProps) 
   const pathname = usePathname();
   const sidebarRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (mobileOpen && sidebarRef.current && !sidebarRef.current.contains(e.target as Node)) {
-        onMobileClose();
-      }
-    };
+  // En el celular, el menú se cierra al elegir una pantalla. La función se guarda en una referencia
+  // porque cambia en cada render del layout y no debe volver a disparar el cierre.
+  const cerrar = useRef(onMobileClose);
+  cerrar.current = onMobileClose;
+  useEffect(() => { cerrar.current(); }, [pathname]);
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+  useEffect(() => {
+    const alTocarAfuera = (e: MouseEvent) => {
+      if (mobileOpen && sidebarRef.current && !sidebarRef.current.contains(e.target as Node)) onMobileClose();
+    };
+    document.addEventListener('mousedown', alTocarAfuera);
+    return () => document.removeEventListener('mousedown', alTocarAfuera);
   }, [mobileOpen, onMobileClose]);
 
   return (
     <>
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onMobileClose}
-        />
-      )}
+      {mobileOpen && <div className="fixed inset-0 z-40 bg-gray-900/30 backdrop-blur-[1px] lg:hidden" onClick={onMobileClose} />}
 
       <aside
         ref={sidebarRef}
         className={
-          'fixed lg:sticky top-0 left-0 z-50 h-screen bg-[#1A1A1A] flex flex-col shrink-0 transition-all duration-300 ' +
-          'w-64 ' +
-          (collapsed ? 'lg:!w-16' : 'lg:w-64') +
-          ' ' +
-          (mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0')
+          'fixed left-0 top-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-gray-200 bg-[#FBFBFA] transition-all duration-300 lg:sticky ' +
+          (collapsed ? 'lg:!w-16' : 'lg:w-60') + ' ' +
+          (mobileOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0')
         }
       >
-        <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2 overflow-hidden">
-            <NextImage src={MARCA.logo.archivo} alt={MARCA.nombre} width={150} height={30} priority className="object-contain h-6 w-auto" />
-            <span className="w-2 h-2 rounded-full bg-[#B3855C] shrink-0" />
-          </div>
-          <button
-            onClick={onMobileClose}
-            className="lg:hidden text-slate-400 hover:text-white"
-          >
-            <X className="w-5 h-5" />
+        <div className="flex h-14 shrink-0 items-center justify-between border-b border-gray-200 px-5">
+          <Logo collapsed={collapsed} />
+          <button type="button" onClick={onMobileClose} aria-label="Cerrar menú" className="rounded-md p-1.5 text-gray-500 hover:bg-gray-100 lg:hidden">
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <p className={'px-6 pt-2 text-slate-400 text-xs shrink-0 ' + (collapsed ? 'lg:hidden' : '')}>
-          Panel de Administracion
-        </p>
+        <Navegacion pathname={pathname} collapsed={collapsed} />
 
-        <SidebarNav pathname={pathname} collapsed={collapsed} />
-
-        <div className="px-6 py-4 border-t border-white/10 shrink-0">
-          <p className={'text-slate-600 text-xs ' + (collapsed ? 'lg:hidden' : '')}>BackOffice v1.2.0</p>
+        <div className="shrink-0 border-t border-gray-200 p-3">
+          <a
+            href={TIENDA_URL} target="_blank" rel="noopener noreferrer" title="Ver la tienda"
+            className={'flex items-center gap-3 rounded-md px-3 py-2 text-[13px] text-gray-500 transition-colors hover:bg-gray-900/[0.04] hover:text-gray-900' + (collapsed ? ' lg:justify-center lg:px-2' : '')}
+          >
+            <ArrowUpRight className="h-[18px] w-[18px] shrink-0" strokeWidth={1.6} />
+            <span className={collapsed ? 'lg:hidden' : ''}>Ver la tienda</span>
+          </a>
         </div>
       </aside>
     </>

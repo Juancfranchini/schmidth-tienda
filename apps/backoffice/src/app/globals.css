@@ -27,8 +27,8 @@ body {
   transition: box-shadow 0.15s, border-color 0.15s;
 }
 .input-field:focus {
-  border-color: #B3855C;
-  box-shadow: 0 0 0 3px rgba(179, 133, 92, 0.15);
+  border-color: #1A1A1A;
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.08);
 }
 .input-field[disabled] {
   background: #f9fafb;
@@ -40,15 +40,15 @@ body {
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 1rem;
-  background: #B3855C;
-  color: #1A1A1A;
+  background: #1A1A1A;
+  color: #FFFFFF;
   border-radius: 0.5rem;
   font-weight: 600;
   font-size: 0.875rem;
   transition: background 0.15s;
   cursor: pointer;
 }
-.btn-primary:hover { background: #9E7149; }
+.btn-primary:hover { background: #3A3A3A; }
 .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 .btn-secondary {
   display: inline-flex;
@@ -72,15 +72,19 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #2A2A2A;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #D1D1CD;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #A8A8A2;
 }
+
+/* Filas que se deslizan de costado (pestañas) sin barra visible. */
+.sin-barra { scrollbar-width: none; }
+.sin-barra::-webkit-scrollbar { display: none; }
 
 select option {
   background: white;

@@ -10,6 +10,7 @@ const config: Config = {
         'sidebar-hover': '#2A2A2A',
         accent: '#B3855C',
       },
+      fontFamily: { display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'] },
     },
   },
   plugins: [],
